@@ -1,0 +1,115 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+	<script src="js/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+    <center>
+        <h1>Json2Table</h1>
+        <p>Please choose a Json file to convert into a Table</p>
+        <form>
+            <div class="upFile">
+                <input type="file" id="datasetFile" accept=".json">
+            </div>
+            <br>
+            <div>
+                <button id="addDatasetBtn">Click to convert</button>
+            </div>
+        </form>
+        <div id="parentHolder"></div>
+    </center>
+</body>
+    <script>
+        $(document).ready(function(){
+            var parentDiv = "";
+            var aTable = "";
+            var fragTrow = "";
+            var rowCount = 0;
+            var colmCount = 0;
+            var json = "";
+            var counter = 50;
+            
+            $("#parentHolder").scroll(function() {
+                if(counter+50 <= rowCount){
+                    var end = counter + 50;
+                    for (var i = counter; i < end; i < i++) {
+                        fragTrow = $("<tr>", {
+                            "class": "trClass"
+                        }).appendTo(aTable);
+                        var row = json.data[i];
+
+                        for (var j = 0; j < colmCount; j++) {
+                            $("<td>", {
+                                "class": "tdClass"
+                            }).appendTo(fragTrow).html(row[j]);
+                        }
+                    }
+                    counter = end;
+                } else if(counter < rowCount){
+                    for (var i = counter; i < rowCount; i < i++) {
+                        fragTrow = $("<tr>", {
+                            "class": "trClass"
+                        }).appendTo(aTable);
+                        var row = json.data[i];
+
+                        for (var j = 0; j < colmCount; j++) {
+                            $("<td>", {
+                                "class": "tdClass"
+                            }).appendTo(fragTrow).html(row[j]);
+                        }
+                    }
+                    counter = rowCount +1;
+                } else {
+                }
+                
+            });
+                             
+            $("#addDatasetBtn").on('click', function (e) {
+                e.preventDefault();
+                var file = document.getElementById('datasetFile').files[0];
+                if (file) {
+                    // Create Reader
+                    var reader = new FileReader();
+                    reader.readAsText(file);
+                    reader.onload = function(e) {
+                        json = JSON.parse(e.target.result);
+                        parentDiv = $("#parentHolder");
+                        parentDiv.html("");
+                        aTable = $("<table>", {
+                            "id": "scrollTable"
+                        }).appendTo(parentDiv);
+                        rowCount = Object.keys(json.data).length;
+                        colmCount = Object.keys(json.meta.view.columns).length;
+                        
+                        // For loop for adding header .i.e th to our table
+                        for (var k = 0; k < 1; k++) {
+                            fragTrow = $("<tr>", {
+                                "class": "trClass"
+                            }).appendTo(aTable);
+                            for (var j = 0; j < colmCount; j++) {
+                                $("<th>", {
+                                    "class": "thClass"
+                                }).prependTo(fragTrow).html(json.meta.view.columns[j].name);
+                            }
+                        }
+                        
+                        //For loop for adding data .i.e td with data to our dynamic generated table
+                        for (var i = 1; i < 50; i < i++) {
+                            fragTrow = $("<tr>", {
+                                "class": "trClass"
+                            }).appendTo(aTable);
+                            var row = json.data[i];
+                            
+                            for (var j = 0; j < colmCount; j++) {
+                                $("<td>", {
+                                    "class": "tdClass"
+                                }).appendTo(fragTrow).html(row[j]);
+                            }
+                        }
+                        
+                    };   
+                }
+            });
+        });
+    </script>
+</html>

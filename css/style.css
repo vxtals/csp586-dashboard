@@ -1,0 +1,49 @@
+h1{
+    color:darkgoldenrod;
+}
+
+p{
+    font-size: 20px;
+}
+
+button{
+    background-color: darkgoldenrod;
+    color:antiquewhite;
+    outline-color: antiquewhite;
+    font-size: 15px;
+    height: 30px;
+    border-radius: 5px;
+}
+
+#datasetFile{
+    font-size: 15px;
+}
+
+#datasetFile::-webkit-file-upload-button {
+    color: darkgoldenrod;
+    border: 1px solid arkgoldenrod;
+    border-radius: 5px;
+    background: antiquewhite;
+    font-size: 15px;
+}
+
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+table th {
+    border: 1px solid black;
+}
+
+table td {
+    border: 1px solid black;
+    min-width: 100px;
+}
+
+#parentHolder {
+    overflow:scroll;
+    height:500px;
+    width:100%;
+}
