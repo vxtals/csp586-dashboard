@@ -17,9 +17,7 @@ class TableRenderer{
 
 		this.parent.onscroll = function(){
 			const element = tableRenderer.parent;
-			console.log(element);
 			const maxScrollTop = element.scrollHeight - element.clientHeight;
-			console.log(maxScrollTop + " " + element.scrollTop);
 			if(maxScrollTop == element.scrollTop){
 				tableRenderer.appendChilds(50);
 			}
