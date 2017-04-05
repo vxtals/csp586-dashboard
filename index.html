@@ -7,6 +7,7 @@
     <script src="js/classes/charts/ObjectChart.js"></script>
     <script src="js/classes/charts/BaseChart.js"></script>
     <script src="js/classes/charts/ConfiguredChart.js"></script>
+    <script src="js/classes/charts/BarChart.js"></script>
   </head>
 
   <body>
@@ -30,7 +31,7 @@
   <script src="js/main.js"></script>
   <script>
     const ctx = document.getElementById("myChart");
-    const myChart = new ConfiguredChart(ctx);
+    const myChart = new BarChart(ctx);
     myChart.displayChart(ctx);
   </script>
 </html>

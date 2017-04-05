@@ -1,11 +1,5 @@
+// Upper Object that call Chart.js
 class ObjectChart {
-  constructor({ctx, type = 'line', chartLabels, chartDatas}) {
-    this.ctx = ctx;
-    this.type = type
-    this.chartLabels = chartLabels
-    this.chartDatas = chartDatas
-  }
-
   displayChart() {
     const myChart = new Chart(this.ctx, {
         type: this.type,
