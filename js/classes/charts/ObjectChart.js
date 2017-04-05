@@ -1,16 +1,19 @@
 class ObjectChart {
-  constructor(ctx) {
+  constructor({ctx, type = 'line', chartLabels, chartDatas}) {
     this.ctx = ctx;
+    this.type = type
+    this.chartLabels = chartLabels
+    this.chartDatas = chartDatas
   }
 
   displayChart() {
     const myChart = new Chart(this.ctx, {
-        type: 'bar',
+        type: this.type,
         data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            labels: this.chartLabels,
             datasets: [{
                 label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                data: this.chartDatas,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
