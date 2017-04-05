@@ -1,9 +1,10 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <script src="Charts/Chart.js"></script>
     <script src="js/classes/Dataset.js"></script>
     <script src="js/classes/TableRenderer.js"></script>
+    <script src="js/classes/charts/Chart.js"></script>
+    <script src="js/classes/charts/ObjectChart.js"></script>
   </head>
 
   <body>
@@ -21,7 +22,13 @@
       </form>
       <div id="parentHolder"></div>
     </center>
+    <canvas id="myChart" width="400" height="400"></canvas>
   </body>
 
   <script src="js/main.js"></script>
+  <script>
+    const ctx = document.getElementById("myChart");
+    const myChart = new ObjectChart(ctx);
+    myChart.displayChart(ctx);
+  </script>
 </html>
