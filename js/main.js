@@ -82,19 +82,26 @@ function applyColumnFilter(){
 
 function applyRowByParameter(){
     let selector = document.getElementById("columnSelector");
+    let errMsgParameter = document.getElementById("errMsgParameter");
     let selectedColumn = selector.options[selector.selectedIndex].value;
     let parameterValue = document.getElementById("parameterValue").value;
     if(!!selectedColumn){    
         let filter = new Filter(filteredDataset)
-        filteredDataset = filter.filterByParameter(selectedColumn, parameterValue)
-        applyColumnFilter();
+        let filteredTemp = filter.filterByParameter(selectedColumn, parameterValue)
+        if(filteredTemp.dataframe.toArray().length < 1){
+            errMsgParameter.innerHTML = "Filter didn't retrieve any data";
+        }else{
+            errMsgParameter.innerHTML = "";
+            filteredDataset = filteredTemp;
+            applyColumnFilter();
+        }
     }
 }
 
 function applyQuery(){
     let textarea = document.getElementById("queryInput");
-    let errMsg = document.getElementById("errMsg");
-    errMsg.innerHTML = "";
+    let errMsgQuery = document.getElementById("errMsgQuery");
+    errMsgQuery.innerHTML = "";
     let query = textarea.value;
     if(query.length > 0){    
         let filter = new Filter(filteredDataset)
@@ -102,7 +109,7 @@ function applyQuery(){
             filteredDataset = filter.filterByQuery(query)
         }
         catch(err) {
-            errMsg.innerHTML = err.message;
+            errMsgQuery.innerHTML = err.message;
             textarea.className += " errorTextarea";
             document.getElementById("applyQueryBtn").disabled = true
         }

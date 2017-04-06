@@ -143,7 +143,7 @@ tbody tr:nth-child(even) {
     vertical-align: bottom;
 }
 
-#errMsg{
+#errMsgQuery, #errMsgParameter{
     color: red;
 }
 
