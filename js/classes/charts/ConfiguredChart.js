@@ -4,19 +4,24 @@ class ConfiguredChart extends BaseChart {
     super();
     this.chartLabels = [];
     this.chartDatas = [];
+    this.chartColors = [];
   }
 
-  addValue(label, data) {
+  addValue(label, data, color) {
     this.chartLabels.push(label);
     this.chartDatas.push(data);
+    this.chartColors.push(color);
   }
 
-  addValues(labels, datas) {
+  addValues(labels, datas, colors) {
     labels.map((label) => {
        this.chartLabels.push(label);
     });
     datas.map((data) => {
        this.chartDatas.push(data);
+    });
+    colors.map((color) => {
+       this.chartColors.push(color);
     });
   }
 }
