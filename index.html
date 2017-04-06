@@ -8,6 +8,7 @@
     <script src="js/classes/charts/BaseChart.js"></script>
     <script src="js/classes/charts/ConfiguredChart.js"></script>
     <script src="js/classes/charts/BarChart.js"></script>
+    <script src="js/classes/charts/LineChart.js"></script>
   </head>
 
   <body>
@@ -31,7 +32,7 @@
   <script src="js/main.js"></script>
   <script>
     const ctx = document.getElementById("myChart");
-    const myChart = new BarChart(ctx);
+    const myChart = new LineChart(ctx);
     myChart.addValues(
       ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
       [12, 19, 3, 5, 2, 3],
@@ -46,5 +47,6 @@
     );
     myChart.addValue('Violet', 9, 'rgba(255, 0, 64, 1)');
     myChart.displayChart(ctx);
+    myChart.setLabel('Mon CHAR');
   </script>
 </html>
