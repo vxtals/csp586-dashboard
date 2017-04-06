@@ -2,7 +2,21 @@
 class ConfiguredChart extends BaseChart {
   constructor() {
     super();
-    this.chartLabels = ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"];
-    this.chartDatas = [12, 19, 3, 5, 2, 3];
+    this.chartLabels = [];
+    this.chartDatas = [];
+  }
+
+  addValue(label, data) {
+    this.chartLabels.push(label);
+    this.chartDatas.push(data);
+  }
+
+  addValues(labels, datas) {
+    labels.map((label) => {
+       this.chartLabels.push(label);
+    });
+    datas.map((data) => {
+       this.chartDatas.push(data);
+    });
   }
 }

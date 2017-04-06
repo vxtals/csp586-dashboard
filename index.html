@@ -32,6 +32,8 @@
   <script>
     const ctx = document.getElementById("myChart");
     const myChart = new BarChart(ctx);
+    myChart.addValues(["Red", "Blue", "Yellow", "Green", "Purple", "Orange"], [12, 19, 3, 5, 2, 3]);
+    myChart.addValue("Violet", 9);
     myChart.displayChart(ctx);
   </script>
 </html>
