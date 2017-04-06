@@ -9,7 +9,7 @@
 <body>
     <center>
         <h1>DataSet Dashboard</h1>
-        <p>Please choose a Json file to convert into a Table</p>
+        <p class="subtitle">Please choose a Json file to convert into a Table</p>
         <form>
             <div class="upFile">
                 <input type="file" id="datasetFile" accept=".json">
@@ -21,22 +21,27 @@
         </form>
         <div id="parentHolder"></div>
     </center>
-    <button id="showFilterBtn" class="project-btn" hidden>SHOW FILTERS</button>
-    <button id="hideFilterBtn" class="project-btn" hidden>HIDE FILTERS</button>
+    <button id="showFilterBtn" class="project-btn display-filter-btn" hidden>SHOW FILTERS</button>
+    <button id="hideFilterBtn" class="project-btn display-filter-btn" hidden>HIDE FILTERS</button>
     <button id="resetFiltersBtn" hidden>Reset</button>
     <div class="filterContainer">
         <div class="columnFilter">
-            <p>Select columns to show</p>
+            <p class="filterInstruction">Select columns to show:</p>
             <form id="columnsCheckers">
-                <button id="applyColumnFilterBtn">Apply</button>
+                <button id="applyColumnFilterBtn" class="project-btn apply-filter-btn">Apply</button>
             </form>
         </div>
         <div class="parameterFilter">
-            <p>Filter rows by parameter</p>
-            <select id="columnSelector">
-            </select>
+            <p class="filterInstruction">Filter rows by parameter:</p>
+            <select id="columnSelector"></select>
             <input id="parameterValue" type='text' placeholder="value">
-            <button id="applyRowByParameterBtn">Apply</button>
+            <button id="applyRowByParameterBtn" class="project-btn apply-filter-btn">Apply</button>
+        </div>
+        <div class="queryFilter">
+            <p class="filterInstruction">Filter with a SQL-like query. Use 'dataset' as table name: </p>
+            <textarea id="queryInput" rows="4" cols="50" placeholder="SQL Query"></textarea>
+            <button id="applyQueryBtn" class="project-btn apply-filter-btn">Apply</button>
+            <span id="errMsg"></span>
         </div>
     </div>
 </body>
