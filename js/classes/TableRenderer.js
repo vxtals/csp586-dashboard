@@ -72,7 +72,7 @@ class TableRenderer{
 		this.table.innerHTML = ""
 	}
 
-	reRenderTable(dataset){
+	refreshTable(dataset){
 		this.cleanTable();
 		if(!!dataset){
 			this.dataset = dataset;
