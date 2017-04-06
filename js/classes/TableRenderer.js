@@ -3,12 +3,21 @@ class TableRenderer{
 	constructor(parent, dataset){
 		this.parent = parent;
 		this.dataset = dataset;
+		this.dataframe = dataset.dataframe;
 		this.nextRowToRender = 0;
 	}
 
 	renderTable(){
-		this.table = document.createElement("table");
-		this.table.setAttribute("id", "scrollTable");
+		let tableNode = document.getElementById("scrollTable")
+		if(!!tableNode){
+			while (tableNode.firstChild) {
+			    tableNode.removeChild(tableNode.firstChild);
+			}
+			this.table = tableNode
+		}else{
+			this.table = document.createElement("table");
+			this.table.setAttribute("id", "scrollTable");
+		}
 		
 		this.appendHeader();
 		this.appendChilds(50);
@@ -26,12 +35,12 @@ class TableRenderer{
 
 	appendHeader(){
 		const header = document.createElement("tr");
-		const columns = this.dataset.columns;
+		const columns = this.dataframe.listColumns();
 		this.body = document.createElement
 		for(let i = 0; i < columns.length; i++){
 			const column = columns[i];
 			const th = document.createElement("th");
-			th.innerHTML = column.name;
+			th.innerHTML = column;
 			header.appendChild(th);
 
 		}
@@ -39,7 +48,7 @@ class TableRenderer{
 	}
 
 	appendChilds(number){
-		const rows = this.dataset.rows;
+		const rows = this.dataset.dataframe.toArray();
 		if(rows.length - this.nextRowToRender < number){
 			number = rows.length - this.nextRowToRender;
 		}
@@ -57,6 +66,22 @@ class TableRenderer{
 		}
 		this.nextRowToRender = lastRowRendered+1;
 		this.parent.appendChild(this.table);
+	}
+
+	cleanTable(){
+		this.table.innerHTML = ""
+	}
+
+	reRenderTable(dataset){
+		this.cleanTable();
+		if(!!dataset){
+			this.dataset = dataset;
+			this.dataframe = dataset.dataframe;
+		}
+		this.nextRowToRender = 0;
+		this.appendHeader();
+		this.appendChilds(50);
+
 	}
 
 
