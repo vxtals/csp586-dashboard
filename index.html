@@ -3,6 +3,8 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="js/classes/Dataset.js"></script>
     <script src="js/classes/TableRenderer.js"></script>
+    <script src="js/classes/Filter.js"></script>
+    <script src="js/libraries/dataframe.js"></script>
 </head>
 <body>
     <center>
@@ -19,6 +21,19 @@
         </form>
         <div id="parentHolder"></div>
     </center>
+    <button id="showFilterBtn" disabled>Show Filters</button>
+    <div class="filterContainer" hidden>
+        <div class="columnFilter">
+            <p>Select columns to show</p>
+        </div>
+        <div>
+            <form class="columnsCheckers">
+                <button id="applyColumnFilterBtn">Apply</button>
+                <button id="resetColumnFilterBtn">Reset</button>
+            </form>
+
+      </div>
+  </div>
 </body>
 
 <script src="js/main.js"></script>
