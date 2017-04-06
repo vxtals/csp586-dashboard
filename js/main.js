@@ -3,6 +3,11 @@ let dataset, filteredDataset, tableRenderer
 const parent = document.getElementById('parentHolder');
 
 window.onload = function() {
+    document.getElementById("queryInput").onfocus = function() {
+        document.getElementById("queryInput").removeAttribute("class")
+        document.getElementById("applyQueryBtn").disabled = false;
+    }
+
 	document.getElementById("addDatasetBtn").onclick = function(e) {
         e.preventDefault();
         addDataset();
@@ -37,6 +42,11 @@ window.onload = function() {
     document.getElementById("applyRowByParameterBtn").onclick = function(e) {
         e.preventDefault();
         applyRowByParameter();
+    };
+
+    document.getElementById("applyQueryBtn").onclick = function(e) {
+        e.preventDefault();
+        applyQuery();
     };
 
 
@@ -77,6 +87,26 @@ function applyRowByParameter(){
     if(!!selectedColumn){    
         let filter = new Filter(filteredDataset)
         filteredDataset = filter.filterByParameter(selectedColumn, parameterValue)
+        applyColumnFilter();
+    }
+}
+
+function applyQuery(){
+    let textarea = document.getElementById("queryInput");
+    let errMsg = document.getElementById("errMsg");
+    errMsg.innerHTML = "";
+    let query = textarea.value;
+    if(query.length > 0){    
+        let filter = new Filter(filteredDataset)
+        try {
+            filteredDataset = filter.filterByQuery(query)
+        }
+        catch(err) {
+            errMsg.innerHTML = err.message;
+            textarea.className += " errorTextarea";
+            document.getElementById("applyQueryBtn").disabled = true
+        }
+        filteredDataset = filter.filterByQuery(query)
         applyColumnFilter();
     }
 }

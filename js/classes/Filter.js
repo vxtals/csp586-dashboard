@@ -21,7 +21,11 @@ class Filter {
     return filteredDataset
   }
 
-  filterByQuery(){
-
+  filterByQuery(query){
+    let filteredDataset = new Dataset()
+    this.df.sql.register('dataset', true)
+    // Request on Table
+    filteredDataset.setDataframe(DataFrame.sql.request(query))
+    return filteredDataset
   }
 }
