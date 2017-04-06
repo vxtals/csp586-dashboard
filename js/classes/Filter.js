@@ -1,8 +1,8 @@
 'use strict';
 class Filter {
   constructor(dataset){
-    this.dataset = dataset; 
-    this.df = this.dataset.dataframe 
+    this.dataset = dataset
+    this.df = dataset.dataframe
   }
 
   filterByColumn(selectedColumns){
@@ -15,8 +15,10 @@ class Filter {
 
   }
 
-  filterByParameter(){
-
+  filterByParameter(columnName, value){
+    let filteredDataset = new Dataset()
+    filteredDataset.setDataframe(this.df.filter(row => row.get(columnName) == value))
+    return filteredDataset
   }
 
   filterByQuery(){
