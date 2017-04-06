@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 body{  
-    background: #f7f7f7;
+    background: white;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -9,8 +9,12 @@ h1{
     color:darkgoldenrod;
 }
 
-p{
+.subtitle{
     font-size: 20px;
+}
+
+.filterInstruction{
+    font-size: 17px;
 }
 
 button{
@@ -35,28 +39,60 @@ button{
 }
 
 table {
-    border: 1px solid black;
     border-collapse: collapse;
     text-align: center;
     width: 100%;
+    background-color: #bdbdbd; 
 }
 
 table th {
-    border: 1px solid black;
+    border-left: 1px solid #a09d9d;
     height: 40px;
-    background-color: grey;
+    background-color: #bdbdbd;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+table th:first-child {
+    border-left: none;
+
 }
 
 table td {
-    border: 1px solid black;
+    border: 1px solid #bdbdbd;
     min-width: 100px;
     height: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+tbody {
+    display:block;
+    height:460px;
+    overflow-y:auto;
+    overflow-x: hidden;
+}
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;/* even columns width , fix width of table too*/
+}
+
+thead {
+    width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+}
+
+tbody tr:nth-child(odd) {
+    background-color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f7f7f7;
 }
 
 #parentHolder {
-    overflow-y: scroll;
-    height:500px;
     width:100%;
+    box-shadow: 0 0px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 
 .filterContainer{
@@ -73,18 +109,45 @@ table td {
     max-height: 500px;
     background-color: white;
     padding: 5px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 0 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     transition: max-height 1s ease-in;
 }
 
 .project-btn{
     margin-top: 5px;
-    background-color: #00897B;
     font-family: 'Roboto', sans-serif;
-    color: #fff;
     text-align: center;
     letter-spacing: .5px;
     border-radius: 0;
     cursor: pointer;
+}
+
+.display-filter-btn{
+    color: #fff;
+    background-color: #00897B;
     width: 140px;
+}
+
+.apply-filter-btn{
+    color: #00897B;
+    background-color: #fff;
+    border-color: #00897B;
+    border-radius: 0;
+}
+
+#parameterValue, #columnSelector{
+    height: 25px;
+}
+
+#queryInput{
+    vertical-align: bottom;
+}
+
+#errMsg{
+    color: red;
+}
+
+.errorTextarea{
+    border-color: red;
+    box-shadow: 0px 0px 3px red;
 }
