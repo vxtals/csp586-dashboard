@@ -21,19 +21,24 @@
         </form>
         <div id="parentHolder"></div>
     </center>
-    <button id="showFilterBtn" disabled>Show Filters</button>
-    <div class="filterContainer" hidden>
+    <button id="showFilterBtn" class="project-btn" hidden>SHOW FILTERS</button>
+    <button id="hideFilterBtn" class="project-btn" hidden>HIDE FILTERS</button>
+    <button id="resetFiltersBtn" hidden>Reset</button>
+    <div class="filterContainer">
         <div class="columnFilter">
             <p>Select columns to show</p>
-        </div>
-        <div>
-            <form class="columnsCheckers">
+            <form id="columnsCheckers">
                 <button id="applyColumnFilterBtn">Apply</button>
-                <button id="resetColumnFilterBtn">Reset</button>
             </form>
-
-      </div>
-  </div>
+        </div>
+        <div class="parameterFilter">
+            <p>Filter rows by parameter</p>
+            <select id="columnSelector">
+            </select>
+            <input id="parameterValue" type='text' placeholder="value">
+            <button id="applyRowByParameterBtn">Apply</button>
+        </div>
+    </div>
 </body>
 
 <script src="js/main.js"></script>
