@@ -1,13 +1,15 @@
 class Dataset {
 
     constructor(json) {
-        this.columns = this.parseColumns(json.meta.view.columns);
-        this.rows = this.parseRows(json.data);
-        this.dataframe = new DataFrame(this.rows, this.columns.map(
-            function(col){
-                return col.name
-            } 
-        ))
+        if(!!json){
+            this.columns = this.parseColumns(json.meta.view.columns);
+            this.rows = this.parseRows(json.data);
+            this.dataframe = new DataFrame(this.rows, this.columns.map(
+                function(col){
+                    return col.name
+                } 
+            ))
+        }
     }
 
     parseColumns(columnsArray){
@@ -45,6 +47,12 @@ class Dataset {
         }
 
         return rows;
+    }
+
+    setDataframe(dataframe){
+        this.dataframe = dataframe;
+        this.columns = dataframe.listColumns()
+        this.rows = dataframe.toArray()
     }
 
 }
