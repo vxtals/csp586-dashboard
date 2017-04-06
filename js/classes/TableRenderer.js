@@ -34,6 +34,7 @@ class TableRenderer{
 	}
 
 	appendHeader(){
+		const thead =  document.createElement("thead");
 		const header = document.createElement("tr");
 		const columns = this.dataframe.listColumns();
 		this.body = document.createElement
@@ -44,10 +45,25 @@ class TableRenderer{
 			header.appendChild(th);
 
 		}
-		this.table.appendChild(header);
+		thead.appendChild(header);
+		this.table.appendChild(thead);
 	}
 
 	appendChilds(number){
+		let tbody
+		if(this.table.getElementsByTagName("tbody").length < 1){
+			const tableRenderer = this;
+			tbody = document.createElement("tbody")
+			tbody.onscroll = function(){
+				const maxScrollTop = tbody.scrollHeight - tbody.clientHeight;
+				if(maxScrollTop == tbody.scrollTop){
+					tableRenderer.appendChilds(50);
+				}
+			};
+			this.table.appendChild(tbody)
+		}else{
+			tbody = this.table.getElementsByTagName("tbody")[0]
+		}
 		const rows = this.dataset.dataframe.toArray();
 		if(rows.length - this.nextRowToRender < number){
 			number = rows.length - this.nextRowToRender;
@@ -61,7 +77,7 @@ class TableRenderer{
 				td.innerHTML = row[j];
 				tableRow.appendChild(td);
 			}
-			this.table.appendChild(tableRow);
+			tbody.appendChild(tableRow);
 			lastRowRendered = i;
 		}
 		this.nextRowToRender = lastRowRendered+1;
