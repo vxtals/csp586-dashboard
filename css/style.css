@@ -13,10 +13,6 @@ h1{
     font-size: 20px;
 }
 
-.filterInstruction{
-    font-size: 17px;
-}
-
 button{
     background-color: darkgoldenrod;
     color:antiquewhite;
@@ -36,6 +32,12 @@ button{
     border-radius: 5px;
     background: antiquewhite;
     font-size: 15px;
+}
+
+#parentHolder {
+    width:100%;
+    box-shadow: 0 0px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    margin-bottom: 5px;
 }
 
 table {
@@ -90,25 +92,25 @@ tbody tr:nth-child(even) {
     background-color: #f7f7f7;
 }
 
-#parentHolder {
-    width:100%;
-    box-shadow: 0 0px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-    margin-bottom: 5px;
+.filterInstruction{
+    font-size: 17px;
 }
 
-.filterContainer{
-    max-height: 0;
+#filterContainer{
     overflow-y: hidden;
     margin-top: 10px;
     background-color: white;
+}
+
+.hidden-filters{
+    max-height: 0;
     padding: 0 5px 0px 5px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     transition: max-height 1s ease-out, padding 1s;
 }
 
 .visible-filters{
-    max-height: 500px;
-    background-color: white;
+    max-height: 800px;
     padding: 5px;
     box-shadow: 0 0 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     transition: max-height 1s ease-in;
@@ -167,11 +169,18 @@ tbody tr:nth-child(even) {
     vertical-align: bottom;
 }
 
-.errMsg{
+.err-msg{
     color: red;
+    font-weight: bold;
+    margin-left: 10px;
+    vertical-align: bottom;
 }
 
-.errorTextarea{
+.error-textarea{
     border-color: red;
     box-shadow: 0px 0px 3px red;
+}
+
+.checker-name{
+    margin-right: 10px;
 }
