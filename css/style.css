@@ -179,6 +179,7 @@ tbody tr:nth-child(even) {
     font-weight: bold;
     margin-left: 10px;
     vertical-align: bottom;
+    display: inline-block;
 }
 
 .error-textarea{
