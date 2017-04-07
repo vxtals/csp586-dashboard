@@ -92,6 +92,11 @@ tbody tr:nth-child(even) {
     background-color: #f7f7f7;
 }
 
+#rowCounter{
+    margin-left: 15px;
+    font-weight: bold;
+}
+
 .filterInstruction{
     font-size: 17px;
 }

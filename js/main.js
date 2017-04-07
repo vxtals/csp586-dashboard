@@ -95,6 +95,7 @@ function applyColumnFilter(){
     let filter = new Filter(filteredDataset)
     let visibleDataset = filter.filterByColumn(selectedColumns)
     tableRenderer.refreshTable(visibleDataset)
+    updateRowCounter(visibleDataset)
     setColumnSelectorValue(dataset)
     setColumnSelectorDate(dataset)
     setColumnSelectorRange(dataset);
@@ -198,6 +199,7 @@ function resetFilters(){
     }
     filteredDataset = dataset
     tableRenderer.refreshTable(filteredDataset)
+    updateRowCounter(filteredDataset);
 }
 
 function addColumnCheckers(dataset){
@@ -314,4 +316,9 @@ function setColumnSelectorRange(dataset){
     emptyselector.setAttribute("value", null)
 
     columnSelectorRange.insertBefore(emptyselector, columnSelectorRange.firstChild);
+}
+
+function updateRowCounter(dataset){
+    let rowCounter = document.getElementById("rowCounter");
+    rowCounter.innerHTML = dataset.dataframe.toArray().length + " rows."
 }
