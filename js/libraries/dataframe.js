@@ -15550,7 +15550,15 @@ var dfjs =
 	                });
 	                return operationalTerms.map(function (operationalTerm) {
 	                    var operatorToApply = _reusables.xContains.apply(undefined, [operationalTerm].concat((0, _toConsumableArray3['default'])((0, _keys2['default'])(WHERE_OPERATORS))))[0];
-	                    var terms = operationalTerm.replace(' ', '').split(operatorToApply);
+	                    var terms = operationalTerm.match(/"([^"]*)"|[^\s]+/g)
+	                    terms = terms.map(function(term){
+	                    	if(term.indexOf("\"") >= 0){
+	                    		return term.replace(/"|'/g, "")
+	                    	}else{
+	                    		return term
+	                    	}
+	                    })
+	                    terms.splice(terms.indexOf(operatorToApply),1)
 	                    return WHERE_OPERATORS[operatorToApply](String(row.get(terms[0])), (0, _reusables.xReplace)(terms[1].trim(), ['\"', ''], ['\'', ''], ['\`', '']));
 	                }).reduce(function (prev, next) {
 	                    return WHERE_OPERATORS[conditionalOperators.shift()](prev, next);
@@ -15680,7 +15688,6 @@ var dfjs =
 	        selections = _sqlSplitter.selections,
 	        table = _sqlSplitter.table,
 	        operations = _sqlSplitter.operations;
-
 	    if (!table || !(0, _keys2['default'])(tables).includes(table)) {
 	        throw new _errors.SQLParseError('Wrong table name in your query: ' + table);
 	    }
