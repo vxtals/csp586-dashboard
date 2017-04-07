@@ -28,4 +28,24 @@ class Filter {
     filteredDataset.setDataframe(DataFrame.sql.request(query))
     return filteredDataset
   }
+
+  filterByDate(columnName, startDate, endDate){
+    if(!columnName || (!startDate && !endDate)){
+      return null
+    }
+    let filteredDataset = new Dataset()
+    this.df.sql.register('dataset', true)
+    let queryBase = "SELECT * FROM dataset WHERE "
+    let queryTail
+    if(!!startDate && !!endDate){
+      queryTail = "\"" + columnName + "\" > " + startDate + " AND \"" + columnName +  "\" < " + endDate
+    }else if(!!startDate){
+      queryTail = "\"" + columnName + "\" > " + startDate
+    }else if(!!endDate){
+      queryTail = "\"" + columnName +  "\" < " + endDate
+    }
+
+    filteredDataset.setDataframe(DataFrame.sql.request(queryBase + queryTail))
+    return filteredDataset
+  }
 }

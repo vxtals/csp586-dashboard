@@ -1,5 +1,5 @@
 let DataFrame = dfjs.DataFrame;
-let dataset, filteredDataset, tableRenderer
+let dataset, filteredDataset, tableRenderer, reload
 const parent = document.getElementById('parentHolder');
 
 window.onload = function() {
@@ -19,6 +19,7 @@ window.onload = function() {
         filtersContainer.className += ' visible-filters';
         document.getElementById('showFilterBtn').hidden = true;
         document.getElementById('hideFilterBtn').hidden = false;
+        document.getElementById('resetFiltersBtn').hidden = false;
     };
 
     document.getElementById("hideFilterBtn").onclick = function(e) {
@@ -49,6 +50,11 @@ window.onload = function() {
         applyQuery();
     };
 
+    document.getElementById("applyDateBtn").onclick = function(e) {
+        e.preventDefault();
+        applyDateFilter()
+    };
+
 
 }
 
@@ -63,9 +69,14 @@ function addDataset(){
             filteredDataset = dataset
             tableRenderer = new TableRenderer(parent, dataset);
             tableRenderer.renderTable();
-            document.getElementById('showFilterBtn').removeAttribute("hidden");
+            if(!reload){
+                document.getElementById('showFilterBtn').removeAttribute("hidden");
+                reload = true;
+            }
+            resetFilters()
             addColumnCheckers(dataset);
-            setColumnSelector(dataset);
+            setColumnSelectorValue(dataset);
+            setColumnSelectorDate(dataset);
         }
     }else{
         alert("You must to select a file!");
@@ -77,7 +88,8 @@ function applyColumnFilter(){
     let filter = new Filter(filteredDataset)
     let visibleDataset = filter.filterByColumn(selectedColumns)
     tableRenderer.refreshTable(visibleDataset)
-    setColumnSelector(dataset)
+    setColumnSelectorValue(dataset)
+    setColumnSelectorDate(dataset)
 }
 
 function applyRowByParameter(){
@@ -118,14 +130,44 @@ function applyQuery(){
     }
 }
 
+function applyDateFilter(){
+    errMsgDate.innerHTML = "";
+    let selector = document.getElementById("columnSelectorDate");
+    let selectedColumn = selector.options[selector.selectedIndex].value;
+    let startdate = document.getElementById("startDate").value
+    let enddate = document.getElementById("endDate").value    
+    let filter = new Filter(filteredDataset)
+    let filteredTemp = filter.filterByDate(selectedColumn, startdate, enddate)
+    if(!!filteredTemp){
+        filteredDataset = filteredTemp
+        applyColumnFilter();
+    }else{
+        errMsgDate.innerHTML = "Fields are not properly filled";
+    }
+}
+
 function resetFilters(){
     checkAllColumns();
+    let filterContainer = document.getElementsByClassName("filterContainer")[0]
+    let inputFields = filterContainer.getElementsByTagName("input")
+    let selectFields = filterContainer.getElementsByTagName("select")
+    let textareaFields = filterContainer.getElementsByTagName("textarea")
+    for(let i = 0; i < inputFields.length; i++){
+        inputFields[i].value = null
+    }
+    for(let i = 0; i < selectFields.length; i++){
+        selectFields[i].value = null
+    }
+    for(let i = 0; i < textareaFields.length; i++){
+        textareaFields[i].value = null
+    }
     filteredDataset = dataset
     tableRenderer.refreshTable(filteredDataset)
 }
 
 function addColumnCheckers(dataset){
     let columnCheckers = document.getElementById("columnsCheckers")
+    columnCheckers.innerHTML = ""
     let columnNames = dataset.dataframe.listColumns()
     for(let index = columnNames.length - 1; index > -1; index--){
         const checkbox = document.createElement("input")
@@ -160,7 +202,7 @@ function checkAllColumns(){
     }
 }
 
-function setColumnSelector(dataset){
+function setColumnSelectorValue(dataset){
     let colCheckboxes = document.getElementById("columnsCheckers").getElementsByTagName('input')
     let columnSelector = document.getElementById("columnSelector")
     columnSelector.innerHTML = ""
@@ -176,10 +218,34 @@ function setColumnSelector(dataset){
         columnSelector.insertBefore(selector, columnSelector.firstChild);
     }
     const emptyselector = document.createElement("option")
-    emptyselector.innerHTML = "Select value"
+    emptyselector.innerHTML = "Select column"
     emptyselector.selected = true
     emptyselector.disabled = true
     emptyselector.setAttribute("value", null)
         // Get the <ul> element to insert a new node
     columnSelector.insertBefore(emptyselector, columnSelector.firstChild);
+}
+
+function setColumnSelectorDate(dataset){
+    let colCheckboxes = document.getElementById("columnsCheckers").getElementsByTagName('input')
+    let columnSelectorValue = document.getElementById("columnSelectorDate")
+    columnSelectorDate.innerHTML = ""
+    let columnNames = dataset.dataframe.listColumns()
+    for(let index = columnNames.length - 1; index > -1; index--){
+        const selector = document.createElement("option")
+        selector.setAttribute("value", columnNames[index])
+        selector.innerHTML = columnNames[index]
+        if(!colCheckboxes[index].checked || dataset.columns[index].dataTypeName != 'calendar_date'){
+            selector.disabled = true
+        }
+            // Get the <ul> element to insert a new node
+        columnSelectorDate.insertBefore(selector, columnSelectorDate.firstChild);
+    }
+    const emptyselector = document.createElement("option")
+    emptyselector.innerHTML = "Select column"
+    emptyselector.selected = true
+    emptyselector.disabled = true
+    emptyselector.setAttribute("value", null)
+        // Get the <ul> element to insert a new node
+    columnSelectorDate.insertBefore(emptyselector, columnSelectorDate.firstChild);
 }

@@ -23,26 +23,36 @@
     </center>
     <button id="showFilterBtn" class="project-btn display-filter-btn" hidden>SHOW FILTERS</button>
     <button id="hideFilterBtn" class="project-btn display-filter-btn" hidden>HIDE FILTERS</button>
-    <button id="resetFiltersBtn" hidden>Reset</button>
+    <button id="resetFiltersBtn" class="project-btn reset-filter-btn" hidden>RESET</button>
     <div class="filterContainer">
         <div class="columnFilter">
             <p class="filterInstruction">Select columns to show:</p>
             <form id="columnsCheckers">
-                <button id="applyColumnFilterBtn" class="project-btn apply-filter-btn">Apply</button>
             </form>
+            <button id="applyColumnFilterBtn" class="project-btn apply-filter-btn">Apply</button>
         </div>
         <div class="parameterFilter">
             <p class="filterInstruction">Filter rows by parameter:</p>
-            <select id="columnSelector"></select>
-            <input id="parameterValue" type='text' placeholder="value">
+            <select id="columnSelector" class="input-field"></select>
+            <input id="parameterValue" class="input-field" type='text' placeholder="value">
             <button id="applyRowByParameterBtn" class="project-btn apply-filter-btn">Apply</button>
-            <span id="errMsgParameter"></span>
+            <span id="errMsgParameter" class="errMsg"></span>
         </div>
         <div class="queryFilter">
             <p class="filterInstruction">Filter with a SQL-like query. Use 'dataset' as table name: </p>
             <textarea id="queryInput" rows="4" cols="50" placeholder="SQL Query"></textarea>
             <button id="applyQueryBtn" class="project-btn apply-filter-btn">Apply</button>
-            <span id="errMsgQuery"></span>
+            <span id="errMsgQuery" class="errMsg"></span>
+        </div>
+        <div class="dateFilter">
+            <p class="filterInstruction">Filter by date range:</p>
+            <select id="columnSelectorDate" class="input-field" ></select>
+            <span>Start:</span>
+            <input id="startDate" type="date" class="input-field" > 
+            <span>End:</span>
+            <input id="endDate" type="date" class="input-field" > 
+            <button id="applyDateBtn" class="project-btn apply-filter-btn">Apply</button>
+            <span id="errMsgDate" class="errMsg"></span>
         </div>
     </div>
 </body>
