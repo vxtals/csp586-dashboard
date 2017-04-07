@@ -24,7 +24,7 @@
     <button id="showFilterBtn" class="project-btn display-filter-btn" hidden>SHOW FILTERS</button>
     <button id="hideFilterBtn" class="project-btn display-filter-btn" hidden>HIDE FILTERS</button>
     <button id="resetFiltersBtn" class="project-btn reset-filter-btn" hidden>RESET</button>
-    <div class="filterContainer">
+    <div id="filterContainer" class="hidden-filters">
         <div class="columnFilter">
             <p class="filterInstruction">Select columns to show:</p>
             <form id="columnsCheckers">
@@ -36,13 +36,13 @@
             <select id="columnSelector" class="input-field"></select>
             <input id="parameterValue" class="input-field" type='text' placeholder="value">
             <button id="applyRowByParameterBtn" class="project-btn apply-filter-btn">Apply</button>
-            <span id="errMsgParameter" class="errMsg"></span>
+            <span id="errMsgParameter" class="err-msg"></span>
         </div>
         <div class="queryFilter">
             <p class="filterInstruction">Filter with a SQL-like query. Use 'dataset' as table name: </p>
             <textarea id="queryInput" rows="4" cols="50" placeholder="SQL Query"></textarea>
             <button id="applyQueryBtn" class="project-btn apply-filter-btn">Apply</button>
-            <span id="errMsgQuery" class="errMsg"></span>
+            <span id="errMsgQuery" class="err-msg"></span>
         </div>
         <div class="dateFilter">
             <p class="filterInstruction">Filter by date range:</p>
@@ -52,7 +52,17 @@
             <span>End:</span>
             <input id="endDate" type="date" class="input-field" > 
             <button id="applyDateBtn" class="project-btn apply-filter-btn">Apply</button>
-            <span id="errMsgDate" class="errMsg"></span>
+            <span id="errMsgDate" class="err-msg"></span>
+        </div>
+        <div class="rangeFilter">
+            <p class="filterInstruction">Filter by value range:</p>
+            <select id="columnSelectorRange" class="input-field" ></select>
+            <span>Min:</span>
+            <input id="minRange" type="text" class="input-field" > 
+            <span>Max:</span>
+            <input id="maxRange" type="text" class="input-field" > 
+            <button id="applyRangeBtn" class="project-btn apply-filter-btn">Apply</button>
+            <span id="errMsgRange" class="err-msg"></span>
         </div>
     </div>
 </body>

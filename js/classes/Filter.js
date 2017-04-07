@@ -6,6 +6,9 @@ class Filter {
   }
 
   filterByColumn(selectedColumns){
+    if(!selectedColumns){
+      throw "selectedColumns is not defined"
+    }
     let filteredDataset = new Dataset()
     filteredDataset.setDataframe(this.df.select(...selectedColumns))
     return filteredDataset
@@ -16,12 +19,20 @@ class Filter {
   }
 
   filterByParameter(columnName, value){
+    if(!columnName){
+      throw "columnName is not defined"
+    }else if(!value){
+      throw "value is not defined"
+    }
     let filteredDataset = new Dataset()
     filteredDataset.setDataframe(this.df.filter(row => row.get(columnName) == value))
     return filteredDataset
   }
 
   filterByQuery(query){
+    if(!query){
+      throw "query is not defined"
+    }
     let filteredDataset = new Dataset()
     this.df.sql.register('dataset', true)
     // Request on Table
@@ -29,20 +40,22 @@ class Filter {
     return filteredDataset
   }
 
-  filterByDate(columnName, startDate, endDate){
-    if(!columnName || (!startDate && !endDate)){
-      return null
+  filterByRangeOrDate(columnName, minRange, maxRange){
+    if(!columnName){
+      throw "columnName is not defined"
+    }else if(!minRange && !maxRange){
+      throw "minRange or maxRange must be definer"
     }
     let filteredDataset = new Dataset()
     this.df.sql.register('dataset', true)
     let queryBase = "SELECT * FROM dataset WHERE "
     let queryTail
-    if(!!startDate && !!endDate){
-      queryTail = "\"" + columnName + "\" > " + startDate + " AND \"" + columnName +  "\" < " + endDate
-    }else if(!!startDate){
-      queryTail = "\"" + columnName + "\" > " + startDate
-    }else if(!!endDate){
-      queryTail = "\"" + columnName +  "\" < " + endDate
+    if(!!minRange && !!maxRange){
+      queryTail = "\"" + columnName + "\" > " + minRange + " AND \"" + columnName +  "\" < " + maxRange
+    }else if(!!minRange){
+      queryTail = "\"" + columnName + "\" > " + minRange
+    }else if(!!maxRange){
+      queryTail = "\"" + columnName +  "\" < " + maxRange
     }
 
     filteredDataset.setDataframe(DataFrame.sql.request(queryBase + queryTail))

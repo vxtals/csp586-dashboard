@@ -11,17 +11,16 @@ window.onload = function() {
 
     document.getElementById("showFilterBtn").onclick = function(e) {
         e.preventDefault();
-        let filtersContainer = document.getElementsByClassName("filterContainer")[0]
-        filtersContainer.className += ' visible-filters';
+        let filterContainer = document.getElementById("filterContainer");
+        filterContainer.className = 'visible-filters';
         document.getElementById('showFilterBtn').hidden = true;
         document.getElementById('hideFilterBtn').hidden = false;
-        document.getElementById('resetFiltersBtn').hidden = false;
     };
 
     document.getElementById("hideFilterBtn").onclick = function(e) {
         e.preventDefault();
-        let filtersContainer = document.getElementsByClassName("filterContainer")[0]
-        filtersContainer.className = 'filterContainer';
+        let filterContainer = document.getElementById("filterContainer");
+        filterContainer.className = 'hidden-filters';
         document.getElementById('showFilterBtn').hidden = false;
         document.getElementById('hideFilterBtn').hidden = true;
     };
@@ -76,13 +75,15 @@ function addDataset(){
             tableRenderer = new TableRenderer(parent, dataset);
             tableRenderer.renderTable();
             if(!reload){
-                document.getElementById('showFilterBtn').removeAttribute("hidden");
+                document.getElementById('showFilterBtn').hidden = false;
+                document.getElementById('resetFiltersBtn').hidden = false;
                 reload = true;
             }
             resetFilters()
             addColumnCheckers(dataset);
             setColumnSelectorValue(dataset);
             setColumnSelectorDate(dataset);
+            setColumnSelectorRange(dataset);
         }
     }else{
         alert("You must to select a file!");
@@ -96,6 +97,7 @@ function applyColumnFilter(){
     tableRenderer.refreshTable(visibleDataset)
     setColumnSelectorValue(dataset)
     setColumnSelectorDate(dataset)
+    setColumnSelectorRange(dataset);
 }
 
 function applyRowByParameter(){
@@ -105,7 +107,10 @@ function applyRowByParameter(){
 
     errMsgParameter.innerHTML = "";
     let selectedColumn = selector.options[selector.selectedIndex].value;
-    if(!!selectedColumn){    
+    
+    if(!selectedColumn || selectedColumn == "null"){
+        errMsgParameter.innerHTML = "You must select a column";
+    }else{ 
         let filter = new Filter(filteredDataset)
         let filteredTemp = filter.filterByParameter(selectedColumn, parameterValue.value)
         if(filteredTemp.dataframe.toArray().length < 1){
@@ -114,8 +119,6 @@ function applyRowByParameter(){
             filteredDataset = filteredTemp;
             applyColumnFilter();
         }
-    }else{
-        errMsgParameter.innerHTML = "You must select a column";
     }
 }
 
@@ -133,7 +136,7 @@ function applyQuery(){
         }
         catch(err) {
             errMsgQuery.innerHTML = err.message;
-            queryInput.className += " errorTextarea";
+            queryInput.className += " error-textarea";
             applyQueryBtn.disabled = true
         }
         filteredDataset = filter.filterByQuery(query)
@@ -150,19 +153,35 @@ function applyDateFilter(){
     let endDate = document.getElementById("endDate");
 
     errMsgDate.innerHTML = "";
-    let selectedColumn = columnSelectorDate.options[columnSelectorDate.selectedIndex].value;    
-    let filter = new Filter(filteredDataset)
-    let filteredTemp = filter.filterByDate(selectedColumn, startDate.value, endDate.value)
-    if(!!filteredTemp){
-        filteredDataset = filteredTemp
-        applyColumnFilter();
-    }else{
+    let selectedColumn = columnSelectorDate.options[columnSelectorDate.selectedIndex].value;   
+    if(!selectedColumn || (!startDate.value && !endDate.value)){
         errMsgDate.innerHTML = "Fields are not properly filled";
+    }else{
+        let filter = new Filter(filteredDataset)
+        filteredDataset = filter.filterByRangeOrDate(selectedColumn, startDate.value, endDate.value)
+        applyColumnFilter();
+    }
+}
+
+function applyRangeFilter(){
+    let errMsgRange = document.getElementById("errMsgRange");
+    let columnSelectorRange = document.getElementById("columnSelectorRange");
+    let minRange = document.getElementById("minRange");
+    let maxRange = document.getElementById("maxRange");
+
+    errMsgRange.innerHTML = "";
+    let selectedColumn = columnSelectorRange.options[columnSelectorRange.selectedIndex].value;     
+    if(!selectedColumn || (!minRange.value && !maxRange.value)){
+        errMsgRange.innerHTML = "Fields are not properly filled";
+    }else{
+        let filter = new Filter(filteredDataset)
+        filteredDataset = filter.filterByRangeOrDate(selectedColumn, minRange.value, maxRange.value)
+        applyColumnFilter();
     }
 }
 
 function resetFilters(){
-    let filterContainer = document.getElementsByClassName("filterContainer")[0]
+    let filterContainer = document.getElementById("filterContainer");
     let inputFields = filterContainer.getElementsByTagName("input")
     let selectFields = filterContainer.getElementsByTagName("select")
     let textareaFields = filterContainer.getElementsByTagName("textarea")
@@ -191,6 +210,7 @@ function addColumnCheckers(dataset){
         checkbox.setAttribute("value", columnNames[index])
         checkbox.checked = true;
         const span = document.createElement("span")
+        span.className = "checker-name"
         span.innerHTML = columnNames[index]
             // Get the <ul> element to insert a new node
         columnCheckers.insertBefore(span, columnCheckers.firstChild);
@@ -268,4 +288,30 @@ function setColumnSelectorDate(dataset){
     emptyselector.setAttribute("value", null)
 
     columnSelectorDate.insertBefore(emptyselector, columnSelectorDate.firstChild);
+}
+
+function setColumnSelectorRange(dataset){
+    let columnsCheckers = document.getElementById("columnsCheckers");
+    let columnSelectorRange = document.getElementById("columnSelectorRange");
+    let colCheckboxes = columnsCheckers.getElementsByTagName('input');
+
+    columnSelectorRange.innerHTML = "";
+    let columnNames = dataset.dataframe.listColumns()
+    for(let index = columnNames.length - 1; index > -1; index--){
+        const selector = document.createElement("option")
+        selector.setAttribute("value", columnNames[index])
+        selector.innerHTML = columnNames[index]
+        if(!colCheckboxes[index].checked || dataset.columns[index].dataTypeName == 'calendar_date'){
+            selector.disabled = true
+        }
+        columnSelectorRange.insertBefore(selector, columnSelectorRange.firstChild);
+    }
+
+    const emptyselector = document.createElement("option")
+    emptyselector.innerHTML = "Select column"
+    emptyselector.selected = true
+    emptyselector.disabled = true
+    emptyselector.setAttribute("value", null)
+
+    columnSelectorRange.insertBefore(emptyselector, columnSelectorRange.firstChild);
 }
