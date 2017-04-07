@@ -56,7 +56,8 @@ class TableRenderer{
 			tbody = document.createElement("tbody")
 			tbody.onscroll = function(){
 				const maxScrollTop = tbody.scrollHeight - tbody.clientHeight;
-				if(maxScrollTop == tbody.scrollTop){
+				if(maxScrollTop == Math.floor(tbody.scrollTop)){
+					console.log('Esto va')
 					tableRenderer.appendChilds(50);
 				}
 			};
