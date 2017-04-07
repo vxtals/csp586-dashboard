@@ -3,10 +3,6 @@ let dataset, filteredDataset, tableRenderer, reload
 const parent = document.getElementById('parentHolder');
 
 window.onload = function() {
-    document.getElementById("queryInput").onfocus = function() {
-        document.getElementById("queryInput").removeAttribute("class")
-        document.getElementById("applyQueryBtn").disabled = false;
-    }
 
 	document.getElementById("addDatasetBtn").onclick = function(e) {
         e.preventDefault();
@@ -50,9 +46,19 @@ window.onload = function() {
         applyQuery();
     };
 
+    document.getElementById("queryInput").onfocus = function() {
+        document.getElementById("queryInput").removeAttribute("class")
+        document.getElementById("applyQueryBtn").disabled = false;
+    }
+
     document.getElementById("applyDateBtn").onclick = function(e) {
         e.preventDefault();
         applyDateFilter()
+    };
+
+    document.getElementById("applyRangeBtn").onclick = function(e) {
+        e.preventDefault();
+        applyRangeFilter()
     };
 
 
@@ -95,26 +101,31 @@ function applyColumnFilter(){
 function applyRowByParameter(){
     let selector = document.getElementById("columnSelector");
     let errMsgParameter = document.getElementById("errMsgParameter");
+    let parameterValue = document.getElementById("parameterValue");
+
+    errMsgParameter.innerHTML = "";
     let selectedColumn = selector.options[selector.selectedIndex].value;
-    let parameterValue = document.getElementById("parameterValue").value;
     if(!!selectedColumn){    
         let filter = new Filter(filteredDataset)
-        let filteredTemp = filter.filterByParameter(selectedColumn, parameterValue)
+        let filteredTemp = filter.filterByParameter(selectedColumn, parameterValue.value)
         if(filteredTemp.dataframe.toArray().length < 1){
             errMsgParameter.innerHTML = "Filter didn't retrieve any data";
         }else{
-            errMsgParameter.innerHTML = "";
             filteredDataset = filteredTemp;
             applyColumnFilter();
         }
+    }else{
+        errMsgParameter.innerHTML = "You must select a column";
     }
 }
 
 function applyQuery(){
-    let textarea = document.getElementById("queryInput");
+    let queryInput = document.getElementById("queryInput");
     let errMsgQuery = document.getElementById("errMsgQuery");
+    let applyQueryBtn = document.getElementById("applyQueryBtn");
+
     errMsgQuery.innerHTML = "";
-    let query = textarea.value;
+    let query = queryInput.value;
     if(query.length > 0){    
         let filter = new Filter(filteredDataset)
         try {
@@ -122,22 +133,26 @@ function applyQuery(){
         }
         catch(err) {
             errMsgQuery.innerHTML = err.message;
-            textarea.className += " errorTextarea";
-            document.getElementById("applyQueryBtn").disabled = true
+            queryInput.className += " errorTextarea";
+            applyQueryBtn.disabled = true
         }
         filteredDataset = filter.filterByQuery(query)
         applyColumnFilter();
+    }else{
+        errMsgQuery.innerHTML = "Query is empty.";
     }
 }
 
 function applyDateFilter(){
+    let errMsgDate = document.getElementById("errMsgDate");
+    let columnSelectorDate = document.getElementById("columnSelectorDate");
+    let startDate = document.getElementById("startDate");
+    let endDate = document.getElementById("endDate");
+
     errMsgDate.innerHTML = "";
-    let selector = document.getElementById("columnSelectorDate");
-    let selectedColumn = selector.options[selector.selectedIndex].value;
-    let startdate = document.getElementById("startDate").value
-    let enddate = document.getElementById("endDate").value    
+    let selectedColumn = columnSelectorDate.options[columnSelectorDate.selectedIndex].value;    
     let filter = new Filter(filteredDataset)
-    let filteredTemp = filter.filterByDate(selectedColumn, startdate, enddate)
+    let filteredTemp = filter.filterByDate(selectedColumn, startDate.value, endDate.value)
     if(!!filteredTemp){
         filteredDataset = filteredTemp
         applyColumnFilter();
@@ -147,11 +162,12 @@ function applyDateFilter(){
 }
 
 function resetFilters(){
-    checkAllColumns();
     let filterContainer = document.getElementsByClassName("filterContainer")[0]
     let inputFields = filterContainer.getElementsByTagName("input")
     let selectFields = filterContainer.getElementsByTagName("select")
     let textareaFields = filterContainer.getElementsByTagName("textarea")
+
+    checkAllColumns();
     for(let i = 0; i < inputFields.length; i++){
         inputFields[i].value = null
     }
@@ -203,8 +219,10 @@ function checkAllColumns(){
 }
 
 function setColumnSelectorValue(dataset){
-    let colCheckboxes = document.getElementById("columnsCheckers").getElementsByTagName('input')
-    let columnSelector = document.getElementById("columnSelector")
+    let columnsCheckers = document.getElementById("columnsCheckers");
+    let columnSelector = document.getElementById("columnSelector");
+    let colCheckboxes = columnsCheckers.getElementsByTagName('input');
+
     columnSelector.innerHTML = ""
     let columnNames = dataset.dataframe.listColumns()
     for(let index = columnNames.length - 1; index > -1; index--){
@@ -214,22 +232,24 @@ function setColumnSelectorValue(dataset){
         if(!colCheckboxes[index].checked){
             selector.disabled = true
         }
-            // Get the <ul> element to insert a new node
         columnSelector.insertBefore(selector, columnSelector.firstChild);
     }
+
     const emptyselector = document.createElement("option")
     emptyselector.innerHTML = "Select column"
     emptyselector.selected = true
     emptyselector.disabled = true
     emptyselector.setAttribute("value", null)
-        // Get the <ul> element to insert a new node
+
     columnSelector.insertBefore(emptyselector, columnSelector.firstChild);
 }
 
 function setColumnSelectorDate(dataset){
-    let colCheckboxes = document.getElementById("columnsCheckers").getElementsByTagName('input')
-    let columnSelectorValue = document.getElementById("columnSelectorDate")
-    columnSelectorDate.innerHTML = ""
+    let columnsCheckers = document.getElementById("columnsCheckers");
+    let columnSelectorDate = document.getElementById("columnSelectorDate");
+    let colCheckboxes = columnsCheckers.getElementsByTagName('input');
+
+    columnSelectorDate.innerHTML = "";
     let columnNames = dataset.dataframe.listColumns()
     for(let index = columnNames.length - 1; index > -1; index--){
         const selector = document.createElement("option")
@@ -238,14 +258,14 @@ function setColumnSelectorDate(dataset){
         if(!colCheckboxes[index].checked || dataset.columns[index].dataTypeName != 'calendar_date'){
             selector.disabled = true
         }
-            // Get the <ul> element to insert a new node
         columnSelectorDate.insertBefore(selector, columnSelectorDate.firstChild);
     }
+
     const emptyselector = document.createElement("option")
     emptyselector.innerHTML = "Select column"
     emptyselector.selected = true
     emptyselector.disabled = true
     emptyselector.setAttribute("value", null)
-        // Get the <ul> element to insert a new node
+
     columnSelectorDate.insertBefore(emptyselector, columnSelectorDate.firstChild);
 }
