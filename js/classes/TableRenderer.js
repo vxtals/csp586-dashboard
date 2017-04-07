@@ -3,7 +3,6 @@ class TableRenderer{
 	constructor(parent, dataset){
 		this.parent = parent;
 		this.dataset = dataset;
-		this.dataframe = dataset.dataframe;
 		this.nextRowToRender = 0;
 	}
 
@@ -36,7 +35,7 @@ class TableRenderer{
 	appendHeader(){
 		const thead =  document.createElement("thead");
 		const header = document.createElement("tr");
-		const columns = this.dataframe.listColumns();
+		const columns = this.dataset.dataframe.listColumns();
 		this.body = document.createElement
 		for(let i = 0; i < columns.length; i++){
 			const column = columns[i];
@@ -57,7 +56,6 @@ class TableRenderer{
 			tbody.onscroll = function(){
 				const maxScrollTop = tbody.scrollHeight - tbody.clientHeight;
 				if(maxScrollTop == Math.floor(tbody.scrollTop)){
-					console.log('Esto va')
 					tableRenderer.appendChilds(50);
 				}
 			};
@@ -93,7 +91,7 @@ class TableRenderer{
 		this.cleanTable();
 		if(!!dataset){
 			this.dataset = dataset;
-			this.dataframe = dataset.dataframe;
+			this.dataset.dataframe = dataset.dataframe;
 		}
 		this.nextRowToRender = 0;
 		this.appendHeader();

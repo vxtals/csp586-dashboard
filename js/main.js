@@ -1,5 +1,5 @@
 let DataFrame = dfjs.DataFrame;
-let dataset, filteredDataset, tableRenderer, reload
+let dataset, filter, filteredDataset, tableRenderer, reload
 const parent = document.getElementById('parentHolder');
 
 window.onload = function() {
@@ -71,9 +71,9 @@ function addDataset(){
         reader.onload = function(e) {
             json = JSON.parse(e.target.result);
             dataset = new Dataset(json);
-            filteredDataset = dataset
-            tableRenderer = new TableRenderer(parent, dataset);
-            tableRenderer.renderTable();
+            filter = new Filter(dataset)
+            tableRenderer = new TableRenderer(parent, filter.getDataset());
+            tableRenderer.renderTable()
             if(!reload){
                 document.getElementById('showFilterBtn').hidden = false;
                 document.getElementById('resetFiltersBtn').hidden = false;
@@ -92,10 +92,9 @@ function addDataset(){
 
 function applyColumnFilter(){
     let selectedColumns = getCheckedColumns();
-    let filter = new Filter(filteredDataset)
-    let visibleDataset = filter.filterByColumn(selectedColumns)
-    tableRenderer.refreshTable(visibleDataset)
-    updateRowCounter(visibleDataset)
+    let filteredByColumns = filter.filterByColumn(selectedColumns)
+    tableRenderer.refreshTable(filteredByColumns)
+    updateRowCounter(filter.getDataset())
     setColumnSelectorValue(dataset)
     setColumnSelectorDate(dataset)
     setColumnSelectorRange(dataset);
@@ -114,16 +113,9 @@ function applyRowByParameter(){
     }else if(!parameterValue.value){
         errMsgParameter.innerHTML = "You must enter a value";
     }else{ 
-        console.log("** " + selectedColumn + " **")
-        let filter = new Filter(filteredDataset)
-        let filteredTemp = filter.filterByParameter(selectedColumn, parameterValue.value)
-        if(filteredTemp.dataframe.toArray().length < 1){
-            errMsgParameter.innerHTML = "Filter didn't retrieve any data";
-        }else{
-            filteredDataset = filteredTemp;
-            parameterValue.value = null;
-            applyColumnFilter();
-        }
+        filter.filterByParameter(selectedColumn, parameterValue.value)
+        parameterValue.value = null;
+        applyColumnFilter();
     }
 }
 
@@ -134,17 +126,15 @@ function applyQuery(){
 
     errMsgQuery.innerHTML = "";
     let query = queryInput.value;
-    if(query.length > 0){    
-        let filter = new Filter(filteredDataset)
+    if(query.length > 0){
         try {
-            filteredDataset = filter.filterByQuery(query)
+            filter.filterByQuery(query)
         }
         catch(err) {
             errMsgQuery.innerHTML = err.message;
             queryInput.className += " error-textarea";
             applyQueryBtn.disabled = true
         }
-        filteredDataset = filter.filterByQuery(query)
         queryInput.value = null;
         applyColumnFilter();
     }else{
@@ -165,8 +155,7 @@ function applyDateFilter(){
     }else if((!startDate.value && !endDate.value)){
         errMsgDate.innerHTML = "You must select at least one among start and end dates";
     }else{
-        let filter = new Filter(filteredDataset)
-        filteredDataset = filter.filterByRangeOrDate(selectedColumn, startDate.value, endDate.value)
+        filter.filterByRangeOrDate(selectedColumn, startDate.value, endDate.value)
         startDate.value = null;
         endDate.value = null;
         applyColumnFilter();
@@ -186,8 +175,7 @@ function applyRangeFilter(){
     }else if((!minRange.value && !maxRange.value)){
         errMsgRange.innerHTML = "You must select at least one among min and max values";
     }else{
-        let filter = new Filter(filteredDataset)
-        filteredDataset = filter.filterByRangeOrDate(selectedColumn, minRange.value, maxRange.value)
+        filter.filterByRangeOrDate(selectedColumn, minRange.value, maxRange.value)
         minRange.value = null;
         maxRange.value = null;
         applyColumnFilter();
@@ -213,9 +201,9 @@ function resetFilters(){
     for(let i = 0; i < textareaFields.length; i++){
         textareaFields[i].value = null
     }
-    filteredDataset = dataset
-    tableRenderer.refreshTable(filteredDataset)
-    updateRowCounter(filteredDataset);
+    filter.setDataset(dataset)
+    tableRenderer.refreshTable(filter.getDataset())
+    updateRowCounter(filter.getDataset());
 }
 
 function addColumnCheckers(dataset){

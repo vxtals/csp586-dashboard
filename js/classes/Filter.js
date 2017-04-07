@@ -2,7 +2,14 @@
 class Filter {
   constructor(dataset){
     this.dataset = dataset
-    this.df = dataset.dataframe
+  }
+
+  setDataset(dataset){
+    this.dataset = dataset;
+  }
+
+  getDataset(){
+    return this.dataset
   }
 
   filterByColumn(selectedColumns){
@@ -10,7 +17,7 @@ class Filter {
       throw "selectedColumns is not defined"
     }
     let filteredDataset = new Dataset()
-    filteredDataset.setDataframe(this.df.select(...selectedColumns))
+    filteredDataset.setDataframe(this.dataset.dataframe.select(...selectedColumns))
     return filteredDataset
   }
 
@@ -25,8 +32,8 @@ class Filter {
       throw "value is not defined"
     }
     let filteredDataset = new Dataset()
-    filteredDataset.setDataframe(this.df.filter(row => row.get(columnName) == value))
-    return filteredDataset
+    filteredDataset.setDataframe(this.dataset.dataframe.filter(row => row.get(columnName) == value))
+    this.dataset = filteredDataset
   }
 
   filterByQuery(query){
@@ -34,10 +41,10 @@ class Filter {
       throw "query is not defined"
     }
     let filteredDataset = new Dataset()
-    this.df.sql.register('dataset', true)
+    this.dataset.dataframe.sql.register('dataset', true)
     // Request on Table
     filteredDataset.setDataframe(DataFrame.sql.request(query))
-    return filteredDataset
+    this.dataset = filteredDataset
   }
 
   filterByRangeOrDate(columnName, minRange, maxRange){
@@ -47,7 +54,7 @@ class Filter {
       throw "minRange or maxRange must be definer"
     }
     let filteredDataset = new Dataset()
-    this.df.sql.register('dataset', true)
+    this.dataset.dataframe.sql.register('dataset', true)
     let queryBase = "SELECT * FROM dataset WHERE "
     let queryTail
     if(!!minRange && !!maxRange){
@@ -59,6 +66,6 @@ class Filter {
     }
 
     filteredDataset.setDataframe(DataFrame.sql.request(queryBase + queryTail))
-    return filteredDataset
+    this.dataset = filteredDataset
   }
 }
