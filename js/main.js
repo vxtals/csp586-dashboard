@@ -111,13 +111,17 @@ function applyRowByParameter(){
     
     if(!selectedColumn || selectedColumn == "null"){
         errMsgParameter.innerHTML = "You must select a column";
+    }else if(!parameterValue.value){
+        errMsgParameter.innerHTML = "You must enter a value";
     }else{ 
+        console.log("** " + selectedColumn + " **")
         let filter = new Filter(filteredDataset)
         let filteredTemp = filter.filterByParameter(selectedColumn, parameterValue.value)
         if(filteredTemp.dataframe.toArray().length < 1){
             errMsgParameter.innerHTML = "Filter didn't retrieve any data";
         }else{
             filteredDataset = filteredTemp;
+            parameterValue.value = null;
             applyColumnFilter();
         }
     }
@@ -141,6 +145,7 @@ function applyQuery(){
             applyQueryBtn.disabled = true
         }
         filteredDataset = filter.filterByQuery(query)
+        queryInput.value = null;
         applyColumnFilter();
     }else{
         errMsgQuery.innerHTML = "Query is empty.";
@@ -160,6 +165,8 @@ function applyDateFilter(){
     }else{
         let filter = new Filter(filteredDataset)
         filteredDataset = filter.filterByRangeOrDate(selectedColumn, startDate.value, endDate.value)
+        startDate.value = null;
+        endDate.value = null;
         applyColumnFilter();
     }
 }
@@ -177,6 +184,8 @@ function applyRangeFilter(){
     }else{
         let filter = new Filter(filteredDataset)
         filteredDataset = filter.filterByRangeOrDate(selectedColumn, minRange.value, maxRange.value)
+        minRange.value = null;
+        maxRange.value = null;
         applyColumnFilter();
     }
 }
@@ -187,9 +196,12 @@ function resetFilters(){
     let selectFields = filterContainer.getElementsByTagName("select")
     let textareaFields = filterContainer.getElementsByTagName("textarea")
 
-    checkAllColumns();
     for(let i = 0; i < inputFields.length; i++){
-        inputFields[i].value = null
+        if(inputFields[i].getAttribute("type") == "checkbox"){
+            inputFields[i].checked = true;
+        }else{
+            inputFields[i].value = null
+        }
     }
     for(let i = 0; i < selectFields.length; i++){
         selectFields[i].value = null
@@ -230,14 +242,6 @@ function getCheckedColumns(){
         }
     }
     return selectedColumns;
-}
-
-function checkAllColumns(){
-    let columnCheckers = document.getElementById("columnsCheckers")
-    let colCheckboxes = columnCheckers.getElementsByTagName('input')
-    for(let i = 0; i < colCheckboxes.length; i++){
-        colCheckboxes[i].checked = true
-    }
 }
 
 function setColumnSelectorValue(dataset){
