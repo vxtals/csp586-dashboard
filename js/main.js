@@ -159,9 +159,11 @@ function applyDateFilter(){
     let endDate = document.getElementById("endDate");
 
     errMsgDate.innerHTML = "";
-    let selectedColumn = columnSelectorDate.options[columnSelectorDate.selectedIndex].value;   
-    if(!selectedColumn || (!startDate.value && !endDate.value)){
-        errMsgDate.innerHTML = "Fields are not properly filled";
+    let selectedColumn = columnSelectorDate.options[columnSelectorDate.selectedIndex].value; 
+    if(!selectedColumn || selectedColumn == "null"){
+        errMsgDate.innerHTML = "You must select a column";
+    }else if((!startDate.value && !endDate.value)){
+        errMsgDate.innerHTML = "You must select at least one among start and end dates";
     }else{
         let filter = new Filter(filteredDataset)
         filteredDataset = filter.filterByRangeOrDate(selectedColumn, startDate.value, endDate.value)
@@ -179,8 +181,10 @@ function applyRangeFilter(){
 
     errMsgRange.innerHTML = "";
     let selectedColumn = columnSelectorRange.options[columnSelectorRange.selectedIndex].value;     
-    if(!selectedColumn || (!minRange.value && !maxRange.value)){
-        errMsgRange.innerHTML = "Fields are not properly filled";
+    if(!selectedColumn || selectedColumn == "null"){
+        errMsgRange.innerHTML = "You must select a column";
+    }else if((!minRange.value && !maxRange.value)){
+        errMsgRange.innerHTML = "You must select at least one among min and max values";
     }else{
         let filter = new Filter(filteredDataset)
         filteredDataset = filter.filterByRangeOrDate(selectedColumn, minRange.value, maxRange.value)
