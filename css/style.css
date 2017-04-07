@@ -93,6 +93,7 @@ tbody tr:nth-child(even) {
 #parentHolder {
     width:100%;
     box-shadow: 0 0px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    margin-bottom: 5px;
 }
 
 .filterContainer{
@@ -119,7 +120,9 @@ tbody tr:nth-child(even) {
     text-align: center;
     letter-spacing: .5px;
     border-radius: 0;
-    cursor: pointer;
+    cursor: pointer;    
+    border-width: 0;
+    border-radius: 3px;
 }
 
 .display-filter-btn{
@@ -128,14 +131,35 @@ tbody tr:nth-child(even) {
     width: 140px;
 }
 
+.display-filter-btn:hover{
+    background-color: #035d53;
+}
+
+.reset-filter-btn{
+    color: #fff;
+    background-color: rgba(224, 96, 38, 0.92);
+    width: 140px;
+}
+
+.reset-filter-btn:hover{
+    background-color: rgba(173, 73, 28, 0.92);
+}
+
 .apply-filter-btn{
     color: #00897B;
     background-color: #fff;
     border-color: #00897B;
-    border-radius: 0;
+    border-radius: 3px;
+    border: 2px solid;
 }
 
-#parameterValue, #columnSelector{
+.apply-filter-btn:hover{
+    background-color: #00897B;
+    color: #fff;
+    border-color: #00897B;
+}
+
+.input-field{
     height: 25px;
 }
 
@@ -143,7 +167,7 @@ tbody tr:nth-child(even) {
     vertical-align: bottom;
 }
 
-#errMsgQuery, #errMsgParameter{
+.errMsg{
     color: red;
 }
 
