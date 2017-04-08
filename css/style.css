@@ -1,25 +1,66 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Righteous');
 
 body{  
     background: white;
     font-family: 'Roboto', sans-serif;
+    margin-top: 85px;
+    overflow-y: scroll;
+}
+
+header{
+    font-family: 'Righteous', sans-serif;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    padding-left: 10px;
+    background-color: #035d53;
+    color: white;
 }
 
 h1{
-    color:darkgoldenrod;
+    /*color:darkgoldenrod;*/
+    color: white;
+}
+
+.visible-steps{
+    max-height: 200px;
+    transition: max-height 0.5s ease-in;
+}
+
+.hidden-steps{
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+}
+
+#newDatasetBtn{
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    letter-spacing: .5px;
+    border-radius: 0;
+    cursor: pointer;    
+    border-width: 0;
+    border-radius: 3px;
+    color: #fff;
+    background-color: #5cb85c;
+    height: 35px;
+    text-transform: uppercase;
+    transition: height 0.5s;
+    margin-bottom: 5px;
+}
+
+#newDatasetBtn.hidden-button{
+    height: 0;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
 .subtitle{
     font-size: 20px;
-}
-
-button{
-    background-color: darkgoldenrod;
-    color:antiquewhite;
-    outline-color: antiquewhite;
-    font-size: 15px;
-    height: 30px;
-    border-radius: 5px;
 }
 
 #datasetFile{
@@ -27,11 +68,42 @@ button{
 }
 
 #datasetFile::-webkit-file-upload-button {
-    color: darkgoldenrod;
-    border: 1px solid arkgoldenrod;
-    border-radius: 5px;
-    background: antiquewhite;
-    font-size: 15px;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    letter-spacing: .5px;
+    border-radius: 0;
+    cursor: pointer;    
+    border-width: 0;
+    border-radius: 3px;
+    color: #fff;
+    background-color: #5cb85c;
+    height: 35px;
+    text-transform: uppercase;
+}
+
+#addDatasetBtn{
+    height: 35px;
+}
+
+.project-step{
+    display: inline-block;
+    border: 1px solid;
+    height: 40px;
+    width: 40px;
+    border-radius: 40px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+.project-step>span{
+    font-family: 'Righteous', sans-serif;
+    font-size: 33px;
+}
+
+.convert-file, .upFile{
+    display: inline;
+    margin-right: 20px;
 }
 
 #parentHolder {
@@ -92,9 +164,14 @@ tbody tr:nth-child(even) {
     background-color: #f7f7f7;
 }
 
+.filtersControls > button{
+    height: 17px;
+}
+
 #rowCounter{
     margin-left: 15px;
     font-weight: bold;
+    vertical-align: middle;
 }
 
 .filterInstruction{
@@ -112,7 +189,7 @@ tbody tr:nth-child(even) {
     max-height: 0;
     padding: 0 5px 0px 5px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-    transition: max-height 1s ease-out, padding 1s;
+    transition: max-height 1s ease-out, padding 1s, box-shadow 1s;
 }
 
 .visible-filters{
@@ -162,12 +239,17 @@ tbody tr:nth-child(even) {
     background-color: rgba(173, 73, 28, 0.92);
 }
 
+#columnsCheckers{
+    display: inline;
+}
+
 .apply-filter-btn{
     color: #00897B;
     background-color: #fff;
     border-color: #00897B;
     border-radius: 3px;
     border: 2px solid;
+    height: 27px;
 }
 
 .apply-filter-btn:hover{

@@ -7,28 +7,38 @@
     <script src="js/libraries/dataframe.js"></script>
 </head>
 <body>
-    <center>
+    <header>
         <h1>DataSet Dashboard</h1>
-        <p class="subtitle">Please choose a Json file to convert into a Table</p>
+    </header>
+    <button id="newDatasetBtn" class="hidden-button">New dataset</button>
+    <div id="startSteps" class="visible-steps"> 
+        <p class="subtitle">Follow steps to convert a Json file to convert into a Table</p>
         <form>
             <div class="upFile">
+                <div class="project-step">
+                    <span>1</span>
+                </div>
                 <input type="file" id="datasetFile" accept=".json">
             </div>
-            <br>
-            <div>
-                <button id="addDatasetBtn">Click to convert</button>
+            <div class="convert-file">
+                <div class="project-step">
+                    <span>2</span>
+                </div>
+                <button id="addDatasetBtn" class="project-btn apply-filter-btn">Click to convert</button>
             </div>
         </form>
-        <div id="parentHolder"></div>
-    </center>
-    <button id="showFilterBtn" class="project-btn display-filter-btn" hidden>SHOW FILTERS</button>
-    <button id="hideFilterBtn" class="project-btn display-filter-btn" hidden>HIDE FILTERS</button>
-    <button id="resetFiltersBtn" class="project-btn reset-filter-btn" hidden>RESET</button>
-    <span id="rowCounter"></span>
-    <span id="doBtns">
-        <button id="undoBtn" class="project-btn display-filter-btn" hidden>UNDO</button>
-        <button id="redoBtn" class="project-btn display-filter-btn" hidden>REDO</button>
-    </span>
+    </div>
+    <div id="parentHolder"></div>
+    <div class="filtersControls">
+        <button id="showFilterBtn" class="project-btn display-filter-btn" hidden>SHOW FILTERS</button>
+        <button id="hideFilterBtn" class="project-btn display-filter-btn" hidden>HIDE FILTERS</button>
+        <button id="resetFiltersBtn" class="project-btn reset-filter-btn" hidden>RESET</button>
+        <span id="rowCounter"></span>
+        <span id="doBtns">
+            <button id="undoBtn" class="project-btn display-filter-btn" hidden>UNDO</button>
+            <button id="redoBtn" class="project-btn display-filter-btn" hidden>REDO</button>
+        </span>
+    </div>
     <div id="filterContainer" class="hidden-filters">
         <div class="columnFilter">
             <p class="filterInstruction">Select columns to show:</p>

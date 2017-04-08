@@ -25,6 +25,12 @@ window.onload = function() {
         document.getElementById('hideFilterBtn').hidden = true;
     };
 
+    document.getElementById("newDatasetBtn").onclick = function(e) {
+        e.preventDefault();
+        document.getElementById("newDatasetBtn").className="hidden-button"
+        document.getElementById("startSteps").className = "";
+    };
+
     document.getElementById("undoBtn").onclick = function(e) {
         e.preventDefault();
         filter.setPreviousDataset();
@@ -99,6 +105,8 @@ function addDataset(){
             setColumnSelectorValue(dataset);
             setColumnSelectorDate(dataset);
             setColumnSelectorRange(dataset);
+            document.getElementById("startSteps").className = "hidden-steps";
+            document.getElementById("newDatasetBtn").className = "";
         }
     }else{
         alert("You must to select a file!");
