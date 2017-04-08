@@ -9,6 +9,9 @@ class Filter {
 
   setDataset(dataset){
     this.dataset = dataset;
+    this.datasetHistory = [];
+    this.datasetHistory.push(this.dataset) 
+    this.historyPointer = 0;
   }
 
   getDataset(){
@@ -63,11 +66,11 @@ class Filter {
     let queryBase = "SELECT * FROM dataset WHERE "
     let queryTail
     if(!!minRange && !!maxRange){
-      queryTail = "\"" + columnName + "\" > " + minRange + " AND \"" + columnName +  "\" < " + maxRange
+      queryTail = "\"" + columnName + "\" >= " + minRange + " AND \"" + columnName +  "\" <= " + maxRange
     }else if(!!minRange){
-      queryTail = "\"" + columnName + "\" > " + minRange
+      queryTail = "\"" + columnName + "\" >= " + minRange
     }else if(!!maxRange){
-      queryTail = "\"" + columnName +  "\" < " + maxRange
+      queryTail = "\"" + columnName +  "\" <= " + maxRange
     }
 
     filteredDataset.setDataframe(DataFrame.sql.request(queryBase + queryTail))

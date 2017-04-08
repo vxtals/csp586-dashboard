@@ -220,6 +220,7 @@ function resetFilters(){
     filter.setDataset(dataset)
     tableRenderer.refreshTable(filter.getDataset())
     updateRowCounter(filter.getDataset());
+    updateDoButtons()
 }
 
 function addColumnCheckers(dataset){
