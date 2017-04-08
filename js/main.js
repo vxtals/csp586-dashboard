@@ -25,6 +25,18 @@ window.onload = function() {
         document.getElementById('hideFilterBtn').hidden = true;
     };
 
+    document.getElementById("undoBtn").onclick = function(e) {
+        e.preventDefault();
+        filter.setPreviousDataset();
+        applyColumnFilter();
+    };
+
+    document.getElementById("redoBtn").onclick = function(e) {
+        e.preventDefault();
+        filter.setNextDataset();
+        applyColumnFilter();
+    };
+
     document.getElementById("applyColumnFilterBtn").onclick = function(e) {
         e.preventDefault();
         applyColumnFilter();
@@ -77,6 +89,9 @@ function addDataset(){
             if(!reload){
                 document.getElementById('showFilterBtn').hidden = false;
                 document.getElementById('resetFiltersBtn').hidden = false;
+                document.getElementById('undoBtn').hidden = false;
+                document.getElementById('redoBtn').hidden = false;
+                updateDoButtons()
                 reload = true;
             }
             resetFilters()
@@ -95,6 +110,7 @@ function applyColumnFilter(){
     let filteredByColumns = filter.filterByColumn(selectedColumns)
     tableRenderer.refreshTable(filteredByColumns)
     updateRowCounter(filter.getDataset())
+    updateDoButtons()
     setColumnSelectorValue(dataset)
     setColumnSelectorDate(dataset)
     setColumnSelectorRange(dataset);
@@ -317,4 +333,9 @@ function setColumnSelectorRange(dataset){
 function updateRowCounter(dataset){
     let rowCounter = document.getElementById("rowCounter");
     rowCounter.innerHTML = dataset.dataframe.toArray().length + " rows."
+}
+
+function updateDoButtons(){
+    document.getElementById('undoBtn').disabled = !filter.getUndoStatus();
+    document.getElementById('redoBtn').disabled = !filter.getRedoStatus();
 }

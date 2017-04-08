@@ -1,7 +1,10 @@
 'use strict';
 class Filter {
   constructor(dataset){
-    this.dataset = dataset
+    this.dataset = dataset;
+    this.datasetHistory = [];
+    this.datasetHistory.push(this.dataset) 
+    this.historyPointer = 0;
   }
 
   setDataset(dataset){
@@ -9,7 +12,7 @@ class Filter {
   }
 
   getDataset(){
-    return this.dataset
+    return this.dataset;
   }
 
   filterByColumn(selectedColumns){
@@ -34,6 +37,7 @@ class Filter {
     let filteredDataset = new Dataset()
     filteredDataset.setDataframe(this.dataset.dataframe.filter(row => row.get(columnName) == value))
     this.dataset = filteredDataset
+    this.addDatasetToHistory(this.dataset)
   }
 
   filterByQuery(query){
@@ -45,6 +49,7 @@ class Filter {
     // Request on Table
     filteredDataset.setDataframe(DataFrame.sql.request(query))
     this.dataset = filteredDataset
+    this.addDatasetToHistory(this.dataset)
   }
 
   filterByRangeOrDate(columnName, minRange, maxRange){
@@ -67,5 +72,38 @@ class Filter {
 
     filteredDataset.setDataframe(DataFrame.sql.request(queryBase + queryTail))
     this.dataset = filteredDataset
+    this.addDatasetToHistory(this.dataset)
+  }
+
+  addDatasetToHistory(dataset){
+    if(this.historyPointer < this.datasetHistory.length - 1){
+      this.datasetHistory.splice(this.historyPointer, this.datasetHistory.length - this.historyPointer);
+    }
+    if(this.historyPointer == 5){
+      this.datasetHistory.shift();
+      this.datasetHistory[this.historyPointer] = dataset;
+    }else{
+      this.datasetHistory[++this.historyPointer] = dataset;
+    }
+  }
+
+  setPreviousDataset(){
+    if(this.historyPointer > 0){
+      this.dataset = this.datasetHistory[--this.historyPointer]
+    }
+  }
+
+  setNextDataset(){
+    if(this.historyPointer < this.datasetHistory.length -1){
+      this.dataset = this.datasetHistory[++this.historyPointer]
+    }
+  }
+
+  getUndoStatus(){
+    return this.historyPointer > 0
+  }
+
+  getRedoStatus(){
+    return this.historyPointer < this.datasetHistory.length -1
   }
 }
