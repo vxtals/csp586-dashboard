@@ -1,18 +1,66 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Righteous');
+
+body{  
+    background: white;
+    font-family: 'Roboto', sans-serif;
+    margin-top: 85px;
+    overflow-y: scroll;
+}
+
+header{
+    font-family: 'Righteous', sans-serif;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    padding-left: 10px;
+    background-color: #035d53;
+    color: white;
+}
+
 h1{
-    color:darkgoldenrod;
+    /*color:darkgoldenrod;*/
+    color: white;
 }
 
-p{
+.visible-steps{
+    max-height: 200px;
+    transition: max-height 0.5s ease-in;
+}
+
+.hidden-steps{
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+}
+
+#newDatasetBtn{
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    letter-spacing: .5px;
+    border-radius: 0;
+    cursor: pointer;    
+    border-width: 0;
+    border-radius: 3px;
+    color: #fff;
+    background-color: #5cb85c;
+    height: 35px;
+    text-transform: uppercase;
+    transition: height 0.5s;
+    margin-bottom: 5px;
+}
+
+#newDatasetBtn.hidden-button{
+    height: 0;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.subtitle{
     font-size: 20px;
-}
-
-button{
-    background-color: darkgoldenrod;
-    color:antiquewhite;
-    outline-color: antiquewhite;
-    font-size: 15px;
-    height: 30px;
-    border-radius: 5px;
 }
 
 #datasetFile{
@@ -20,30 +68,217 @@ button{
 }
 
 #datasetFile::-webkit-file-upload-button {
-    color: darkgoldenrod;
-    border: 1px solid arkgoldenrod;
-    border-radius: 5px;
-    background: antiquewhite;
-    font-size: 15px;
-}
-
-table {
-    border: 1px solid black;
-    border-collapse: collapse;
+    font-family: 'Roboto', sans-serif;
     text-align: center;
+    letter-spacing: .5px;
+    border-radius: 0;
+    cursor: pointer;    
+    border-width: 0;
+    border-radius: 3px;
+    color: #fff;
+    background-color: #5cb85c;
+    height: 35px;
+    text-transform: uppercase;
 }
 
-table th {
-    border: 1px solid black;
+#addDatasetBtn{
+    height: 35px;
 }
 
-table td {
-    border: 1px solid black;
-    min-width: 100px;
+.project-step{
+    display: inline-block;
+    border: 1px solid;
+    height: 40px;
+    width: 40px;
+    border-radius: 40px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+.project-step>span{
+    font-family: 'Righteous', sans-serif;
+    font-size: 33px;
+}
+
+.convert-file, .upFile{
+    display: inline;
+    margin-right: 20px;
 }
 
 #parentHolder {
-    overflow:scroll;
-    height:500px;
     width:100%;
+    box-shadow: 0 0px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    margin-bottom: 5px;
+}
+
+table {
+    border-collapse: collapse;
+    text-align: center;
+    width: 100%;
+    background-color: #bdbdbd; 
+}
+
+table th {
+    border-left: 1px solid #a09d9d;
+    height: 40px;
+    background-color: #bdbdbd;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+table th:first-child {
+    border-left: none;
+
+}
+
+table td {
+    border: 1px solid #bdbdbd;
+    min-width: 100px;
+    height: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+tbody {
+    display:block;
+    height:460px;
+    overflow-y:scroll;
+    overflow-x: hidden;
+}
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;/* even columns width , fix width of table too*/
+}
+
+thead {
+    width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+}
+
+tbody tr:nth-child(odd) {
+    background-color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f7f7f7;
+}
+
+.filtersControls > button{
+    height: 17px;
+}
+
+#rowCounter{
+    margin-left: 15px;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.filterInstruction{
+    font-size: 17px;
+}
+
+#filterContainer{
+    overflow-y: hidden;
+    margin-top: 10px;
+    background-color: white;
+    width: 99%;
+}
+
+.hidden-filters{
+    max-height: 0;
+    padding: 0 5px 0px 5px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    transition: max-height 1s ease-out, padding 1s, box-shadow 1s;
+}
+
+.visible-filters{
+    max-height: 800px;
+    padding: 5px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    transition: max-height 1s ease-in;
+}
+
+.project-btn{
+    margin-top: 5px;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    letter-spacing: .5px;
+    border-radius: 0;
+    cursor: pointer;    
+    border-width: 0;
+    border-radius: 3px;
+}
+
+#doBtns{
+    float: right;
+}
+
+#doBtns button:disabled{
+    background-color: #9ab7b4;
+    cursor: not-allowed;
+}
+
+.display-filter-btn{
+    color: #fff;
+    background-color: #00897B;
+    width: 140px;
+}
+
+.display-filter-btn:hover{
+    background-color: #035d53;
+}
+
+.reset-filter-btn{
+    color: #fff;
+    background-color: rgba(224, 96, 38, 0.92);
+    width: 140px;
+}
+
+.reset-filter-btn:hover{
+    background-color: rgba(173, 73, 28, 0.92);
+}
+
+#columnsCheckers{
+    display: inline;
+}
+
+.apply-filter-btn{
+    color: #00897B;
+    background-color: #fff;
+    border-color: #00897B;
+    border-radius: 3px;
+    border: 2px solid;
+    height: 27px;
+}
+
+.apply-filter-btn:hover{
+    background-color: #00897B;
+    color: #fff;
+    border-color: #00897B;
+}
+
+.input-field{
+    height: 25px;
+}
+
+#queryInput{
+    vertical-align: bottom;
+}
+
+.err-msg{
+    color: red;
+    font-weight: bold;
+    margin-left: 10px;
+    vertical-align: bottom;
+    display: inline-block;
+}
+
+.error-textarea{
+    border-color: red;
+    box-shadow: 0px 0px 3px red;
+}
+
+.checker-name{
+    margin-right: 10px;
 }

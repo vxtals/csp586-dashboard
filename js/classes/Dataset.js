@@ -1,17 +1,14 @@
 class Dataset {
-  constructor(json) {
-    this.columns = this.parseColumns(json.meta.view.columns);
-    this.rows = this.parseRows(json.data);
-  }
 
-  parseColumns(columnsArray){
-    const columns = [];
-    for (let i = 0; i < columnsArray.length; i++) {
-      const column = columnsArray[i];
-      if(column.id >= 0){
-        column.dataPosition = i;
-        columns.push(column);
-      }
+  constructor(json) {
+    if(!!json){
+      this.columns = this.parseColumns(json.meta.view.columns);
+      this.rows = this.parseRows(json.data);
+      this.dataframe = new DataFrame(this.rows, this.columns.map(
+        function(col){
+          return col.name
+        }
+      ))
     }
 
     // Sort columns by position
@@ -20,25 +17,27 @@ class Dataset {
     });
 
     /*for(let i = 0; i < columns.length; i++){
-      alert(columns[i].name);
-    }*/
+    alert(columns[i].name);
+  }*/
 
-    return columns;
-  }
+  return columns;
+}
 
-  parseRows(rowsArray){
-    const rows = [];
+parseRows(rowsArray){
+  const rows = [];
 
-    for(let i = 0; i < rowsArray.length; i++){
-      const currentRow = rowsArray[i];
-      const row = [];
-      for(let j = 0; j < this.columns.length; j++){
-        row.push(currentRow[this.columns[j].dataPosition]);
-      }
-      rows.push(row);
+  for(let i = 0; i < rowsArray.length; i++){
+    const currentRow = rowsArray[i];
+    const row = [];
+    for(let j = 0; j < this.columns.length; j++){
+      row.push(currentRow[this.columns[j].dataPosition]);
     }
-
-    return rows;
+    rows.push(row);
   }
 
+  setDataframe(dataframe){
+    this.dataframe = dataframe;
+    this.columns = dataframe.listColumns()
+    this.rows = dataframe.toArray()
+  }
 }

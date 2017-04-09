@@ -7,8 +7,17 @@ class TableRenderer{
 	}
 
 	renderTable(){
-		this.table = document.createElement("table");
-		this.table.setAttribute("id", "scrollTable");
+
+		let tableNode = document.getElementById("scrollTable")
+		if(!!tableNode){
+			while (tableNode.firstChild) {
+			    tableNode.removeChild(tableNode.firstChild);
+			}
+			this.table = tableNode
+		}else{
+			this.table = document.createElement("table");
+			this.table.setAttribute("id", "scrollTable");
+		}
 
 		this.appendHeader();
 		this.appendChilds(50);
@@ -25,21 +34,37 @@ class TableRenderer{
 	}
 
 	appendHeader(){
+		const thead =  document.createElement("thead");
 		const header = document.createElement("tr");
-		const columns = this.dataset.columns;
+		const columns = this.dataset.dataframe.listColumns();
 		this.body = document.createElement
 		for(let i = 0; i < columns.length; i++){
 			const column = columns[i];
 			const th = document.createElement("th");
-			th.innerHTML = column.name;
+			th.innerHTML = column;
 			header.appendChild(th);
 
 		}
-		this.table.appendChild(header);
+		thead.appendChild(header);
+		this.table.appendChild(thead);
 	}
 
 	appendChilds(number){
-		const rows = this.dataset.rows;
+		let tbody
+		if(this.table.getElementsByTagName("tbody").length < 1){
+			const tableRenderer = this;
+			tbody = document.createElement("tbody")
+			tbody.onscroll = function(){
+				const maxScrollTop = tbody.scrollHeight - tbody.clientHeight;
+				if(maxScrollTop == Math.floor(tbody.scrollTop)){
+					tableRenderer.appendChilds(50);
+				}
+			};
+			this.table.appendChild(tbody)
+		}else{
+			tbody = this.table.getElementsByTagName("tbody")[0]
+		}
+		const rows = this.dataset.dataframe.toArray();
 		if(rows.length - this.nextRowToRender < number){
 			number = rows.length - this.nextRowToRender;
 		}
@@ -52,11 +77,27 @@ class TableRenderer{
 				td.innerHTML = row[j];
 				tableRow.appendChild(td);
 			}
-			this.table.appendChild(tableRow);
+			tbody.appendChild(tableRow);
 			lastRowRendered = i;
 		}
 		this.nextRowToRender = lastRowRendered+1;
 		this.parent.appendChild(this.table);
+	}
+
+	cleanTable(){
+		this.table.innerHTML = ""
+	}
+
+	refreshTable(dataset){
+		this.cleanTable();
+		if(!!dataset){
+			this.dataset = dataset;
+			this.dataset.dataframe = dataset.dataframe;
+		}
+		this.nextRowToRender = 0;
+		this.appendHeader();
+		this.appendChilds(50);
+
 	}
 
 

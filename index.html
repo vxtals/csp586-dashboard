@@ -3,33 +3,99 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="js/classes/Dataset.js"></script>
     <script src="js/classes/TableRenderer.js"></script>
+
     <script src="js/classes/charts/Chart.js"></script>
     <script src="js/classes/charts/ObjectChart.js"></script>
     <script src="js/classes/charts/BaseChart.js"></script>
     <script src="js/classes/charts/ConfiguredChart.js"></script>
     <script src="js/classes/charts/BarChart.js"></script>
     <script src="js/classes/charts/LineChart.js"></script>
-  </head>
 
-  <body>
-    <center>
-      <h1>DataSet Dashboard</h1>
-      <p>Please choose a Json file to convert into a Table</p>
-      <form>
-        <div class="upFile">
-          <input type="file" id="datasetFile" accept=".json">
+    <script src="js/classes/Filter.js"></script>
+    <script src="js/libraries/dataframe.js"></script>
+</head>
+<body>
+    <header>
+        <h1>DataSet Dashboard</h1>
+    </header>
+    <button id="newDatasetBtn" class="hidden-button">New dataset</button>
+    <div id="startSteps" class="visible-steps">
+        <p class="subtitle">Follow steps to convert a Json file to convert into a Table</p>
+        <form>
+            <div class="upFile">
+                <div class="project-step">
+                    <span>1</span>
+                </div>
+                <input type="file" id="datasetFile" accept=".json">
+            </div>
+            <div class="convert-file">
+                <div class="project-step">
+                    <span>2</span>
+                </div>
+                <button id="addDatasetBtn" class="project-btn apply-filter-btn">Click to convert</button>
+            </div>
+        </form>
+    </div>
+    <div id="parentHolder"></div>
+    <div class="filtersControls">
+        <button id="showFilterBtn" class="project-btn display-filter-btn" hidden>SHOW FILTERS</button>
+        <button id="hideFilterBtn" class="project-btn display-filter-btn" hidden>HIDE FILTERS</button>
+        <button id="resetFiltersBtn" class="project-btn reset-filter-btn" hidden>RESET</button>
+        <span id="rowCounter"></span>
+        <span id="doBtns">
+            <button id="undoBtn" class="project-btn display-filter-btn" hidden>UNDO</button>
+            <button id="redoBtn" class="project-btn display-filter-btn" hidden>REDO</button>
+        </span>
+    </div>
+    <div id="filterContainer" class="hidden-filters">
+        <div class="columnFilter">
+            <p class="filterInstruction">Select columns to show:</p>
+            <form id="columnsCheckers">
+            </form>
+            <button id="applyColumnFilterBtn" class="project-btn apply-filter-btn">Apply</button>
         </div>
-        <br>
-        <div>
-          <button id="addDatasetBtn">Click to convert</button>
+        <div class="parameterFilter">
+            <p class="filterInstruction">Filter rows by parameter:</p>
+            <select id="columnSelector" class="input-field"></select>
+            <input id="parameterValue" class="input-field" type='text' placeholder="value">
+            <button id="applyRowByParameterBtn" class="project-btn apply-filter-btn">Apply</button>
+            <span id="errMsgParameter" class="err-msg"></span>
         </div>
-      </form>
-      <div id="parentHolder"></div>
-    </center>
+        <div class="queryFilter">
+            <p class="filterInstruction">Filter with a SQL-like query. Use 'dataset' as table name: </p>
+            <textarea id="queryInput" rows="4" cols="50" placeholder="SQL Query"></textarea>
+            <button id="applyQueryBtn" class="project-btn apply-filter-btn">Apply</button>
+            <span id="errMsgQuery" class="err-msg"></span>
+        </div>
+        <div class="dateFilter">
+            <p class="filterInstruction">Filter by date range:</p>
+            <select id="columnSelectorDate" class="input-field" ></select>
+            <span>Start:</span>
+            <input id="startDate" type="date" class="input-field" >
+            <span>End:</span>
+            <input id="endDate" type="date" class="input-field" >
+            <button id="applyDateBtn" class="project-btn apply-filter-btn">Apply</button>
+            <span id="errMsgDate" class="err-msg"></span>
+        </div>
+        <div class="rangeFilter">
+            <p class="filterInstruction">Filter by value range:</p>
+            <select id="columnSelectorRange" class="input-field" ></select>
+            <span>Min:</span>
+            <input id="minRange" type="text" class="input-field" >
+            <span>Max:</span>
+            <input id="maxRange" type="text" class="input-field" >
+            <button id="applyRangeBtn" class="project-btn apply-filter-btn">Apply</button>
+            <span id="errMsgRange" class="err-msg"></span>
+        </div>
+    </div>
+
+
+    <!--
     <button id="barChart">Bar Chart</button>
-    <button id="lineChart">Line Chart</button>
+    <button id="lineChart">Line Chart</button>-->
     <canvas id="myChart" width="400" height="400"></canvas>
-  </body>
+
+</body>
 
   <script src="js/main.js"></script>
   <script>
