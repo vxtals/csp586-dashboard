@@ -8,6 +8,34 @@ body{
     overflow-y: scroll;
 }
 
+#loadingGlass{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: grey;
+    opacity: 0.2;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: grey;
+    opacity: 0.2;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+#loadingGlass>span{
+    z-index: 13;
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    font-size: 42px;
+    font-weight: bold;
+    color: black;
+    opacity: 1;
+    transform: translateX(-50%);
+}
+
 header{
     font-family: 'Righteous', sans-serif;
     position: fixed;
@@ -25,7 +53,7 @@ h1{
 }
 
 .visible-steps{
-    max-height: 200px;
+    max-height: 1200px;
     transition: max-height 0.5s ease-in;
 }
 
@@ -281,4 +309,45 @@ tbody tr:nth-child(even) {
 
 .checker-name{
     margin-right: 10px;
+}
+
+.preselected_datasets{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.dataset_card{
+    position: relative;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    width: 170px;
+    height: 140px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    display: inline-block;
+    text-align: center;
+    padding-top: 10px;
+    border-radius: 25px;
+}
+
+.dataset_card:hover{
+    cursor: pointer;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    background-color: #66afa7;
+    font-weight: bold;
+}
+
+.dataset_card:hover > i{
+    color: white;
+}
+
+.dataset_card > p{
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 2px;
+}
+
+.fa-wifi{
+    transform: rotate(90deg);
 }

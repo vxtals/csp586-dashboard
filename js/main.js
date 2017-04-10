@@ -6,7 +6,8 @@ window.onload = function() {
 
 	document.getElementById("addDatasetBtn").onclick = function(e) {
 		e.preventDefault();
-		addDataset();
+		let file = document.getElementById('datasetFile').files[0];
+		addLocalDataset(file);
 	};
 /*
 	document.getElementById("barChart").onclick = function(e) {
@@ -48,6 +49,35 @@ window.onload = function() {
 	};
 	*/
 
+	document.getElementById("trainDatasetCard").onclick = function(e) {
+		e.preventDefault();
+		addRemoteDataset("https://data.cityofchicago.org/api/views/5neh-572f/rows.json?accessType=DOWNLOAD", 134200813);
+		//addDataset(file);
+	};
+
+	document.getElementById("towedVehiclesDataset").onclick = function(e) {
+		e.preventDefault();
+		addRemoteDataset("https://data.cityofchicago.org/api/views/ygr5-vcbg/rows.json?accessType=DOWNLOAD", 1466435);
+		//addDataset(file);
+	};
+
+	document.getElementById("busDatasetCard").onclick = function(e) {
+		e.preventDefault();
+		addRemoteDataset("https://data.cityofchicago.org/api/views/jyb9-n7fm/rows.json?accessType=DOWNLOAD");
+		//addDataset(file);
+	};
+
+	document.getElementById("speedCameraDataset").onclick = function(e) {
+		e.preventDefault();
+		addRemoteDataset("https://data.cityofchicago.org/api/views/hhkd-xvj4/rows.json?accessType=DOWNLOAD");
+		//addDataset(file);
+	};
+
+	document.getElementById("redLightsDataset").onclick = function(e) {
+		e.preventDefault();
+		addRemoteDataset("https://data.cityofchicago.org/api/views/spqx-js37/rows.json?accessType=DOWNLOAD");
+		//addDataset(file);
+	};
 
 	document.getElementById("showFilterBtn").onclick = function(e) {
 		e.preventDefault();
@@ -120,32 +150,66 @@ window.onload = function() {
 
 }
 
-function addDataset(){
-	const file = document.getElementById('datasetFile').files[0];
+function processJson(rawJson){
+	let json = JSON.parse(rawJson);
+	dataset = new Dataset(json);
+	filter = new Filter(dataset)
+	tableRenderer = new TableRenderer(parent, filter.getDataset());
+	tableRenderer.renderTable()
+	if(!reload){
+		document.getElementById('showFilterBtn').hidden = false;
+		document.getElementById('resetFiltersBtn').hidden = false;
+		document.getElementById('undoBtn').hidden = false;
+		document.getElementById('redoBtn').hidden = false;
+		updateDoButtons()
+		reload = true;
+	}
+	resetFilters()
+	addColumnCheckers(dataset);
+	setColumnSelectorValue(dataset);
+	setColumnSelectorDate(dataset);
+	setColumnSelectorRange(dataset);
+	document.getElementById("startSteps").className = "hidden-steps";
+	document.getElementById("newDatasetBtn").className = "";
+	document.getElementById("loadingGlass").hidden = true;
+	document.getElementById("loadingGlassMsg").innerHTML = "";
+
+}
+
+function addRemoteDataset(url, estimatedSize)
+{
+		let loadingGlass = document.getElementById("loadingGlass");
+		let loadingGlassMsg = document.getElementById("loadingGlassMsg");
+		loadingGlass.hidden = false;
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onprogress = function(evt) {
+    	if(!!estimatedSize){
+				var percentComplete = (evt.loaded / estimatedSize)*100;
+				loadingGlassMsg.innerHTML = "Downloading dataset " + Math.trunc(percentComplete) + " %";
+    	}
+    }
+    xmlHttp.onreadystatechange = function() { 
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+					loadingGlassMsg.innerHTML = "Converting JSON ...";
+					setTimeout(function() {
+						processJson(xmlHttp.responseText)
+					}, 100);
+        }
+    }
+    xmlHttp.open("GET", url, true); // true for asynchronous 
+    xmlHttp.send(null);
+}
+
+function addLocalDataset(file){
 	if (file) {
 		const reader = new FileReader();
 		reader.readAsText(file);
 		reader.onload = function(e) {
-			json = JSON.parse(e.target.result);
-			dataset = new Dataset(json);
-			filter = new Filter(dataset)
-			tableRenderer = new TableRenderer(parent, filter.getDataset());
-			tableRenderer.renderTable()
-			if(!reload){
-				document.getElementById('showFilterBtn').hidden = false;
-				document.getElementById('resetFiltersBtn').hidden = false;
-				document.getElementById('undoBtn').hidden = false;
-				document.getElementById('redoBtn').hidden = false;
-				updateDoButtons()
-				reload = true;
-			}
-			resetFilters()
-			addColumnCheckers(dataset);
-			setColumnSelectorValue(dataset);
-			setColumnSelectorDate(dataset);
-			setColumnSelectorRange(dataset);
-			document.getElementById("startSteps").className = "hidden-steps";
-			document.getElementById("newDatasetBtn").className = "";
+			document.getElementById("loadingGlass").hidden = false;
+			document.getElementById("loadingGlassMsg").innerHTML = "Converting JSON ...";
+			setTimeout(function() {
+				processJson(e.target.result)
+			}, 100);
 		}
 	}else{
 		alert("You must to select a file!");
@@ -387,3 +451,6 @@ function updateDoButtons(){
 	document.getElementById('undoBtn').disabled = !filter.getUndoStatus();
 	document.getElementById('redoBtn').disabled = !filter.getRedoStatus();
 }
+
+
+

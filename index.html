@@ -1,5 +1,6 @@
 <html>
   <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="js/classes/Dataset.js"></script>
     <script src="js/classes/TableRenderer.js"></script>
@@ -18,9 +19,12 @@
     <header>
         <h1>DataSet Dashboard</h1>
     </header>
+    <div id="loadingGlass" hidden>
+        <span id="loadingGlassMsg"></span>
+    </div>
     <button id="newDatasetBtn" class="hidden-button">New dataset</button>
     <div id="startSteps" class="visible-steps">
-        <p class="subtitle">Follow steps to convert a Json file to convert into a Table</p>
+        <p class="subtitle">Follow steps to convert a Json file to convert into a Table:</p>
         <form>
             <div class="upFile">
                 <div class="project-step">
@@ -35,6 +39,45 @@
                 <button id="addDatasetBtn" class="project-btn apply-filter-btn">Click to convert</button>
             </div>
         </form>
+        <p class="subtitle">Or choose one of our preselected datasets:</p>
+        <div class="preselected_datasets">
+            <div id="trainDatasetCard" class="dataset_card">
+                <i class="fa fa-train  fa-5x"></i>
+                <p>CTA 'L' Station Daily Entries</p>
+            </div>
+            <div id="towedVehiclesDataset" class="dataset_card">
+                <i class="fa fa-wrench  fa-5x"></i>
+                <div>
+                    <p>Towed Vehicles</p>
+                </div>
+            </div>
+            <div id="busDatasetCard" class="dataset_card">
+                <i class="fa fa-bus  fa-5x"></i>
+                <p>CTA Bus Routes Daily Use</p>
+            </div>
+            <div id="speedCameraDataset" class="dataset_card">
+                <i class="fa fa-wifi  fa-4x"></i>
+                <i class="fa fa-car  fa-3x"></i>
+                <p>Speed Camera Violations</p>
+            </div>
+            <div id="redLightsDataset" class="dataset_card">
+                <i class="fa fa-map-pin  fa-4x"></i>
+                <i class="fa fa-car  fa-3x"></i>
+                <p>Red Light Camera Violations</p>
+            </div>
+<!--             <div id="taxyDatasetCard" class="dataset_card">
+                <i class="fa fa-taxi  fa-5x"></i>
+                <div>
+                    <p>Taxi Trips</p>
+                </div>
+            </div>
+            <div id="divvyDatasetCard" class="dataset_card">
+                <i class="fa fa-bicycle  fa-5x"></i>
+                <div>
+                    <p>Divvy Trips</p>
+                </div>
+            </div> -->
+        </div>
     </div>
     <div id="parentHolder"></div>
     <div class="filtersControls">
