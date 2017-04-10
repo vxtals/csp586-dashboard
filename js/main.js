@@ -134,6 +134,7 @@ window.onload = function() {
 		applyRangeFilter()
 	};
 
+
 }
 
 function addDataset(){
@@ -403,4 +404,10 @@ function updateRowCounter(dataset){
 function updateDoButtons(){
 	document.getElementById('undoBtn').disabled = !filter.getUndoStatus();
 	document.getElementById('redoBtn').disabled = !filter.getRedoStatus();
+}
+
+function showHideChart(checkbox, chartId) {
+    var isChecked = checkbox.checked;
+    var showHide = isChecked ?"":"none";
+    document.getElementById(chartId).style.display = showHide;
 }

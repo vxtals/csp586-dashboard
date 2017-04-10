@@ -93,24 +93,22 @@
 
     <div id="chartContainer" class="hidden-charts">
         <div class="columnFilter">
-            <p class="chartInstruction">Select graphs to show:</p>
+          <p class="chartInstruction">Select graphs to show:</p>
+            <input type="checkbox" id="checkBar" onchange="showHideChart(this, 'myDivBarChart');">Bar Chart</input>
             <form id="">
             </form>
-            <button id="" class="project-btn apply-chart-btn">Apply</button>
+            <input type="checkbox" id="checkLine" onchange="showHideChart(this, 'myDivLineChart');">Line Chart</input>
+            <form id="">
+            </form>
         </div>
-    </div>
-
-
-    <!--
-    <button id="barChart">Bar Chart</button>
-    <button id="lineChart">Line Chart</button>-->
-    <div class="container">
-      <div class="chart-container">
-          <canvas id="myBarChart"></canvas>
-      </div>
-      <div class="chart-container">
-          <canvas id="myLineChart"></canvas>
-      </div>
+        <div class="container">
+          <div class="chart-container" id="myDivBarChart" style="display: none;">
+              <canvas id="myBarChart"></canvas>
+          </div>
+          <div class="chart-container" id="myDivLineChart" style="display: none;">
+              <canvas id="myLineChart"></canvas>
+          </div>
+        </div>
     </div>
 
 
@@ -134,7 +132,7 @@
     );
     myBarChart.addValue('Violet', 9, 'rgba(255, 0, 64, 1)');
     myBarChart.displayChart(ctxBar);
-    myBarChart.setLabel('Mon CHAR');
+    myBarChart.setLabel('BAR CHAR');
 
     let ctxLine = document.getElementById("myLineChart").getContext("2d");
     let myLineChart = new LineChart(ctxLine);
@@ -144,6 +142,6 @@
     );
     myLineChart.addValue('Violet', 9);
     myLineChart.displayChart(ctxLine);
-    myLineChart.setLabel('Mon CHAR');
+    myLineChart.setLabel('LINE CHAR');
   </script>
 </html>
