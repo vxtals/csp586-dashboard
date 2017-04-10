@@ -85,7 +85,7 @@
             <span>Min:</span>
             <input id="minRange" type="text" class="input-field" >
             <span>Max:</span>
-            <input id="maxRange" type="text" class="input-field" >
+            <input id="maxRange" type="text" ≈ >
             <button id="applyRangeBtn" class="project-btn apply-filter-btn">Apply</button>
             <span id="errMsgRange" class="err-msg"></span>
         </div>
@@ -95,11 +95,9 @@
         <div class="columnFilter">
           <p class="chartInstruction">Select graphs to show:</p>
             <input type="checkbox" id="checkBar" onchange="showHideChart(this, 'myDivBarChart');">Bar Chart</input>
-            <form id="">
-            </form>
+            <select id="columnSelectorBar" class="input-field block"></select>
             <input type="checkbox" id="checkLine" onchange="showHideChart(this, 'myDivLineChart');">Line Chart</input>
-            <form id="">
-            </form>
+            <select id="columnSelectorLine" class="input-field block"></select>
         </div>
         <div class="container">
           <div class="chart-container" id="myDivBarChart" style="display: none;">

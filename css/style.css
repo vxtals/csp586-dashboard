@@ -323,3 +323,8 @@ canvas {
     flex-wrap: wrap;
     justify-content: center;
 }
+
+.block {
+    display: block;
+    margin: 20px;
+}

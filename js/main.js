@@ -162,6 +162,8 @@ function addDataset(){
 			setColumnSelectorValue(dataset);
 			setColumnSelectorDate(dataset);
 			setColumnSelectorRange(dataset);
+			setColumnSelectorBarChart(dataset);
+			setColumnSelectorLineChart(dataset);
 			document.getElementById("startSteps").className = "hidden-steps";
 			document.getElementById("newDatasetBtn").className = "";
 		}
@@ -179,6 +181,8 @@ function applyColumnFilter(){
 	setColumnSelectorValue(dataset)
 	setColumnSelectorDate(dataset)
 	setColumnSelectorRange(dataset);
+	setColumnSelectorBarChart(dataset);
+	setColumnSelectorLineChart(dataset);
 }
 
 function applyRowByParameter(){
@@ -395,6 +399,59 @@ function setColumnSelectorRange(dataset){
 
 	columnSelectorRange.insertBefore(emptyselector, columnSelectorRange.firstChild);
 }
+
+function setColumnSelectorBarChart(dataset){
+	let columnsCheckers = document.getElementById("columnsCheckers");
+	let columnSelectorBar = document.getElementById("columnSelectorBar");
+	let colCheckboxes = columnsCheckers.getElementsByTagName('input');
+
+	columnSelectorBar.innerHTML = ""
+	let columnNames = dataset.dataframe.listColumns()
+	for(let index = columnNames.length - 1; index > -1; index--){
+		const selector = document.createElement("option")
+		selector.setAttribute("value", columnNames[index])
+		selector.innerHTML = columnNames[index]
+		if(!colCheckboxes[index].checked){
+			selector.disabled = true
+		}
+		columnSelectorBar.insertBefore(selector, columnSelectorBar.firstChild);
+	}
+
+	const emptyselector = document.createElement("option")
+	emptyselector.innerHTML = "Select column"
+	emptyselector.selected = true
+	emptyselector.disabled = true
+	emptyselector.setAttribute("value", null)
+
+	columnSelectorBar.insertBefore(emptyselector, columnSelectorBar.firstChild);
+}
+
+function setColumnSelectorLineChart(dataset){
+	let columnsCheckers = document.getElementById("columnsCheckers");
+	let columnSelectorLine = document.getElementById("columnSelectorLine");
+	let colCheckboxes = columnsCheckers.getElementsByTagName('input');
+
+	columnSelectorLine.innerHTML = ""
+	let columnNames = dataset.dataframe.listColumns()
+	for(let index = columnNames.length - 1; index > -1; index--){
+		const selector = document.createElement("option")
+		selector.setAttribute("value", columnNames[index])
+		selector.innerHTML = columnNames[index]
+		if(!colCheckboxes[index].checked){
+			selector.disabled = true
+		}
+		columnSelectorLine.insertBefore(selector, columnSelectorLine.firstChild);
+	}
+
+	const emptyselector = document.createElement("option")
+	emptyselector.innerHTML = "Select column"
+	emptyselector.selected = true
+	emptyselector.disabled = true
+	emptyselector.setAttribute("value", null)
+
+	columnSelectorLine.insertBefore(emptyselector, columnSelectorLine.firstChild);
+}
+
 
 function updateRowCounter(dataset){
 	let rowCounter = document.getElementById("rowCounter");
