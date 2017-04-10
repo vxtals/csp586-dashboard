@@ -240,7 +240,8 @@ function applyRowByParameter(){
 	}else if(!parameterValue.value){
 		errMsgParameter.innerHTML = "You must enter a value";
 	}else{
-		filter.filterByParameter(selectedColumn, parameterValue.value)
+		let exactMatch = document.getElementById("exactMatchValue").checked
+		filter.filterByParameter(selectedColumn, parameterValue.value, exactMatch)
 		parameterValue.value = null;
 		applyColumnFilter();
 	}

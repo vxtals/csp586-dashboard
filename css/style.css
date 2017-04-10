@@ -45,6 +45,7 @@ header{
     padding-left: 10px;
     background-color: #035d53;
     color: white;
+    z-index: 5;
 }
 
 h1{
@@ -278,6 +279,7 @@ tbody tr:nth-child(even) {
     border-radius: 3px;
     border: 2px solid;
     height: 27px;
+    margin-left: 20px;
 }
 
 .apply-filter-btn:hover{

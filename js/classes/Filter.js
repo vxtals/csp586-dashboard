@@ -31,17 +31,22 @@ class Filter {
 
   }
 
-  filterByParameter(columnName, value){
+  filterByParameter(columnName, value, exactMatch){
     if(!columnName){
       throw "columnName is not defined"
     }else if(!value){
       throw "value is not defined"
     }
     let filteredDataset = new Dataset()
-    filteredDataset.setDataframe(this.dataset.dataframe.filter(row => row.get(columnName) == value))
+    if(exactMatch){
+      filteredDataset.setDataframe(this.dataset.dataframe.filter(row => row.get(columnName) == value))
+    }else{
+      filteredDataset.setDataframe(this.dataset.dataframe.filter(row => !!row.get(columnName) && row.get(columnName).indexOf(value) >= 0))
+    }
     this.dataset = filteredDataset
     this.addDatasetToHistory(this.dataset)
   }
+
 
   filterByQuery(query){
     if(!query){
