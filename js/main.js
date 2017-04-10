@@ -65,6 +65,22 @@ window.onload = function() {
 		document.getElementById('hideFilterBtn').hidden = true;
 	};
 
+	document.getElementById("showChartBtn").onclick = function(e) {
+		e.preventDefault();
+		let chartContainer = document.getElementById("chartContainer");
+		chartContainer.className = 'visible-charts';
+		document.getElementById('showChartBtn').hidden = true;
+		document.getElementById('hideChartBtn').hidden = false;
+	};
+
+	document.getElementById("hideChartBtn").onclick = function(e) {
+		e.preventDefault();
+		let chartContainer = document.getElementById("chartContainer");
+		chartContainer.className = 'hidden-charts';
+		document.getElementById('showChartBtn').hidden = false;
+		document.getElementById('hideChartBtn').hidden = true;
+	};
+
 	document.getElementById("newDatasetBtn").onclick = function(e) {
 		e.preventDefault();
 		document.getElementById("newDatasetBtn").className="hidden-button"
@@ -133,6 +149,7 @@ function addDataset(){
 			tableRenderer.renderTable()
 			if(!reload){
 				document.getElementById('showFilterBtn').hidden = false;
+				document.getElementById('showChartBtn').hidden = false;
 				document.getElementById('resetFiltersBtn').hidden = false;
 				document.getElementById('undoBtn').hidden = false;
 				document.getElementById('redoBtn').hidden = false;
