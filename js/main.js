@@ -4,50 +4,39 @@ const parent = document.getElementById('parentHolder');
 
 window.onload = function() {
 
-	document.getElementById("addDatasetBtn").onclick = function(e) {
-		e.preventDefault();
-		addDataset();
-	};
-/*
-	document.getElementById("barChart").onclick = function(e) {
-		e.preventDefault();
-		ctx = null;
-		myChart = null;
-		ctx = document.getElementById("myChart");
-		myChart = new BarChart(ctx);
-		myChart.addValues(
-			['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-			[12, 19, 3, 5, 2, 3],
-			[
+	let ctxBar = document.getElementById("myBarChart").getContext("2d");
+	let myBarChart = new BarChart(ctxBar);
+	myBarChart.addValues(
+		['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+		[12, 19, 3, 5, 2, 3],
+		[
 				'rgba(255, 99, 132, 1)',
 				'rgba(54, 162, 235, 1)',
 				'rgba(255, 206, 86, 1)',
 				'rgba(75, 192, 192, 1)',
 				'rgba(153, 102, 255, 1)',
 				'rgba(255, 159, 64, 1)'
-			]
-		);
-		myChart.addValue('Violet', 9, 'rgba(255, 0, 64, 1)');
-		myChart.displayChart(ctx);
-		myChart.setLabel('Mon CHAR');
-	};
+		]
+	);
+	myBarChart.addValue('Violet', 9, 'rgba(255, 0, 64, 1)');
+	myBarChart.setLabel('BAR CHAR');
+	myBarChart.displayChart(ctxBar);
 
-	document.getElementById("lineChart").onclick = function(e) {
+	let ctxLine = document.getElementById("myLineChart").getContext("2d");
+	let myLineChart = new LineChart(ctxLine);
+	myLineChart.addValues(
+		['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+		[12, 19, 3, 5, 2, 3]
+	);
+	myLineChart.addValue('Violet', 9);
+	myLineChart.setLabel('LINE CHAR');
+
+	myLineChart.displayChart(ctxLine);
+
+	document.getElementById("addDatasetBtn").onclick = function(e) {
 		e.preventDefault();
-		ctx = null;
-		myChart = null;
-		ctx = document.getElementById("myChart");
-		myChart = new LineChart(ctx);
-		myChart.addValues(
-			['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-			[12, 19, 3, 5, 2, 3]
-		);
-		myChart.addValue('Violet', 9);
-		myChart.displayChart(ctx);
-		myChart.setLabel('Mon CHAR');
+		addDataset();
 	};
-	*/
-
 
 	document.getElementById("showFilterBtn").onclick = function(e) {
 		e.preventDefault();
@@ -177,6 +166,7 @@ function applyColumnFilter(){
 	let filteredByColumns = filter.filterByColumn(selectedColumns)
 	tableRenderer.refreshTable(filteredByColumns)
 	updateRowCounter(filter.getDataset())
+	// TODO: UPDATE HERE
 	updateDoButtons()
 	setColumnSelectorValue(dataset)
 	setColumnSelectorDate(dataset)
