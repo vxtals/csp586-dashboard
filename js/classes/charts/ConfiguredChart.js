@@ -7,6 +7,7 @@ class ConfiguredChart extends BaseChart {
     this.chartColors = [];
   }
 
+  /*
   addValue(label, data, color = "") {
     this.chartLabels.push(label);
     this.chartDatas.push(data);
@@ -28,4 +29,5 @@ class ConfiguredChart extends BaseChart {
       });
     }
   }
+  */
 }

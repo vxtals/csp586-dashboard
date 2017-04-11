@@ -1,7 +1,20 @@
-// Represent each Bar or the Bar Chart
+// Represent each Bar in the Bar Chart
 class Bar {
-  constructor(label, data) {
+  constructor(label, data, color) {
     this.label = label;
     this.data = data;
+    this.color = color;
+  }
+
+  getLabel() {
+    return this.label
+  }
+
+  getData() {
+    return this.data
+  }
+
+  getColor() {
+    return this.color
   }
 }

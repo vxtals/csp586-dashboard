@@ -5,4 +5,18 @@ class BarChart extends ConfiguredChart {
     this.ctx = ctx
     this.type = 'bar';
   }
+
+  addBar(bar) {
+    this.chartLabels.push(bar.label);
+    this.chartDatas.push(bar.data);
+    this.chartColors.push(bar.color);
+  }
+
+  addBars(bars) {
+    bars.map((bar) => {
+      this.chartLabels.push(bar.label);
+      this.chartDatas.push(bar.data);
+      this.chartColors.push(bar.color);
+    });
+  }
 }
