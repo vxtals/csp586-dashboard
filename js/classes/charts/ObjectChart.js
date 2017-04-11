@@ -1,8 +1,12 @@
 // Upper Object that call Chart.js
 class ObjectChart {
+
   displayChart() {
     // TODO : Move this elsewhere and change backgroud color
-    const myChart = new Chart(this.ctx, {
+    if(!!this.myChart){
+        this.myChart.destroy();
+    }
+    this.myChart = new Chart(this.ctx, {
         type: this.type,
         data: {
             labels: this.chartLabels,
