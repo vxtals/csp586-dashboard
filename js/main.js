@@ -21,7 +21,39 @@ window.onload = function() {
 
 	document.getElementById("addDatasetBtn").onclick = function(e) {
 		e.preventDefault();
-		addDataset();
+
+		let file = document.getElementById('datasetFile').files[0];
+		addLocalDataset(file);
+	};
+
+	document.getElementById("trainDatasetCard").onclick = function(e) {
+		e.preventDefault();
+		addRemoteDataset("https://data.cityofchicago.org/api/views/5neh-572f/rows.json?accessType=DOWNLOAD", 134200813);
+		//addDataset(file);
+	};
+
+	document.getElementById("towedVehiclesDataset").onclick = function(e) {
+		e.preventDefault();
+		addRemoteDataset("https://data.cityofchicago.org/api/views/ygr5-vcbg/rows.json?accessType=DOWNLOAD", 1466435);
+		//addDataset(file);
+	};
+
+	document.getElementById("busDatasetCard").onclick = function(e) {
+		e.preventDefault();
+		addRemoteDataset("https://data.cityofchicago.org/api/views/jyb9-n7fm/rows.json?accessType=DOWNLOAD");
+		//addDataset(file);
+	};
+
+	document.getElementById("speedCameraDataset").onclick = function(e) {
+		e.preventDefault();
+		addRemoteDataset("https://data.cityofchicago.org/api/views/hhkd-xvj4/rows.json?accessType=DOWNLOAD");
+		//addDataset(file);
+	};
+
+	document.getElementById("redLightsDataset").onclick = function(e) {
+		e.preventDefault();
+		addRemoteDataset("https://data.cityofchicago.org/api/views/spqx-js37/rows.json?accessType=DOWNLOAD");
+		//addDataset(file);
 	};
 
 	document.getElementById("showFilterBtn").onclick = function(e) {
@@ -122,53 +154,85 @@ window.onload = function() {
 
 }
 
-function addDataset(){
-	const file = document.getElementById('datasetFile').files[0];
-	if (file) {
-		const reader = new FileReader();
-		reader.readAsText(file);
-		reader.onload = function(e) {
-			json = JSON.parse(e.target.result);
-			dataset = new Dataset(json);
-			filter = new Filter(dataset)
-			tableRenderer = new TableRenderer(parent, filter.getDataset());
-			tableRenderer.renderTable()
-			if(!reload){
-				document.getElementById('showFilterBtn').hidden = false;
-				document.getElementById('showChartBtn').hidden = false;
-				document.getElementById('resetFiltersBtn').hidden = false;
-				document.getElementById('undoBtn').hidden = false;
-				document.getElementById('redoBtn').hidden = false;
-				updateDoButtons()
-				reload = true;
-			}
-			resetFilters()
-			addColumnCheckers(dataset);
-			setColumnSelectorValue(dataset);
-			setColumnSelectorDate(dataset);
-			setColumnSelectorRange(dataset);
-			setColumnSelectorBarChart(dataset);
-			setColumnSelectorLineChart(dataset);
-			document.getElementById("startSteps").className = "hidden-steps";
-			document.getElementById("newDatasetBtn").className = "";
-		}
-	}else{
-		alert("You must to select a file!");
-	}
-}
 
 function applyColumnFilter(){
 	let selectedColumns = getCheckedColumns();
 	let filteredByColumns = filter.filterByColumn(selectedColumns)
 	tableRenderer.refreshTable(filteredByColumns)
 	updateRowCounter(filter.getDataset())
-	// TODO: UPDATE HERE
 	updateDoButtons()
 	setColumnSelectorValue(dataset)
 	setColumnSelectorDate(dataset)
 	setColumnSelectorRange(dataset);
 	setColumnSelectorBarChart(dataset);
 	setColumnSelectorLineChart(dataset);
+}
+
+function processJson(rawJson){
+	let json = JSON.parse(rawJson);
+	dataset = new Dataset(json);
+	filter = new Filter(dataset)
+	tableRenderer = new TableRenderer(parent, filter.getDataset());
+	tableRenderer.renderTable()
+	if(!reload){
+		document.getElementById('showFilterBtn').hidden = false;
+		document.getElementById('showChartBtn').hidden = false;
+		document.getElementById('resetFiltersBtn').hidden = false;
+		document.getElementById('undoBtn').hidden = false;
+		document.getElementById('redoBtn').hidden = false;
+		updateDoButtons()
+		reload = true;
+	}
+	resetFilters()
+	addColumnCheckers(dataset);
+	setColumnSelectorValue(dataset);
+	setColumnSelectorDate(dataset);
+	setColumnSelectorRange(dataset);
+	document.getElementById("startSteps").className = "hidden-steps";
+	document.getElementById("newDatasetBtn").className = "";
+	document.getElementById("loadingGlass").hidden = true;
+	document.getElementById("loadingGlassMsg").innerHTML = "";
+
+}
+
+function addRemoteDataset(url, estimatedSize)
+{
+		let loadingGlass = document.getElementById("loadingGlass");
+		let loadingGlassMsg = document.getElementById("loadingGlassMsg");
+		loadingGlass.hidden = false;
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onprogress = function(evt) {
+    	if(!!estimatedSize){
+				var percentComplete = (evt.loaded / estimatedSize)*100;
+				loadingGlassMsg.innerHTML = "Downloading dataset " + Math.trunc(percentComplete) + " %";
+    	}
+    }
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+					loadingGlassMsg.innerHTML = "Converting JSON ...";
+					setTimeout(function() {
+						processJson(xmlHttp.responseText)
+					}, 100);
+        }
+    }
+    xmlHttp.open("GET", url, true); // true for asynchronous
+    xmlHttp.send(null);
+}
+
+function addLocalDataset(file){
+	if (file) {
+		const reader = new FileReader();
+		reader.readAsText(file);
+		reader.onload = function(e) {
+			document.getElementById("loadingGlass").hidden = false;
+			document.getElementById("loadingGlassMsg").innerHTML = "Converting JSON ...";
+			setTimeout(function() {
+				processJson(e.target.result)
+			}, 100);
+		}
+	}else{
+		alert("You must to select a file!");
+	}
 }
 
 function applyRowByParameter(){
@@ -184,7 +248,8 @@ function applyRowByParameter(){
 	}else if(!parameterValue.value){
 		errMsgParameter.innerHTML = "You must enter a value";
 	}else{
-		filter.filterByParameter(selectedColumn, parameterValue.value)
+		let exactMatch = document.getElementById("exactMatchValue").checked
+		filter.filterByParameter(selectedColumn, parameterValue.value, exactMatch)
 		parameterValue.value = null;
 		applyColumnFilter();
 	}
@@ -251,68 +316,6 @@ function applyRangeFilter(){
 		maxRange.value = null;
 		applyColumnFilter();
 	}
-}
-
-function applyColumnSelectorBar(){
-	let selector = document.getElementById("columnSelectorBar");
-	let errMsgBar = document.getElementById("errMsgBar");
-
-	errMsgBar.innerHTML = "";
-	let selectedColumn = selector.options[selector.selectedIndex].value;
-
-	if(!selectedColumn || selectedColumn == "null"){
-		errMsgBar.innerHTML = "You must select a column";
-	}else{
-		axisValue = filter.getDataset().datasToChartValues(selector.value);
-
-		displayBarChart(axisValue, selector.value);
-		selector.value = null;
-	}
-}
-
-function displayBarChart(datas, label) {
-	this.myBarChart.remove();
-
-	for (var i = 0; i < datas[0].length; i++) {
-		this.myBarChart.addBar(new Bar(datas[0][i], datas[1][i]));
-	}
-
-	this.myBarChart.setLabel(label);
-	this.myBarChart.setChartColorBackground('rgba(255, 99, 132, 1)');
-	this.myBarChart.setChartColorBorder('rgba(255, 99, 132, 1)');
-
-	this.myBarChart.displayChart();
-}
-
-function applyColumnSelectorLine(){
-	let selector = document.getElementById("columnSelectorLine");
-	let errMsgLine = document.getElementById("errMsgLine");
-
-	errMsgLine.innerHTML = "";
-	let selectedColumn = selector.options[selector.selectedIndex].value;
-
-	if(!selectedColumn || selectedColumn == "null"){
-		errMsgLine.innerHTML = "You must select a column";
-	}else{
-		axisValue = filter.getDataset().datasToChartValues(selector.value);
-
-		displayLineChart(axisValue, selector.value);
-		selector.value = null;
-	}
-}
-
-function displayLineChart(datas, label) {
-	this.myLineChart.remove();
-
-	for (var i = 0; i < datas[0].length; i++) {
-		this.myLineChart.addValue(datas[0][i], datas[1][i]);
-	}
-
-	this.myLineChart.setLabel(label);
-	this.myLineChart.setChartColorBackground('rgba(255, 99, 132, 1)');
-	this.myLineChart.setChartColorBorder('rgba(255, 99, 132, 1)');
-
-	this.myLineChart.displayChart();
 }
 
 function resetFilters(){
@@ -448,6 +451,70 @@ function setColumnSelectorRange(dataset){
 	columnSelectorRange.insertBefore(emptyselector, columnSelectorRange.firstChild);
 }
 
+
+function applyColumnSelectorBar(){
+	let selector = document.getElementById("columnSelectorBar");
+	let errMsgBar = document.getElementById("errMsgBar");
+
+	errMsgBar.innerHTML = "";
+	let selectedColumn = selector.options[selector.selectedIndex].value;
+
+	if(!selectedColumn || selectedColumn == "null"){
+		errMsgBar.innerHTML = "You must select a column";
+	}else{
+		axisValue = filter.getDataset().datasToChartValues(selector.value);
+
+		displayBarChart(axisValue, selector.value);
+		selector.value = null;
+	}
+}
+
+function displayBarChart(datas, label) {
+	this.myBarChart.remove();
+
+	for (var i = 0; i < datas[0].length; i++) {
+		this.myBarChart.addBar(new Bar(datas[0][i], datas[1][i]));
+	}
+
+	this.myBarChart.setLabel(label);
+	this.myBarChart.setChartColorBackground('rgba(255, 99, 132, 1)');
+	this.myBarChart.setChartColorBorder('rgba(255, 99, 132, 1)');
+
+	this.myBarChart.displayChart();
+}
+
+function applyColumnSelectorLine(){
+	let selector = document.getElementById("columnSelectorLine");
+	let errMsgLine = document.getElementById("errMsgLine");
+
+	errMsgLine.innerHTML = "";
+	let selectedColumn = selector.options[selector.selectedIndex].value;
+
+	if(!selectedColumn || selectedColumn == "null"){
+		errMsgLine.innerHTML = "You must select a column";
+	}else{
+		axisValue = filter.getDataset().datasToChartValues(selector.value);
+
+		displayLineChart(axisValue, selector.value);
+		selector.value = null;
+	}
+}
+
+function displayLineChart(datas, label) {
+	this.myLineChart.remove();
+
+	for (var i = 0; i < datas[0].length; i++) {
+		this.myLineChart.addValue(datas[0][i], datas[1][i]);
+	}
+
+	this.myLineChart.setLabel(label);
+	this.myLineChart.setChartColorBackground('rgba(255, 99, 132, 1)');
+	this.myLineChart.setChartColorBorder('rgba(255, 99, 132, 1)');
+
+	this.myLineChart.displayChart();
+}
+
+
 function setColumnSelectorBarChart(dataset){
 	let columnsCheckers = document.getElementById("columnsCheckers");
 	let columnSelectorBar = document.getElementById("columnSelectorBar");
@@ -501,6 +568,13 @@ function setColumnSelectorLineChart(dataset){
 }
 
 
+function showHideChart(checkbox, chartId) {
+    var isChecked = checkbox.checked;
+    var showHide = isChecked ?"":"none";
+    document.getElementById(chartId).style.display = showHide;
+}
+
+
 function updateRowCounter(dataset){
 	let rowCounter = document.getElementById("rowCounter");
 	rowCounter.innerHTML = dataset.dataframe.toArray().length + " rows."
@@ -509,10 +583,4 @@ function updateRowCounter(dataset){
 function updateDoButtons(){
 	document.getElementById('undoBtn').disabled = !filter.getUndoStatus();
 	document.getElementById('redoBtn').disabled = !filter.getRedoStatus();
-}
-
-function showHideChart(checkbox, chartId) {
-    var isChecked = checkbox.checked;
-    var showHide = isChecked ?"":"none";
-    document.getElementById(chartId).style.display = showHide;
 }

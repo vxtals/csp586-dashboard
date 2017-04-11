@@ -3,14 +3,14 @@ class Filter {
   constructor(dataset){
     this.dataset = dataset;
     this.datasetHistory = [];
-    this.datasetHistory.push(this.dataset) 
+    this.datasetHistory.push(this.dataset)
     this.historyPointer = 0;
   }
 
   setDataset(dataset){
     this.dataset = dataset;
     this.datasetHistory = [];
-    this.datasetHistory.push(this.dataset) 
+    this.datasetHistory.push(this.dataset)
     this.historyPointer = 0;
   }
 
@@ -31,14 +31,19 @@ class Filter {
 
   }
 
-  filterByParameter(columnName, value){
+  filterByParameter(columnName, value, exactMatch){
     if(!columnName){
       throw "columnName is not defined"
     }else if(!value){
       throw "value is not defined"
     }
     let filteredDataset = new Dataset()
-    filteredDataset.setDataframe(this.dataset.dataframe.filter(row => row.get(columnName) == value))
+
+    if(exactMatch){
+      filteredDataset.setDataframe(this.dataset.dataframe.filter(row => row.get(columnName) == value))
+    }else{
+      filteredDataset.setDataframe(this.dataset.dataframe.filter(row => !!row.get(columnName) && row.get(columnName).indexOf(value) >= 0))
+    }
     this.dataset = filteredDataset
     this.addDatasetToHistory(this.dataset)
   }
