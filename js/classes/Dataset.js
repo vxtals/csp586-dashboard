@@ -55,4 +55,35 @@ class Dataset {
         this.rows = dataframe.toArray()
     }
 
+    getColumnPositionByName(name){
+        let position = 0;
+        this.columns.map((column) => {
+            if (column.name === name) {
+                position = column.position;
+            }
+        });
+        return position;
+    }
+
+    datasToChartValues(column){
+        const position = this.getColumnPositionByName(column);
+        let value = "";
+        let axis = [];
+        let values = [];
+
+        for (var i = 0; i < this.rows.length; i++) {
+            value = this.rows[i][position-1];
+            if (axis.includes(value)) {
+                values[axis.indexOf(value)] += 1;
+            } else {
+                axis.push(value);
+                values.push(1);
+            }
+        }
+
+        const axisValues = [axis, values];
+
+        return axisValues;
+    }
+
 }

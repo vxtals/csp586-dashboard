@@ -5,32 +5,19 @@ const parent = document.getElementById('parentHolder');
 window.onload = function() {
 
 	let ctxBar = document.getElementById("myBarChart").getContext("2d");
-	let myBarChart = new BarChart(ctxBar);
+	this.myBarChart = new BarChart(ctxBar);
 
-	myBarChart.addBars([
-		new Bar('Red', 12, 'rgba(255, 99, 132, 1)'),
-		new Bar('Blue', 19, 'rgba(54, 162, 235, 1)'),
-		new Bar('Yellow', 3, 'rgba(255, 206, 86, 1)'),
-		new Bar('Green', 5, 'rgba(75, 192, 192, 1)'),
-		new Bar('Purple', 2, 'rgba(153, 102, 255, 1)'),
-		new Bar('Orange', 3, 'rgba(255, 159, 64, 1)')
-	]);
-	myBarChart.addBar(new Bar('OO', 12, 'rgba(255, 159, 64, 1)'));
-	myBarChart.setLabel('BAR CHAR');
+	this.myBarChart.setLabel('Default Bar Chart');
+	this.myBarChart.setChartColorBackground('rgba(255, 99, 132, 1)');
+	this.myBarChart.setChartColorBorder('rgba(255, 99, 132, 1)');
 
-	myBarChart.displayChart(ctxBar);
+	this.myBarChart.displayChart(ctxBar);
 
 	let ctxLine = document.getElementById("myLineChart").getContext("2d");
-	let myLineChart = new LineChart(ctxLine);
-	/*
-	myLineChart.addValues(
-		['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-		[12, 19, 3, 5, 2, 3]
-	);
-	myLineChart.addValue('Violet', 9);
-	myLineChart.setLabel('LINE CHAR');
-	*/
-	myLineChart.displayChart(ctxLine);
+	this.myLineChart = new LineChart(ctxLine);
+
+	this.myLineChart.setLabel('Default Line Chart');
+	this.myLineChart.displayChart(ctxLine);
 
 	document.getElementById("addDatasetBtn").onclick = function(e) {
 		e.preventDefault();
@@ -120,6 +107,16 @@ window.onload = function() {
 	document.getElementById("applyRangeBtn").onclick = function(e) {
 		e.preventDefault();
 		applyRangeFilter()
+	};
+
+	document.getElementById("applyColumnSelectorBar").onclick = function(e) {
+		e.preventDefault();
+		applyColumnSelectorBar();
+	};
+
+	document.getElementById("applyColumnSelectorLine").onclick = function(e) {
+		e.preventDefault();
+		applyColumnSelectorLine();
 	};
 
 
@@ -254,6 +251,68 @@ function applyRangeFilter(){
 		maxRange.value = null;
 		applyColumnFilter();
 	}
+}
+
+function applyColumnSelectorBar(){
+	let selector = document.getElementById("columnSelectorBar");
+	let errMsgBar = document.getElementById("errMsgBar");
+
+	errMsgBar.innerHTML = "";
+	let selectedColumn = selector.options[selector.selectedIndex].value;
+
+	if(!selectedColumn || selectedColumn == "null"){
+		errMsgBar.innerHTML = "You must select a column";
+	}else{
+		axisValue = filter.getDataset().datasToChartValues(selector.value);
+
+		displayBarChart(axisValue, selector.value);
+		selector.value = null;
+	}
+}
+
+function displayBarChart(datas, label) {
+	this.myBarChart.remove();
+
+	for (var i = 0; i < datas[0].length; i++) {
+		this.myBarChart.addBar(new Bar(datas[0][i], datas[1][i]));
+	}
+
+	this.myBarChart.setLabel(label);
+	this.myBarChart.setChartColorBackground('rgba(255, 99, 132, 1)');
+	this.myBarChart.setChartColorBorder('rgba(255, 99, 132, 1)');
+
+	this.myBarChart.displayChart();
+}
+
+function applyColumnSelectorLine(){
+	let selector = document.getElementById("columnSelectorLine");
+	let errMsgLine = document.getElementById("errMsgLine");
+
+	errMsgLine.innerHTML = "";
+	let selectedColumn = selector.options[selector.selectedIndex].value;
+
+	if(!selectedColumn || selectedColumn == "null"){
+		errMsgLine.innerHTML = "You must select a column";
+	}else{
+		axisValue = filter.getDataset().datasToChartValues(selector.value);
+
+		displayLineChart(axisValue, selector.value);
+		selector.value = null;
+	}
+}
+
+function displayLineChart(datas, label) {
+	this.myLineChart.remove();
+
+	for (var i = 0; i < datas[0].length; i++) {
+		this.myLineChart.addValue(datas[0][i], datas[1][i]);
+	}
+
+	this.myLineChart.setLabel(label);
+	this.myLineChart.setChartColorBackground('rgba(255, 99, 132, 1)');
+	this.myLineChart.setChartColorBorder('rgba(255, 99, 132, 1)');
+
+	this.myLineChart.displayChart();
 }
 
 function resetFilters(){

@@ -9,14 +9,12 @@ class BarChart extends ConfiguredChart {
   addBar(bar) {
     this.chartLabels.push(bar.label);
     this.chartDatas.push(bar.data);
-    this.chartColors.push(bar.color);
   }
 
   addBars(bars) {
     bars.map((bar) => {
       this.chartLabels.push(bar.label);
       this.chartDatas.push(bar.data);
-      this.chartColors.push(bar.color);
     });
   }
 }

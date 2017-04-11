@@ -10,8 +10,8 @@ class ObjectChart {
                 label: this.chartLabel,
                 data: this.chartDatas,
                 borderWidth: 1,
-                backgroundColor: this.chartColors,
-                borderColor: this.chartColors
+                backgroundColor: this.chartColorBackground,
+                borderColor: this.chartColorBorder
             }]
         },
         options: {

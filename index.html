@@ -95,10 +95,18 @@
     <div id="chartContainer" class="hidden-charts">
         <div class="columnFilter">
           <p class="chartInstruction">Select graphs to show:</p>
+          <div>
             <input type="checkbox" id="checkBar" onchange="showHideChart(this, 'myDivBarChart');">Bar Chart</input>
-            <select id="columnSelectorBar" class="input-field block"></select>
+            <select id="columnSelectorBar" class="input-field"></select>
+            <button id="applyColumnSelectorBar" class="project-btn apply-filter-btn">Apply</button>
+            <span id="errMsgBar" class="err-msg"></span>
+          </div>
+          <div>
             <input type="checkbox" id="checkLine" onchange="showHideChart(this, 'myDivLineChart');">Line Chart</input>
-            <select id="columnSelectorLine" class="input-field block"></select>
+            <select id="columnSelectorLine" class="input-field"></select>
+            <button id="applyColumnSelectorLine" class="project-btn apply-filter-btn">Apply</button>
+            <span id="errMsgLine" class="err-msg"></span>
+          </div>
         </div>
         <div class="container">
           <div class="chart-container" id="myDivBarChart" style="display: none;">

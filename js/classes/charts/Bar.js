@@ -3,7 +3,6 @@ class Bar {
   constructor(label, data, color) {
     this.label = label;
     this.data = data;
-    this.color = color;
   }
 
   getLabel() {
@@ -12,9 +11,5 @@ class Bar {
 
   getData() {
     return this.data
-  }
-
-  getColor() {
-    return this.color
   }
 }
