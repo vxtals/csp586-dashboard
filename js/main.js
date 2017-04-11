@@ -188,6 +188,8 @@ function processJson(rawJson){
 	setColumnSelectorValue(dataset);
 	setColumnSelectorDate(dataset);
 	setColumnSelectorRange(dataset);
+	setColumnSelectorBarChart(dataset);
+	setColumnSelectorLineChart(dataset);
 	document.getElementById("startSteps").className = "hidden-steps";
 	document.getElementById("newDatasetBtn").className = "";
 	document.getElementById("loadingGlass").hidden = true;
