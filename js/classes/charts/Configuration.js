@@ -1,4 +1,4 @@
 // Responsive, Ratio, Animation
-class Options {
+class Configuration {
 
 }

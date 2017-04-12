@@ -1,4 +1,6 @@
 // Label, Chart type...
-class Configuration {
+class Options {
+  constructor(){
 
+  }
 }
