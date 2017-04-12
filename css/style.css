@@ -400,3 +400,8 @@ canvas {
 .fa-wifi{
     transform: rotate(90deg);
 }
+
+.chart-name{
+    width: 90px;
+    display: inline-block;
+}

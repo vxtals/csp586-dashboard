@@ -143,19 +143,22 @@
         <div class="columnFilter">
           <p class="chartInstruction">Select graphs to show:</p>
           <div>
-            <input type="checkbox" id="checkBar" onchange="showHideChart(this, 'myDivBarChart');">Bar Chart</input>
+            <input type="checkbox" id="checkBar" onchange="showHideChart(this, 'myDivBarChart');"></input>
+            <span class="chart-name">Bar Chart</span>
             <select id="columnSelectorBar" class="input-field"></select>
             <button id="applyColumnSelectorBar" class="project-btn apply-filter-btn">Apply</button>
             <span id="errMsgBar" class="err-msg"></span>
           </div>
           <div>
-            <input type="checkbox" id="checkLine" onchange="showHideChart(this, 'myDivLineChart');">Line Chart</input>
+            <input type="checkbox" id="checkLine" onchange="showHideChart(this, 'myDivLineChart');"></input>
+            <span class="chart-name">Line Chart</span>
             <select id="columnSelectorLine" class="input-field"></select>
             <button id="applyColumnSelectorLine" class="project-btn apply-filter-btn">Apply</button>
             <span id="errMsgLine" class="err-msg"></span>
           </div>
           <div>
-            <input type="checkbox" id="checkPie" onchange="showHideChart(this, 'myDivPieChart');">Pie Chart</input>
+            <input type="checkbox" id="checkPie" onchange="showHideChart(this, 'myDivPieChart');"></input>
+            <span class="chart-name">Pie Chart</span>
             <select id="columnSelectorPie" class="input-field"></select>
             <button id="applyColumnSelectorPie" class="project-btn apply-filter-btn">Apply</button>
             <span id="errMsgPie" class="err-msg"></span>
