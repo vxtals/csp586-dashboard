@@ -4,6 +4,15 @@ class LineChart extends ConfiguredChart {
     super();
     this.ctx = ctx
     this.type = 'line';
+    this.options = {    
+      scales: {
+          yAxes: [{
+              ticks: {
+                  beginAtZero:true
+              }
+          }]
+      }
+    }
   }
 
   addValue(label, data) {

@@ -18,15 +18,7 @@ class ObjectChart {
                 borderColor: this.chartColorBorder
             }]
         },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            }
-        }
+        options: this.options
     });
   }
 }
