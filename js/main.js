@@ -548,8 +548,11 @@ function displayBarChart(datas, label) {
 	}
 
 	this.myBarChart.setLabel(label);
-	this.myBarChart.setChartColorBackground('rgba(255, 99, 132, 1)');
-	this.myBarChart.setChartColorBorder('rgba(255, 99, 132, 1)');
+	let pieColors = getRandomColors(datas[0].length);
+	this.myBarChart.setChartColorBackground(pieColors);
+	//this.myBarChart.setChartColorBackground('rgba(255, 99, 132, 1)');
+	this.myBarChart.setChartColorBorder('#FFFFFF');
+	//this.myBarChart.setChartColorBorder('rgba(255, 99, 132, 1)');
 
 	this.myBarChart.displayChart();
 }
@@ -665,8 +668,13 @@ function updateDoButtons(){
 }
 
 function getRandomColors(number) {
-		let colorsList = []
-		for(let i = 0; i < number; i++){
+	  // 4 basic colors
+		let colorsList = [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+            ]
+		for(let i = 0; i < number - 4; i++){
 	    let letters = '0123456789ABCDEF'.split('');
 	    let color = '#';
 	    for (let i = 0; i < 6; i++ ) {
