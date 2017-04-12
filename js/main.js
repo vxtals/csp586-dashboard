@@ -4,20 +4,7 @@ const parent = document.getElementById('parentHolder');
 
 window.onload = function() {
 
-	let ctxBar = document.getElementById("myBarChart").getContext("2d");
-	this.myBarChart = new BarChart(ctxBar);
-
-	this.myBarChart.setLabel('Default Bar Chart');
-	this.myBarChart.setChartColorBackground('rgba(255, 99, 132, 1)');
-	this.myBarChart.setChartColorBorder('rgba(255, 99, 132, 1)');
-
-	this.myBarChart.displayChart(ctxBar);
-
-	let ctxLine = document.getElementById("myLineChart").getContext("2d");
-	this.myLineChart = new LineChart(ctxLine);
-
-	this.myLineChart.setLabel('Default Line Chart');
-	this.myLineChart.displayChart(ctxLine);
+	initCharts();
 
 	document.getElementById("addDatasetBtn").onclick = function(e) {
 		e.preventDefault();
@@ -151,9 +138,39 @@ window.onload = function() {
 		applyColumnSelectorLine();
 	};
 
+	document.getElementById("applyColumnSelectorPie").onclick = function(e) {
+		e.preventDefault();
+		applyColumnSelectorPie();
+	};
+
 
 }
 
+function initCharts(){
+	let ctxBar = document.getElementById("myBarChart").getContext("2d");
+	this.myBarChart = new BarChart(ctxBar);
+
+	this.myBarChart.setLabel('Default Bar Chart');
+	this.myBarChart.setChartColorBackground('rgba(255, 99, 132, 1)');
+	this.myBarChart.setChartColorBorder('rgba(255, 99, 132, 1)');
+
+	this.myBarChart.displayChart(ctxBar);
+
+	let ctxLine = document.getElementById("myLineChart").getContext("2d");
+	this.myLineChart = new LineChart(ctxLine);
+
+	this.myLineChart.setLabel('Default Line Chart');
+	this.myLineChart.displayChart(ctxLine);
+
+	let ctxPie = document.getElementById("myPieChart").getContext("2d");
+	this.myPieChart = new PieChart(ctxPie);
+
+	this.myPieChart.setLabel('Default Pie Chart');
+	this.myPieChart.setChartColorBackground('rgba(255, 99, 132, 1)');
+	this.myPieChart.setChartColorBorder('rgba(255, 99, 132, 1)');
+
+	this.myPieChart.displayChart(ctxPie);
+}
 
 function applyColumnFilter(){
 	let selectedColumns = getCheckedColumns();
@@ -166,6 +183,7 @@ function applyColumnFilter(){
 	setColumnSelectorRange(dataset);
 	setColumnSelectorBarChart(dataset);
 	setColumnSelectorLineChart(dataset);
+	setColumnSelectorPieChart(dataset);
 }
 
 function processJson(rawJson){
@@ -190,6 +208,7 @@ function processJson(rawJson){
 	setColumnSelectorRange(dataset);
 	setColumnSelectorBarChart(dataset);
 	setColumnSelectorLineChart(dataset);
+	setColumnSelectorPieChart(dataset);
 	document.getElementById("startSteps").className = "hidden-steps";
 	document.getElementById("newDatasetBtn").className = "";
 	document.getElementById("loadingGlass").hidden = true;
@@ -471,20 +490,6 @@ function applyColumnSelectorBar(){
 	}
 }
 
-function displayBarChart(datas, label) {
-	this.myBarChart.remove();
-
-	for (var i = 0; i < datas[0].length; i++) {
-		this.myBarChart.addBar(new Bar(datas[0][i], datas[1][i]));
-	}
-
-	this.myBarChart.setLabel(label);
-	this.myBarChart.setChartColorBackground('rgba(255, 99, 132, 1)');
-	this.myBarChart.setChartColorBorder('rgba(255, 99, 132, 1)');
-
-	this.myBarChart.displayChart();
-}
-
 function applyColumnSelectorLine(){
 	let selector = document.getElementById("columnSelectorLine");
 	let errMsgLine = document.getElementById("errMsgLine");
@@ -502,7 +507,26 @@ function applyColumnSelectorLine(){
 	}
 }
 
+
+function applyColumnSelectorPie(){
+	let selector = document.getElementById("columnSelectorPie");
+	let errMsgPie = document.getElementById("errMsgPie");
+
+	errMsgPie.innerHTML = "";
+	let selectedColumn = selector.options[selector.selectedIndex].value;
+
+	if(!selectedColumn || selectedColumn == "null"){
+		errMsgPie.innerHTML = "You must select a column";
+	}else{
+		axisValue = filter.getDataset().datasToChartValues(selector.value);
+
+		displayPieChart(axisValue, selector.value);
+		selector.value = null;
+	}
+}
+
 function displayLineChart(datas, label) {
+	console.log("sasaz");
 	this.myLineChart.remove();
 
 	for (var i = 0; i < datas[0].length; i++) {
@@ -516,6 +540,35 @@ function displayLineChart(datas, label) {
 	this.myLineChart.displayChart();
 }
 
+function displayBarChart(datas, label) {
+	this.myBarChart.remove();
+
+	for (var i = 0; i < datas[0].length; i++) {
+		this.myBarChart.addBar(new Bar(datas[0][i], datas[1][i]));
+	}
+
+	this.myBarChart.setLabel(label);
+	this.myBarChart.setChartColorBackground('rgba(255, 99, 132, 1)');
+	this.myBarChart.setChartColorBorder('rgba(255, 99, 132, 1)');
+
+	this.myBarChart.displayChart();
+}
+
+function displayPieChart(datas, label) {
+	this.myPieChart.remove();
+
+	for (var i = 0; i < datas[0].length; i++) {
+		this.myPieChart.addValue(datas[0][i], datas[1][i]);
+	}
+
+	this.myPieChart.setLabel(label);
+	console.log(datas[0]);
+	let pieColors = getRandomColors(datas[0].length);
+	this.myPieChart.setChartColorBackground(pieColors);
+	this.myPieChart.setChartColorBorder('#FFFFFF');
+
+	this.myPieChart.displayChart();
+}
 
 function setColumnSelectorBarChart(dataset){
 	let columnsCheckers = document.getElementById("columnsCheckers");
@@ -569,13 +622,37 @@ function setColumnSelectorLineChart(dataset){
 	columnSelectorLine.insertBefore(emptyselector, columnSelectorLine.firstChild);
 }
 
+function setColumnSelectorPieChart(dataset){
+	let columnsCheckers = document.getElementById("columnsCheckers");
+	let columnSelectorPie = document.getElementById("columnSelectorPie");
+	let colCheckboxes = columnsCheckers.getElementsByTagName('input');
+
+	columnSelectorPie.innerHTML = ""
+	let columnNames = dataset.dataframe.listColumns()
+	for(let index = columnNames.length - 1; index > -1; index--){
+		const selector = document.createElement("option")
+		selector.setAttribute("value", columnNames[index])
+		selector.innerHTML = columnNames[index]
+		if(!colCheckboxes[index].checked){
+			selector.disabled = true
+		}
+		columnSelectorPie.insertBefore(selector, columnSelectorPie.firstChild);
+	}
+
+	const emptyselector = document.createElement("option")
+	emptyselector.innerHTML = "Select column"
+	emptyselector.selected = true
+	emptyselector.disabled = true
+	emptyselector.setAttribute("value", null)
+
+	columnSelectorPie.insertBefore(emptyselector, columnSelectorPie.firstChild);
+}
 
 function showHideChart(checkbox, chartId) {
     var isChecked = checkbox.checked;
     var showHide = isChecked ?"":"none";
     document.getElementById(chartId).style.display = showHide;
 }
-
 
 function updateRowCounter(dataset){
 	let rowCounter = document.getElementById("rowCounter");
@@ -585,4 +662,17 @@ function updateRowCounter(dataset){
 function updateDoButtons(){
 	document.getElementById('undoBtn').disabled = !filter.getUndoStatus();
 	document.getElementById('redoBtn').disabled = !filter.getRedoStatus();
+}
+
+function getRandomColors(number) {
+		let colorsList = []
+		for(let i = 0; i < number; i++){
+	    let letters = '0123456789ABCDEF'.split('');
+	    let color = '#';
+	    for (let i = 0; i < 6; i++ ) {
+	        color += letters[Math.floor(Math.random() * 16)];
+	    }
+	    colorsList.push(color);
+		}
+    return colorsList;
 }

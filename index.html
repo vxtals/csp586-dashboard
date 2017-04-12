@@ -12,6 +12,7 @@
     <script src="js/classes/charts/BarChart.js"></script>
     <script src="js/classes/charts/Bar.js"></script>
     <script src="js/classes/charts/LineChart.js"></script>
+    <script src="js/classes/charts/PieChart.js"></script>
 
     <script src="js/classes/Filter.js"></script>
     <script src="js/libraries/dataframe.js"></script>
@@ -153,6 +154,12 @@
             <button id="applyColumnSelectorLine" class="project-btn apply-filter-btn">Apply</button>
             <span id="errMsgLine" class="err-msg"></span>
           </div>
+          <div>
+            <input type="checkbox" id="checkPie" onchange="showHideChart(this, 'myDivPieChart');">Pie Chart</input>
+            <select id="columnSelectorPie" class="input-field"></select>
+            <button id="applyColumnSelectorPie" class="project-btn apply-filter-btn">Apply</button>
+            <span id="errMsgPie" class="err-msg"></span>
+          </div>
         </div>
         <div class="container">
           <div class="chart-container" id="myDivBarChart" style="display: none;">
@@ -160,6 +167,9 @@
           </div>
           <div class="chart-container" id="myDivLineChart" style="display: none;">
               <canvas id="myLineChart"></canvas>
+          </div>
+          <div class="chart-container" id="myDivPieChart" style="display: none;">
+              <canvas id="myPieChart"></canvas>
           </div>
         </div>
     </div>
