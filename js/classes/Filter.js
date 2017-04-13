@@ -67,18 +67,20 @@ class Filter {
       throw "minRange or maxRange must be definer"
     }
     let filteredDataset = new Dataset()
-    this.dataset.dataframe.sql.register('dataset', true)
-    let queryBase = "SELECT * FROM dataset WHERE "
-    let queryTail
-    if(!!minRange && !!maxRange){
-      queryTail = "\"" + columnName + "\" >= " + minRange + " AND \"" + columnName +  "\" <= " + maxRange
-    }else if(!!minRange){
-      queryTail = "\"" + columnName + "\" >= " + minRange
-    }else if(!!maxRange){
-      queryTail = "\"" + columnName +  "\" <= " + maxRange
-    }
+    let newDataframe = this.dataset.dataframe.where(function(row){
+      let getRow = false
+      let columnValue = row.get(columnName)
+      if(!!minRange && !!maxRange){
+        getRow = (columnValue >= minRange) && (columnValue <= maxRange); 
+      }else if(!!minRange){
+        getRow = columnValue >= minRange; 
+      }else if(!!maxRange){
+        getRow = columnValue <= maxRange; 
+      }
+      return getRow;
+    })
 
-    filteredDataset.setDataframe(DataFrame.sql.request(queryBase + queryTail))
+    filteredDataset.setDataframe(newDataframe)
     this.dataset = filteredDataset
     this.addDatasetToHistory(this.dataset)
   }
