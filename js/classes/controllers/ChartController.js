@@ -14,44 +14,18 @@ class ChartController{
     // Creates BarChart instance.
     let ctxBar = document.getElementById("myBarChart").getContext("2d");
     this.myBarChart = chartFactory.createChart('bar',ctxBar);
-    this.myBarChart.setLabel('Default Bar Chart');
-    this.myBarChart.setChartColorBackground('rgba(255, 99, 132, 1)');
-    this.myBarChart.setChartColorBorder('rgba(255, 99, 132, 1)');
-    this.myBarChart.setOptionsObject({
-      scales: {
-          yAxes: [{
-              ticks: {
-                  beginAtZero:true
-              }
-          }]
-      }
-    });
     this.myBarChart.displayChart(ctxBar);
     this.barChartRedraw = false;
 
     // Creates LineChart instance.
     let ctxLine = document.getElementById("myLineChart").getContext("2d");
     this.myLineChart = chartFactory.createChart('line',ctxLine);
-    this.myLineChart.setLabel('Default Line Chart');
     this.myLineChart.displayChart(ctxLine);
-    this.myLineChart.setOptionsObject({
-      scales: {
-          yAxes: [{
-              ticks: {
-                  beginAtZero:true
-              }
-          }]
-      }
-    });
     this.lineChartRedraw = false;
 
     // Creates PieChart instance.
     let ctxPie = document.getElementById("myPieChart").getContext("2d");
     this.myPieChart = chartFactory.createChart('pie',ctxPie);
-    this.myPieChart.setLabel('Default Pie Chart');
-    this.myPieChart.setChartColorBackground('rgba(255, 99, 132, 1)');
-    this.myPieChart.setChartColorBorder('rgba(255, 99, 132, 1)');
-    this.myPieChart.setOptionsObject({});
     this.myPieChart.displayChart(ctxPie);
     this.pieChartRedraw = false;
   }
