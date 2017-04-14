@@ -28,10 +28,6 @@ class Filter {
     return filteredDataset
   }
 
-  filterByRow(){
-
-  }
-
   filterByParameter(columnName, value, exactMatch){
     if(!columnName){
       throw "columnName is not defined"
