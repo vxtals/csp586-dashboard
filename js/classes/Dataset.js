@@ -1,7 +1,6 @@
 class Dataset {
   constructor(json) {
         this.columnTypes = []
-        this.dateColumns = []
         if(!!json){
             this.columns = this.parseColumns(json.meta.view.columns);
             this.rows = this.parseRows(json.data);
