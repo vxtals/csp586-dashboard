@@ -17,7 +17,15 @@ class ChartController{
     this.myBarChart.setLabel('Default Bar Chart');
     this.myBarChart.setChartColorBackground('rgba(255, 99, 132, 1)');
     this.myBarChart.setChartColorBorder('rgba(255, 99, 132, 1)');
-
+    this.myBarChart.setOptions({    
+      scales: {
+          yAxes: [{
+              ticks: {
+                  beginAtZero:true
+              }
+          }]
+      }
+    });
     this.myBarChart.displayChart(ctxBar);
 
     let ctxLine = document.getElementById("myLineChart").getContext("2d");
@@ -25,14 +33,24 @@ class ChartController{
 
     this.myLineChart.setLabel('Default Line Chart');
     this.myLineChart.displayChart(ctxLine);
-
+    this.myLineChart.setOptions({    
+      scales: {
+          yAxes: [{
+              ticks: {
+                  beginAtZero:true
+              }
+          }]
+      }
+    });
+    
     let ctxPie = document.getElementById("myPieChart").getContext("2d");
     this.myPieChart = chartFactory.createChart('pie',ctxPie);
 
     this.myPieChart.setLabel('Default Pie Chart');
     this.myPieChart.setChartColorBackground('rgba(255, 99, 132, 1)');
     this.myPieChart.setChartColorBorder('rgba(255, 99, 132, 1)');
-
+    this.myPieChart.setOptions();
+    
     this.myPieChart.displayChart(ctxPie);
   }
 

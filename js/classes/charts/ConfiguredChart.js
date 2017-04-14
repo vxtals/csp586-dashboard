@@ -4,6 +4,11 @@ class ConfiguredChart extends BaseChart {
     super();
     this.chartLabels = [];
     this.chartDatas = [];
+    this.options = new Options({});
+  }
+
+  setOptions(options){
+    this.options = new Options(options);
   }
 
   setChartColorBackground(color) {

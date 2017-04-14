@@ -4,15 +4,6 @@ class BarChart extends ConfiguredChart {
     super();
     this.ctx = ctx
     this.type = 'bar';
-    this.options = new Options({    
-      scales: {
-          yAxes: [{
-              ticks: {
-                  beginAtZero:true
-              }
-          }]
-      }
-    })
   }
 
   addBar(bar) {

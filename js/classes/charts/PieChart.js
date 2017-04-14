@@ -4,7 +4,6 @@ class PieChart extends ConfiguredChart {
     super();
     this.ctx = ctx
     this.type = 'pie';
-    this.options = new Options({});
   }
 
   addValue(label, data) {
