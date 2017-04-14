@@ -18,7 +18,6 @@ class Dataset {
         const columns = [];
         for (let i = 0; i < columnsArray.length; i++) {
             const column = columnsArray[i];
-            console.log(columnsArray[i])
             if(column.id >= 0){
                 column.dataPosition = i;
                 columns.push(column);
