@@ -62,9 +62,9 @@ class Dataset {
 
     getColumnPositionByName(name){
         let position = 0;
-        this.columns.map((column) => {
-            if (column.name === name) {
-                position = column.position;
+        this.dataframe.listColumns().map((column, index) => {
+            if (column == name) {
+                position = index;
             }
         });
         return position;
@@ -79,9 +79,10 @@ class Dataset {
         let value = "";
         let axis = [];
         let values = [];
+        let rows = this.dataframe.toArray();
 
-        for (var i = 0; i < this.rows.length; i++) {
-            value = this.rows[i][position-1];
+        for (var i = 0; i < rows.length; i++) {
+            value = rows[i][position];
             if (axis.includes(value)) {
                 values[axis.indexOf(value)] += 1;
             } else {
