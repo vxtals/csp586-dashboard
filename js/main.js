@@ -1,5 +1,5 @@
 let DataFrame = dfjs.DataFrame;
-let dataset, filter, filteredDataset, tableRenderer, reload
+let dataset, filter, filteredDataset, tableRenderer, reload, chartFactory
 const parent = document.getElementById('parentHolder');
 
 window.onload = function() {
@@ -142,8 +142,9 @@ window.onload = function() {
 }
 
 function initCharts(){
+	chartFactory = new ChartFactory();
 	let ctxBar = document.getElementById("myBarChart").getContext("2d");
-	this.myBarChart = new BarChart(ctxBar);
+	this.myBarChart = chartFactory.createChart('bar',ctxBar);
 
 	this.myBarChart.setLabel('Default Bar Chart');
 	this.myBarChart.setChartColorBackground('rgba(255, 99, 132, 1)');
@@ -152,13 +153,13 @@ function initCharts(){
 	this.myBarChart.displayChart(ctxBar);
 
 	let ctxLine = document.getElementById("myLineChart").getContext("2d");
-	this.myLineChart = new LineChart(ctxLine);
+	this.myLineChart = chartFactory.createChart('line',ctxLine);
 
 	this.myLineChart.setLabel('Default Line Chart');
 	this.myLineChart.displayChart(ctxLine);
 
 	let ctxPie = document.getElementById("myPieChart").getContext("2d");
-	this.myPieChart = new PieChart(ctxPie);
+	this.myPieChart = chartFactory.createChart('pie',ctxPie);
 
 	this.myPieChart.setLabel('Default Pie Chart');
 	this.myPieChart.setChartColorBackground('rgba(255, 99, 132, 1)');
