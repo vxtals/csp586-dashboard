@@ -1,6 +1,6 @@
 class Dataset {
   constructor(json) {
-        this.numberColumns = []
+        this.columnTypes = []
         this.dateColumns = []
         if(!!json){
             this.columns = this.parseColumns(json.meta.view.columns);
@@ -10,7 +10,7 @@ class Dataset {
                     return col.name
                 }
             ))
-            this.dataframe = this.castNumberColumns();
+            this.dataframe = this.castColumns();
         }
     }
 
@@ -31,7 +31,9 @@ class Dataset {
 
         for(let i = 0; i < columns.length; i++){
             if(columns[i].dataTypeName == 'number'){
-                this.numberColumns.push(columns[i].name);
+                this.columnTypes.push(Number);
+            }else{
+                this.columnTypes.push(String);
             }
         }
 
@@ -69,13 +71,8 @@ class Dataset {
         return position;
     }
 
-    castNumberColumns(){
-        let newDataframe = this.dataframe;
-        for(let i = 0; i < this.numberColumns.length; i++){
-            console.log(this.numberColumns[i]);
-            newDataframe = newDataframe.cast(this.numberColumns[i], Number);
-        }
-        return newDataframe;
+    castColumns(){
+        return this.dataframe.castAll(this.columnTypes);
     }
 
     datasToChartValues(column){
