@@ -2,7 +2,6 @@
 class ObjectChart {
 
   displayChart() {
-    // TODO : Move this elsewhere and change backgroud color
     if(!!this.myChart){
         this.myChart.destroy();
     }
