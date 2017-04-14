@@ -45,17 +45,23 @@ class ChartView{
 
     document.getElementById("checkPie").onchange = function(e) {
       e.preventDefault();
-      view.cc.showHideChart(this, 'myDivPieChart');
+      if(!this.checked){
+        view.cc.showHideChart(this, 'myDivPieChart');
+      }
     };
 
     document.getElementById("checkBar").onchange = function(e) {
       e.preventDefault();
-      view.cc.showHideChart(this, 'myDivBarChart');
+      if(!this.checked){
+        view.cc.showHideChart(this, 'myDivBarChart');
+      }
     };
 
     document.getElementById("checkLine").onchange = function(e) {
       e.preventDefault();
-      view.cc.showHideChart(this, 'myDivLineChart');
+      if(!this.checked){
+        view.cc.showHideChart(this, 'myDivLineChart');
+      }
     };
 
   }

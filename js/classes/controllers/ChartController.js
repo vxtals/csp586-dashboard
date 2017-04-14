@@ -106,6 +106,10 @@ class ChartController{
   }
 
   displayLineChart(datas, label) {
+    let myDivLineChart = document.getElementById("myDivLineChart");
+    let checkLine = document.getElementById("checkLine");
+    this.showHideChart(checkLine, 'myDivLineChart');
+
     this.myLineChart.remove();
 
     for (var i = 0; i < datas[0].length; i++) {
@@ -120,6 +124,10 @@ class ChartController{
   }
 
   displayBarChart(datas, label) {
+    let myDivBarChart = document.getElementById("myDivBarChart");
+    let checkBar = document.getElementById("checkBar");
+    this.showHideChart(checkBar, 'myDivBarChart');
+
     this.myBarChart.remove();
 
     for (var i = 0; i < datas[0].length; i++) {
@@ -135,6 +143,10 @@ class ChartController{
   }
 
   displayPieChart(datas, label) {
+    let myDivPieChart = document.getElementById("myDivPieChart");
+    let checkPie = document.getElementById("checkPie");
+    this.showHideChart(checkPie, 'myDivPieChart');
+
     this.myPieChart.remove();
 
     for (var i = 0; i < datas[0].length; i++) {

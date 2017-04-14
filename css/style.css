@@ -244,7 +244,8 @@ tbody tr:nth-child(even) {
 }
 
 .visible-charts{
-    max-height: 3000px;
+    min-height: 170px;
+    max-height: 200vw;
     padding: 5px;
     box-shadow: 0 0 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     transition: max-height 1s ease-in;
@@ -340,6 +341,10 @@ canvas {
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+}
+
+#myDivPieChart {
+     width: 40vw;
 }
 
 .chart-container {
