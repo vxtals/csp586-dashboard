@@ -4,7 +4,7 @@ class LineChart extends ConfiguredChart {
     super();
     this.ctx = ctx
     this.type = 'line';
-    this.options = {    
+    this.options = new Options({    
       scales: {
           yAxes: [{
               ticks: {
@@ -12,7 +12,7 @@ class LineChart extends ConfiguredChart {
               }
           }]
       }
-    }
+    });
   }
 
   addValue(label, data) {

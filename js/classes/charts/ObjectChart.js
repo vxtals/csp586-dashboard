@@ -18,7 +18,7 @@ class ObjectChart {
                 borderColor: this.chartColorBorder
             }]
         },
-        options: this.options
+        options: this.options.getOptions()
     });
   }
 }

@@ -4,7 +4,7 @@ class BarChart extends ConfiguredChart {
     super();
     this.ctx = ctx
     this.type = 'bar';
-    this.options = {    
+    this.options = new Options({    
       scales: {
           yAxes: [{
               ticks: {
@@ -12,7 +12,7 @@ class BarChart extends ConfiguredChart {
               }
           }]
       }
-    }
+    })
   }
 
   addBar(bar) {
