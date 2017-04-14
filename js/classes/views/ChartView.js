@@ -45,21 +45,21 @@ class ChartView{
 
     document.getElementById("checkPie").onchange = function(e) {
       e.preventDefault();
-      if(!this.checked){
+      if(!this.checked || view.cc.pieChartRedraw){
         view.cc.showHideChart(this, 'myDivPieChart');
       }
     };
 
     document.getElementById("checkBar").onchange = function(e) {
       e.preventDefault();
-      if(!this.checked){
+      if(!this.checked || view.cc.barChartRedraw){
         view.cc.showHideChart(this, 'myDivBarChart');
       }
     };
 
     document.getElementById("checkLine").onchange = function(e) {
       e.preventDefault();
-      if(!this.checked){
+      if(!this.checked || view.cc.lineChartRedraw){
         view.cc.showHideChart(this, 'myDivLineChart');
       }
     };

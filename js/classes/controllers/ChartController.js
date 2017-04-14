@@ -11,9 +11,9 @@ class ChartController{
     this.filter = Filter.getInstance();
     this.view = new ChartView();
     let chartFactory = new ChartFactory();
+    // Creates BarChart instance.
     let ctxBar = document.getElementById("myBarChart").getContext("2d");
     this.myBarChart = chartFactory.createChart('bar',ctxBar);
-
     this.myBarChart.setLabel('Default Bar Chart');
     this.myBarChart.setChartColorBackground('rgba(255, 99, 132, 1)');
     this.myBarChart.setChartColorBorder('rgba(255, 99, 132, 1)');
@@ -27,10 +27,11 @@ class ChartController{
       }
     });
     this.myBarChart.displayChart(ctxBar);
+    this.barChartRedraw = false;
 
+    // Creates LineChart instance.
     let ctxLine = document.getElementById("myLineChart").getContext("2d");
     this.myLineChart = chartFactory.createChart('line',ctxLine);
-
     this.myLineChart.setLabel('Default Line Chart');
     this.myLineChart.displayChart(ctxLine);
     this.myLineChart.setOptions({    
@@ -42,16 +43,17 @@ class ChartController{
           }]
       }
     });
-    
+    this.lineChartRedraw = false;
+
+    // Creates PieChart instance.
     let ctxPie = document.getElementById("myPieChart").getContext("2d");
     this.myPieChart = chartFactory.createChart('pie',ctxPie);
-
     this.myPieChart.setLabel('Default Pie Chart');
     this.myPieChart.setChartColorBackground('rgba(255, 99, 132, 1)');
     this.myPieChart.setChartColorBorder('rgba(255, 99, 132, 1)');
     this.myPieChart.setOptions();
-    
     this.myPieChart.displayChart(ctxPie);
+    this.pieChartRedraw = false;
   }
 
   applyColumnSelectorBar(){
@@ -121,6 +123,7 @@ class ChartController{
     this.myLineChart.setChartColorBorder('rgba(255, 99, 132, 1)');
 
     this.myLineChart.displayChart();
+    this.lineChartRedraw = true;
   }
 
   displayBarChart(datas, label) {
@@ -140,6 +143,7 @@ class ChartController{
     this.myBarChart.setChartColorBorder('#FFFFFF');
 
     this.myBarChart.displayChart();
+    this.barChartRedraw = true;
   }
 
   displayPieChart(datas, label) {
@@ -159,6 +163,7 @@ class ChartController{
     this.myPieChart.setChartColorBorder('#FFFFFF');
 
     this.myPieChart.displayChart();
+    this.pieChartRedraw = true;
   }
 
   setColumnSelectorBarChart(dataset){
