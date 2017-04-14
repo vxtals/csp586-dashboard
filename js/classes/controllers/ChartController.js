@@ -17,7 +17,7 @@ class ChartController{
     this.myBarChart.setLabel('Default Bar Chart');
     this.myBarChart.setChartColorBackground('rgba(255, 99, 132, 1)');
     this.myBarChart.setChartColorBorder('rgba(255, 99, 132, 1)');
-    this.myBarChart.setOptionsObject({    
+    this.myBarChart.setOptionsObject({
       scales: {
           yAxes: [{
               ticks: {
@@ -34,7 +34,7 @@ class ChartController{
     this.myLineChart = chartFactory.createChart('line',ctxLine);
     this.myLineChart.setLabel('Default Line Chart');
     this.myLineChart.displayChart(ctxLine);
-    this.myLineChart.setOptionsObject({    
+    this.myLineChart.setOptionsObject({
       scales: {
           yAxes: [{
               ticks: {
@@ -140,8 +140,8 @@ class ChartController{
     }
 
     this.myBarChart.setLabel(label);
-    let pieColors = this.getRandomColors(datas[0].length);
-    this.myBarChart.setChartColorBackground(pieColors);
+    let barColors = this.getRandomColors(datas[0].length);
+    this.myBarChart.setChartColorBackground(barColors);
     this.myBarChart.setChartColorBorder('#FFFFFF');
 
     this.myBarChart.displayChart();
