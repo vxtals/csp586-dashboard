@@ -1,6 +1,13 @@
 class TableRenderer{
 
-	constructor(parent, dataset){
+	static getInstance(){
+		if(!this.instance){
+			this.instance = new TableRenderer()
+		}
+		return this.instance;
+	}
+
+	initTableRenderer(parent, dataset){
 		this.parent = parent;
 		this.dataset = dataset;
 		this.nextRowToRender = 0;
@@ -99,7 +106,6 @@ class TableRenderer{
 		this.appendChilds(50);
 
 	}
-
-
-
 }
+
+TableRenderer.instance = null;
