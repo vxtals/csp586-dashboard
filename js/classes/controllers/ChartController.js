@@ -10,19 +10,32 @@ class ChartController{
   init(){
     this.filter = Filter.getInstance();
     this.view = new ChartView();
+
+    this.initBarChart();
+    this.initLineChart();
+    this.initPieChart();
+  }
+
+  initBarChart(){
     let chartFactory = new ChartFactory();
     // Creates BarChart instance.
     let ctxBar = document.getElementById("myBarChart").getContext("2d");
     this.myBarChart = chartFactory.createChart('bar',ctxBar);
     this.myBarChart.displayChart(ctxBar);
     this.barChartRedraw = false;
+  }
 
+  initLineChart(){
+    let chartFactory = new ChartFactory();
     // Creates LineChart instance.
     let ctxLine = document.getElementById("myLineChart").getContext("2d");
     this.myLineChart = chartFactory.createChart('line',ctxLine);
     this.myLineChart.displayChart(ctxLine);
     this.lineChartRedraw = false;
+  }
 
+  initPieChart(){
+    let chartFactory = new ChartFactory();
     // Creates PieChart instance.
     let ctxPie = document.getElementById("myPieChart").getContext("2d");
     this.myPieChart = chartFactory.createChart('pie',ctxPie);
