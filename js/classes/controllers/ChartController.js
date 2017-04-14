@@ -17,7 +17,7 @@ class ChartController{
     this.myBarChart.setLabel('Default Bar Chart');
     this.myBarChart.setChartColorBackground('rgba(255, 99, 132, 1)');
     this.myBarChart.setChartColorBorder('rgba(255, 99, 132, 1)');
-    this.myBarChart.setOptions({    
+    this.myBarChart.setOptionsObject({    
       scales: {
           yAxes: [{
               ticks: {
@@ -34,7 +34,7 @@ class ChartController{
     this.myLineChart = chartFactory.createChart('line',ctxLine);
     this.myLineChart.setLabel('Default Line Chart');
     this.myLineChart.displayChart(ctxLine);
-    this.myLineChart.setOptions({    
+    this.myLineChart.setOptionsObject({    
       scales: {
           yAxes: [{
               ticks: {
@@ -51,7 +51,7 @@ class ChartController{
     this.myPieChart.setLabel('Default Pie Chart');
     this.myPieChart.setChartColorBackground('rgba(255, 99, 132, 1)');
     this.myPieChart.setChartColorBorder('rgba(255, 99, 132, 1)');
-    this.myPieChart.setOptions();
+    this.myPieChart.setOptionsObject({});
     this.myPieChart.displayChart(ctxPie);
     this.pieChartRedraw = false;
   }
@@ -101,6 +101,8 @@ class ChartController{
       errMsgPie.innerHTML = "You must select a column";
     }else{
       let axisValue = this.filter.getDataset().datasToChartValues(selector.value);
+      //Hide legend when there are too many values
+      this.myPieChart.getOptionsObject().setDisplayLegend(axisValue[0].length <= 35);
 
       this.displayPieChart(axisValue, selector.value);
       selector.value = null;
