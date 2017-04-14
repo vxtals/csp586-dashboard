@@ -1,10 +1,11 @@
 'use strict';
 class Filter {
-  constructor(dataset){
-    this.dataset = dataset;
-    this.datasetHistory = [];
-    this.datasetHistory.push(this.dataset)
-    this.historyPointer = 0;
+
+  static getInstance(){
+    if(!this.instance){
+      this.instance = new Filter();
+    }
+    return this.instance;
   }
 
   setDataset(dataset){
@@ -117,3 +118,5 @@ class Filter {
     return this.historyPointer < this.datasetHistory.length -1
   }
 }
+
+Filter.instance = null;

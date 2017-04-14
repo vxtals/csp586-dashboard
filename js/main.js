@@ -16,31 +16,26 @@ window.onload = function() {
 	document.getElementById("trainDatasetCard").onclick = function(e) {
 		e.preventDefault();
 		addRemoteDataset("https://data.cityofchicago.org/api/views/5neh-572f/rows.json?accessType=DOWNLOAD", 134200813);
-		//addDataset(file);
 	};
 
 	document.getElementById("towedVehiclesDataset").onclick = function(e) {
 		e.preventDefault();
 		addRemoteDataset("https://data.cityofchicago.org/api/views/ygr5-vcbg/rows.json?accessType=DOWNLOAD", 1466435);
-		//addDataset(file);
 	};
 
 	document.getElementById("busDatasetCard").onclick = function(e) {
 		e.preventDefault();
 		addRemoteDataset("https://data.cityofchicago.org/api/views/jyb9-n7fm/rows.json?accessType=DOWNLOAD");
-		//addDataset(file);
 	};
 
 	document.getElementById("speedCameraDataset").onclick = function(e) {
 		e.preventDefault();
 		addRemoteDataset("https://data.cityofchicago.org/api/views/hhkd-xvj4/rows.json?accessType=DOWNLOAD");
-		//addDataset(file);
 	};
 
 	document.getElementById("redLightsDataset").onclick = function(e) {
 		e.preventDefault();
 		addRemoteDataset("https://data.cityofchicago.org/api/views/spqx-js37/rows.json?accessType=DOWNLOAD");
-		//addDataset(file);
 	};
 
 	document.getElementById("showFilterBtn").onclick = function(e) {
@@ -189,7 +184,8 @@ function applyColumnFilter(){
 function processJson(rawJson){
 	let json = JSON.parse(rawJson);
 	dataset = new Dataset(json);
-	filter = new Filter(dataset)
+	filter = Filter.getInstance();
+	filter.setDataset(dataset);
 	tableRenderer = new TableRenderer(parent, filter.getDataset());
 	tableRenderer.renderTable()
 	if(!reload){
@@ -236,7 +232,7 @@ function addRemoteDataset(url, estimatedSize)
 					}, 100);
         }
     }
-    xmlHttp.open("GET", url, true); // true for asynchronous
+    xmlHttp.open("GET", url, true);
     xmlHttp.send(null);
 }
 
@@ -376,7 +372,6 @@ function addColumnCheckers(dataset){
 		const span = document.createElement("span")
 		span.className = "checker-name"
 		span.innerHTML = columnNames[index]
-		// Get the <ul> element to insert a new node
 		columnCheckers.insertBefore(span, columnCheckers.firstChild);
 		columnCheckers.insertBefore(checkbox, columnCheckers.firstChild);
 	}
@@ -526,7 +521,6 @@ function applyColumnSelectorPie(){
 }
 
 function displayLineChart(datas, label) {
-	console.log("sasaz");
 	this.myLineChart.remove();
 
 	for (var i = 0; i < datas[0].length; i++) {
@@ -550,9 +544,7 @@ function displayBarChart(datas, label) {
 	this.myBarChart.setLabel(label);
 	let pieColors = getRandomColors(datas[0].length);
 	this.myBarChart.setChartColorBackground(pieColors);
-	//this.myBarChart.setChartColorBackground('rgba(255, 99, 132, 1)');
 	this.myBarChart.setChartColorBorder('#FFFFFF');
-	//this.myBarChart.setChartColorBorder('rgba(255, 99, 132, 1)');
 
 	this.myBarChart.displayChart();
 }
@@ -565,7 +557,6 @@ function displayPieChart(datas, label) {
 	}
 
 	this.myPieChart.setLabel(label);
-	console.log(datas[0]);
 	let pieColors = getRandomColors(datas[0].length);
 	this.myPieChart.setChartColorBackground(pieColors);
 	this.myPieChart.setChartColorBorder('#FFFFFF');
