@@ -1,6 +1,6 @@
 // Represent each Bar in the Bar Chart
 class Bar {
-  constructor(label, data, color) {
+  constructor(label, data) {
     this.label = label;
     this.data = data;
   }

@@ -96,26 +96,6 @@ class ChartController{
     }
   }
 
-  displayLineChart(datas, label) {
-    let myDivLineChart = document.getElementById("myDivLineChart");
-    let checkLine = document.getElementById("checkLine");
-    this.showHideChart(checkLine, 'myDivLineChart');
-
-    this.myLineChart.remove();
-
-    for (var i = 0; i < datas[0].length; i++) {
-      this.myLineChart.addValue(datas[0][i], datas[1][i]);
-    }
-
-    this.myLineChart.setLabel(label);
-    let pieColors = this.getRandomColors(datas[0].length);
-    this.myLineChart.setChartColorBackground('rgba(255, 99, 132, 1)');
-    this.myLineChart.setChartColorBorder('rgba(255, 99, 132, 1)');
-
-    this.myLineChart.displayChart();
-    this.lineChartRedraw = true;
-  }
-
   displayBarChart(datas, label) {
     let myDivBarChart = document.getElementById("myDivBarChart");
     let checkBar = document.getElementById("checkBar");
@@ -134,6 +114,26 @@ class ChartController{
 
     this.myBarChart.displayChart();
     this.barChartRedraw = true;
+  }
+
+  displayLineChart(datas, label) {
+    let myDivLineChart = document.getElementById("myDivLineChart");
+    let checkLine = document.getElementById("checkLine");
+    this.showHideChart(checkLine, 'myDivLineChart');
+
+    this.myLineChart.remove();
+
+    for (var i = 0; i < datas[0].length; i++) {
+      this.myLineChart.addValue(datas[0][i], datas[1][i]);
+    }
+
+    this.myLineChart.setLabel(label);
+    let pieColors = this.getRandomColors(datas[0].length);
+    this.myLineChart.setChartColorBackground('rgba(255, 99, 132, 1)');
+    this.myLineChart.setChartColorBorder('rgba(255, 99, 132, 1)');
+
+    this.myLineChart.displayChart();
+    this.lineChartRedraw = true;
   }
 
   displayPieChart(datas, label) {
