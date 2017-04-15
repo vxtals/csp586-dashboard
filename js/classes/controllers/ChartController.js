@@ -108,8 +108,9 @@ class ChartController{
     }
 
     this.myLineChart.setLabel(label);
-    this.myLineChart.setChartColorBackground('rgba(255, 99, 132, 1)');
-    this.myLineChart.setChartColorBorder('rgba(255, 99, 132, 1)');
+    let pieColors = this.getRandomColors(datas[0].length);
+    this.myLineChart.setChartColorBackground(pieColors);
+    this.myLineChart.setChartColorBorder(pieColors);
 
     this.myLineChart.displayChart();
     this.lineChartRedraw = true;
