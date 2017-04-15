@@ -109,8 +109,8 @@ class ChartController{
 
     this.myLineChart.setLabel(label);
     let pieColors = this.getRandomColors(datas[0].length);
-    this.myLineChart.setChartColorBackground(pieColors);
-    this.myLineChart.setChartColorBorder(pieColors);
+    this.myLineChart.setChartColorBackground('rgba(255, 99, 132, 1)');
+    this.myLineChart.setChartColorBorder('rgba(255, 99, 132, 1)');
 
     this.myLineChart.displayChart();
     this.lineChartRedraw = true;
@@ -150,7 +150,7 @@ class ChartController{
     this.myPieChart.setLabel(label);
     let pieColors = this.getRandomColors(datas[0].length);
     this.myPieChart.setChartColorBackground(pieColors);
-    this.myPieChart.setChartColorBorder('#FFFFFF');
+    this.myPieChart.setChartColorBorder(pieColors);
 
     this.myPieChart.displayChart();
     this.pieChartRedraw = true;
