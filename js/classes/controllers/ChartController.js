@@ -130,7 +130,7 @@ class ChartController{
     this.myBarChart.setLabel(label);
     let barColors = this.getRandomColors(datas[0].length);
     this.myBarChart.setChartColorBackground(barColors);
-    this.myBarChart.setChartColorBorder('#FFFFFF');
+    this.myBarChart.setChartColorBorder(barColors);
 
     this.myBarChart.displayChart();
     this.barChartRedraw = true;
