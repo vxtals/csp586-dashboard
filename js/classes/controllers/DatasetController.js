@@ -24,7 +24,7 @@ class DatasetController{
     let parent =  document.getElementById('parentHolder');
     let tableRenderer = TableRenderer.getInstance();
     tableRenderer.initTableRenderer(parent, this.filter.getDataset());
-    tableRenderer.renderTable()
+    tableRenderer.renderTable();
     this.setFilters(this.dataset);
     this.setCharts(this.dataset);
     if(!this.reload){
