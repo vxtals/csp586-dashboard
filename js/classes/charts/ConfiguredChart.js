@@ -11,6 +11,10 @@ class ConfiguredChart extends BaseChart {
     this.options = new Options(options);
   }
 
+  getOptionsObject(){
+    return this.options;
+  }
+
   setChartColorBackground(color) {
     this.chartColorBackground = color
   }

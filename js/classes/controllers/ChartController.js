@@ -146,8 +146,7 @@ class ChartController{
     }else{
       let axisValue = this.filter.getDataset().datasToChartValues(selector.value);
       //Hide legend when there are too many values
-      // TODO: This is not working
-      //this.myPieChart.getOptionsObject().setDisplayLegend(axisValue[0].length <= 35);
+      this.myPieChart.getOptionsObject().setDisplayLegend(axisValue[0].length <= 35);
 
       this.displayPieChart(axisValue, selector.value);
       selector.value = null;
