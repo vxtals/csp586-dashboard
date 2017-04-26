@@ -28,7 +28,11 @@ class ConfiguredChart extends BaseChart {
     //this.chartDatas = [];
   }
 
-  addValue(label) {
+  addMainLabel(label) {
     this.chartMainLabels.push(label);
+  }
+
+  addMainLabels(array) {
+    this.chartMainLabels = array;
   }
 }

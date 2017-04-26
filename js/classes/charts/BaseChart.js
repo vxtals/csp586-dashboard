@@ -9,8 +9,8 @@ class BaseChart extends ObjectChart {
     this.datasetsData = [];
   }
 
-  setDatasetLabel(label, position) {
-    this.datasetsLabel[position] = label;
+  setDatasetLabel(label) {
+    this.datasetsLabel = label;
   }
 
   addDatasetLabel(label) {
@@ -21,8 +21,8 @@ class BaseChart extends ObjectChart {
     return this.datasetsLabel[position];
   }
 
-  setDatasetData(array, position) {
-    this.datasetsData[position] = array;
+  setDatasetData(array) {
+    this.datasetsData = array;
   }
 
   addDatasetData(array) {
@@ -34,24 +34,43 @@ class BaseChart extends ObjectChart {
   }
 
   displayChart() {
-    this.datasets = [{
-        label: this.datasetsLabel[0],
-        data: this.datasetsData[0],
-        borderWidth: 1,
-        backgroundColor: this.chartColorBackground,
-        borderColor: this.chartColorBorder
-    }];
 
-    this.datasets.push(
-      {
-          label: this.datasetsLabel[0],
+    this.datasets = [];
+
+    if (this.datasetsData.length > 1) {
+      for (var i = 0; i < this.datasetsData.length; i++) {
+        let color = this.getColor();
+        this.datasets.push(
+          {
+              label: this.datasetsLabel[i],
+              data: this.datasetsData[i],
+              borderWidth: 1,
+              backgroundColor: color,
+              borderColor: color
+          }
+        )
+      }
+    } else {
+      this.datasets = [{
+          label: this.datasetsLabel,
           data: this.datasetsData[0],
           borderWidth: 1,
           backgroundColor: this.chartColorBackground,
           borderColor: this.chartColorBorder
-      }
-    )
+      }];
+    }
+
     this.displayChartJS()
   }
+
+  getColor() {
+    let color = '#';
+    let letters = '0123456789ABCDEF'.split('');
+      for (let i = 0; i < 6; i++ ) {
+          color += letters[Math.floor(Math.random() * 16)];
+      }
+    return color;
+  }
+
 
 }

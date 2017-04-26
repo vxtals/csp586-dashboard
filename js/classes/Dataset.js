@@ -96,4 +96,44 @@ class Dataset {
         return axisValues;
     }
 
+    twoDatasToChartValues(column1, column2){
+      const position1 = this.getColumnPositionByName(column1);
+      const position2 = this.getColumnPositionByName(column2);
+      let value1 = "";
+      let value2 = "";
+      let values = [];
+      let c1axis = [];
+      let c2axis = [];
+      let rows = this.dataframe.toArray();
+
+      for (var i = 0; i < rows.length; i++) {
+        value1 = rows[i][position1];
+        value2 = rows[i][position2];
+        if (!c1axis.includes(value1)) {
+          c1axis.push(value1);
+        }
+        if (!c2axis.includes(value2)) {
+          c2axis.push(value2);
+        }
+      }
+
+      for (var i = 0; i < c2axis.length; i++) {
+        values[i] = [];
+        for (var j = 0; j < c1axis.length; j++) {
+          values[i][j] = 0
+        }
+      }
+
+      for (var j = 0; j < rows.length; j++) {
+        value1 = rows[j][position1];
+        value2 = rows[j][position2];
+        values[c2axis.indexOf(value2)][c1axis.indexOf(value1)] += 1;
+
+      }
+
+      const axisValues = [c1axis, c2axis, values];
+
+      return axisValues;
+    }
+
 }

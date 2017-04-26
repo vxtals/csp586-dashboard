@@ -112,9 +112,9 @@ class ChartController{
         !selectedColumn2 || selectedColumn2 == "null"){
       errMsgStacked.innerHTML = "You must select two columns";
     }else{
-      let axisValue = this.filter.getDataset().datasToChartValues(selector.value);
+      let axisValue = this.filter.getDataset().twoDatasToChartValues(selector.value, selector2.value);
 
-      this.displayStackedChart(axisValue, selector.value);
+      this.displayStackedChart(axisValue, selector.value, selector2.value);
       selector.value = null;
       selector2.value = null;
     }
@@ -165,7 +165,7 @@ class ChartController{
     this.myBarChart.remove();
     // TODO HERE
     for (var i = 0; i < datas[0].length; i++) {
-      this.myBarChart.addValue(datas[0][i]);
+      this.myBarChart.addMainLabel(datas[0][i]);
       tmpArray.push(datas[1][i]);
     }
 
@@ -179,25 +179,20 @@ class ChartController{
     this.barChartRedraw = true;
   }
 
-  displayStackedChart(datas, label) {
+  displayStackedChart(datasSelector, label1, label2) {
     let myDivStackedChart = document.getElementById("myDivStackedChart");
     let checkStacked = document.getElementById("checkStacked");
-    let tmpArray = [];
+    let mainDatasetData = [];
+    let mainChartLabels = []
     this.showHideChart(checkStacked, 'myDivStackedChart');
 
     this.myStackedChart.remove();
-
-    for (var i = 0; i < datas[0].length; i++) {
-      this.myStackedChart.addValue(datas[0][i]);
-      tmpArray.push(datas[1][i]);
-    }
-
-    this.myStackedChart.addDatasetData(tmpArray);
-    this.myStackedChart.setDatasetLabel(label, 0);
-    let color = this.getColor();
-    this.myStackedChart.setChartColorBackground(color);
-    this.myStackedChart.setChartColorBorder(color);
-
+    // datasSelector[0] => c1 axis
+    // datasSelector[1] => c2 axis
+    // datasSelector[2] => 2d array of value values[c2][c1]
+    this.myStackedChart.addMainLabels(datasSelector[0]);
+    this.myStackedChart.setDatasetLabel(datasSelector[1]);
+    this.myStackedChart.setDatasetData(datasSelector[2]);
     this.myStackedChart.displayChart();
     this.stackedChartRedraw = true;
   }
@@ -211,7 +206,7 @@ class ChartController{
     this.myLineChart.remove();
 
     for (var i = 0; i < datas[0].length; i++) {
-      this.myLineChart.addValue(datas[0][i]);
+      this.myLineChart.addMainLabel(datas[0][i]);
       tmpArray.push(datas[1][i]);
     }
 
@@ -234,7 +229,7 @@ class ChartController{
     this.myPieChart.remove();
 
     for (var i = 0; i < datas[0].length; i++) {
-      this.myPieChart.addValue(datas[0][i]);
+      this.myPieChart.addMainLabel(datas[0][i]);
       tmpArray.push(datas[1][i]);
     }
 
