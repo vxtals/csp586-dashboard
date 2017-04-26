@@ -33,4 +33,25 @@ class BaseChart extends ObjectChart {
     return this.datasetsData[position];
   }
 
+  displayChart() {
+    this.datasets = [{
+        label: this.datasetsLabel[0],
+        data: this.datasetsData[0],
+        borderWidth: 1,
+        backgroundColor: this.chartColorBackground,
+        borderColor: this.chartColorBorder
+    }];
+
+    this.datasets.push(
+      {
+          label: this.datasetsLabel[0],
+          data: this.datasetsData[0],
+          borderWidth: 1,
+          backgroundColor: this.chartColorBackground,
+          borderColor: this.chartColorBorder
+      }
+    )
+    this.displayChartJS()
+  }
+
 }

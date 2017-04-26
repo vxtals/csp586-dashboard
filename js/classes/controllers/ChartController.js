@@ -101,18 +101,22 @@ class ChartController{
 
   applyColumnSelectorStacked(){
     let selector = document.getElementById("columnSelectorStacked");
+    let selector2 = document.getElementById("columnSelectorStacked2");
     let errMsgStacked = document.getElementById("errMsgStacked");
 
     errMsgStacked.innerHTML = "";
     let selectedColumn = selector.options[selector.selectedIndex].value;
+    let selectedColumn2 = selector2.options[selector2.selectedIndex].value;
 
-    if(!selectedColumn || selectedColumn == "null"){
-      errMsgStacked.innerHTML = "You must select a column";
+    if(!selectedColumn || selectedColumn == "null" ||
+        !selectedColumn2 || selectedColumn2 == "null"){
+      errMsgStacked.innerHTML = "You must select two columns";
     }else{
       let axisValue = this.filter.getDataset().datasToChartValues(selector.value);
 
       this.displayStackedChart(axisValue, selector.value);
       selector.value = null;
+      selector2.value = null;
     }
   }
 
@@ -167,9 +171,9 @@ class ChartController{
 
     this.myBarChart.addDatasetData(tmpArray);
     this.myBarChart.setDatasetLabel(label, 0);
-    let barColors = this.getRandomColors(datas[0].length);
-    this.myBarChart.setChartColorBackground(barColors);
-    this.myBarChart.setChartColorBorder(barColors);
+    let color = this.getColor();
+    this.myBarChart.setChartColorBackground(color);
+    this.myBarChart.setChartColorBorder(color);
 
     this.myBarChart.displayChart();
     this.barChartRedraw = true;
@@ -190,9 +194,9 @@ class ChartController{
 
     this.myStackedChart.addDatasetData(tmpArray);
     this.myStackedChart.setDatasetLabel(label, 0);
-    let barColors = this.getRandomColors(datas[0].length);
-    this.myStackedChart.setChartColorBackground(barColors);
-    this.myStackedChart.setChartColorBorder(barColors);
+    let color = this.getColor();
+    this.myStackedChart.setChartColorBackground(color);
+    this.myStackedChart.setChartColorBorder(color);
 
     this.myStackedChart.displayChart();
     this.stackedChartRedraw = true;
@@ -213,9 +217,9 @@ class ChartController{
 
     this.myLineChart.addDatasetData(tmpArray);
     this.myLineChart.setDatasetLabel(label, 0);
-    let pieColors = this.getRandomColors(datas[0].length);
-    this.myLineChart.setChartColorBackground('rgba(255, 99, 132, 1)');
-    this.myLineChart.setChartColorBorder('rgba(255, 99, 132, 1)');
+    let color = this.getColor();
+    this.myLineChart.setChartColorBackground(color);
+    this.myLineChart.setChartColorBorder(color);
 
     this.myLineChart.displayChart();
     this.lineChartRedraw = true;
@@ -244,12 +248,12 @@ class ChartController{
     this.pieChartRedraw = true;
   }
 
-  setColumnSelectorBarChart(dataset){
+  setColumnSelector(dataset, idSelector){
     let columnsCheckers = document.getElementById("columnsCheckers");
-    let columnSelectorBar = document.getElementById("columnSelectorBar");
+    let columnSelector = document.getElementById(idSelector);
     let colCheckboxes = columnsCheckers.getElementsByTagName('input');
 
-    columnSelectorBar.innerHTML = ""
+    columnSelector.innerHTML = ""
     let columnNames = dataset.dataframe.listColumns()
     for(let index = columnNames.length - 1; index > -1; index--){
       const selector = document.createElement("option")
@@ -258,7 +262,7 @@ class ChartController{
       if(!colCheckboxes[index].checked){
         selector.disabled = true
       }
-      columnSelectorBar.insertBefore(selector, columnSelectorBar.firstChild);
+      columnSelector.insertBefore(selector, columnSelector.firstChild);
     }
 
     const emptyselector = document.createElement("option")
@@ -267,91 +271,22 @@ class ChartController{
     emptyselector.disabled = true
     emptyselector.setAttribute("value", null)
 
-    columnSelectorBar.insertBefore(emptyselector, columnSelectorBar.firstChild);
-  }
-
-  setColumnSelectorStackedChart(dataset){
-    let columnsCheckers = document.getElementById("columnsCheckers");
-    let columnSelectorStacked = document.getElementById("columnSelectorStacked");
-    let colCheckboxes = columnsCheckers.getElementsByTagName('input');
-
-    columnSelectorStacked.innerHTML = ""
-    let columnNames = dataset.dataframe.listColumns()
-    for(let index = columnNames.length - 1; index > -1; index--){
-      const selector = document.createElement("option")
-      selector.setAttribute("value", columnNames[index])
-      selector.innerHTML = columnNames[index]
-      if(!colCheckboxes[index].checked){
-        selector.disabled = true
-      }
-      columnSelectorStacked.insertBefore(selector, columnSelectorStacked.firstChild);
-    }
-
-    const emptyselector = document.createElement("option")
-    emptyselector.innerHTML = "Select column"
-    emptyselector.selected = true
-    emptyselector.disabled = true
-    emptyselector.setAttribute("value", null)
-
-    columnSelectorStacked.insertBefore(emptyselector, columnSelectorStacked.firstChild);
-  }
-
-  setColumnSelectorLineChart(dataset){
-    let columnsCheckers = document.getElementById("columnsCheckers");
-    let columnSelectorLine = document.getElementById("columnSelectorLine");
-    let colCheckboxes = columnsCheckers.getElementsByTagName('input');
-
-    columnSelectorLine.innerHTML = ""
-    let columnNames = dataset.dataframe.listColumns()
-    for(let index = columnNames.length - 1; index > -1; index--){
-      const selector = document.createElement("option")
-      selector.setAttribute("value", columnNames[index])
-      selector.innerHTML = columnNames[index]
-      if(!colCheckboxes[index].checked){
-        selector.disabled = true
-      }
-      columnSelectorLine.insertBefore(selector, columnSelectorLine.firstChild);
-    }
-
-    const emptyselector = document.createElement("option")
-    emptyselector.innerHTML = "Select column"
-    emptyselector.selected = true
-    emptyselector.disabled = true
-    emptyselector.setAttribute("value", null)
-
-    columnSelectorLine.insertBefore(emptyselector, columnSelectorLine.firstChild);
-  }
-
-  setColumnSelectorPieChart(dataset){
-    let columnsCheckers = document.getElementById("columnsCheckers");
-    let columnSelectorPie = document.getElementById("columnSelectorPie");
-    let colCheckboxes = columnsCheckers.getElementsByTagName('input');
-
-    columnSelectorPie.innerHTML = ""
-    let columnNames = dataset.dataframe.listColumns()
-    for(let index = columnNames.length - 1; index > -1; index--){
-      const selector = document.createElement("option")
-      selector.setAttribute("value", columnNames[index])
-      selector.innerHTML = columnNames[index]
-      if(!colCheckboxes[index].checked){
-        selector.disabled = true
-      }
-      columnSelectorPie.insertBefore(selector, columnSelectorPie.firstChild);
-    }
-
-    const emptyselector = document.createElement("option")
-    emptyselector.innerHTML = "Select column"
-    emptyselector.selected = true
-    emptyselector.disabled = true
-    emptyselector.setAttribute("value", null)
-
-    columnSelectorPie.insertBefore(emptyselector, columnSelectorPie.firstChild);
+    columnSelector.insertBefore(emptyselector, columnSelector.firstChild);
   }
 
   showHideChart(checkbox, chartId) {
       var isChecked = checkbox.checked;
       var showHide = isChecked ?"":"none";
       document.getElementById(chartId).style.display = showHide;
+  }
+
+  getColor() {
+    let color = '#';
+    let letters = '0123456789ABCDEF'.split('');
+      for (let i = 0; i < 6; i++ ) {
+          color += letters[Math.floor(Math.random() * 16)];
+      }
+    return color;
   }
 
   getRandomColors(number) {
@@ -362,11 +297,7 @@ class ChartController{
                   "#FFCE56"
               ]
       for(let i = 0; i < number - 4; i++){
-        let letters = '0123456789ABCDEF'.split('');
-        let color = '#';
-        for (let i = 0; i < 6; i++ ) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
+        let color = this.getColor();
         colorsList.push(color);
       }
       return colorsList;

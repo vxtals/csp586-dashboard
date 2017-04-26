@@ -58,10 +58,11 @@ class DatasetController{
     if(!this.reload){
       document.getElementById('showChartBtn').hidden = false;
     }
-    chartController.setColumnSelectorBarChart(dataset);
-    chartController.setColumnSelectorStackedChart(dataset);
-    chartController.setColumnSelectorLineChart(dataset);
-    chartController.setColumnSelectorPieChart(dataset);
+    chartController.setColumnSelector(dataset, 'columnSelectorBar');
+    chartController.setColumnSelector(dataset, 'columnSelectorStacked');
+    chartController.setColumnSelector(dataset, 'columnSelectorStacked2');
+    chartController.setColumnSelector(dataset, 'columnSelectorLine');
+    chartController.setColumnSelector(dataset, 'columnSelectorPie');
   }
 
   addRemoteDataset(url, estimatedSize)

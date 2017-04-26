@@ -68,10 +68,12 @@ class FilterController{
     this.setColumnSelectorValue(dataset)
     this.setColumnSelectorDate(dataset)
     this.setColumnSelectorRange(dataset);
-    this.chartController.setColumnSelectorBarChart(dataset);
-    this.chartController.setColumnSelectorStackedChart(dataset);
-    this.chartController.setColumnSelectorLineChart(dataset);
-    this.chartController.setColumnSelectorPieChart(dataset);
+
+    this.chartController.setColumnSelector(dataset, 'columnSelectorBar');
+    this.chartController.setColumnSelector(dataset, 'columnSelectorStacked');
+    this.chartController.setColumnSelector(dataset, 'columnSelectorStacked2');
+    this.chartController.setColumnSelector(dataset, 'columnSelectorLine');
+    this.chartController.setColumnSelector(dataset, 'columnSelectorPie');
   }
 
   applyDateFilter(){

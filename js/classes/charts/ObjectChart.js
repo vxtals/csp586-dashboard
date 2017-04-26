@@ -1,7 +1,7 @@
 // Upper Object that call Chart.js
 class ObjectChart {
 
-  displayChart() {
+  displayChartJS() {
     if(!!this.myChart){
         this.myChart.destroy();
     }
@@ -9,19 +9,7 @@ class ObjectChart {
         type: this.type,
         data: {
             labels: this.chartMainLabels,
-            datasets: [{
-                label: this.datasetsLabel[0],
-                data: this.datasetsData[0],
-                borderWidth: 1,
-                backgroundColor: this.chartColorBackground,
-                borderColor: this.chartColorBorder
-            },{
-                label: this.datasetsLabel[0],
-                data: this.datasetsData[0],
-                borderWidth: 1,
-                backgroundColor: this.chartColorBackground,
-                borderColor: this.chartColorBorder
-            }]
+            datasets: this.datasets
         },
         options: this.options.getOptions()
     });
