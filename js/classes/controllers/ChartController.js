@@ -40,7 +40,6 @@ class ChartController{
     // Creates StackedChart instance.
     let ctxStacked = document.getElementById("myStackedChart").getContext("2d");
     this.myStackedChart = chartFactory.createChart('stacked',ctxStacked);
-    // TODO: Not Here
     this.myStackedChart.setOptionsObject({
       scales: {
           yAxes: [{
@@ -156,15 +155,18 @@ class ChartController{
   displayBarChart(datas, label) {
     let myDivBarChart = document.getElementById("myDivBarChart");
     let checkBar = document.getElementById("checkBar");
+    let tmpArray = [];
     this.showHideChart(checkBar, 'myDivBarChart');
 
     this.myBarChart.remove();
-
+    // TODO HERE
     for (var i = 0; i < datas[0].length; i++) {
-      this.myBarChart.addValue(datas[0][i], datas[1][i]);
+      this.myBarChart.addValue(datas[0][i]);
+      tmpArray.push(datas[1][i]);
     }
 
-    this.myBarChart.setLabel(label);
+    this.myBarChart.addDatasetData(tmpArray);
+    this.myBarChart.setDatasetLabel(label, 0);
     let barColors = this.getRandomColors(datas[0].length);
     this.myBarChart.setChartColorBackground(barColors);
     this.myBarChart.setChartColorBorder(barColors);
@@ -176,15 +178,18 @@ class ChartController{
   displayStackedChart(datas, label) {
     let myDivStackedChart = document.getElementById("myDivStackedChart");
     let checkStacked = document.getElementById("checkStacked");
+    let tmpArray = [];
     this.showHideChart(checkStacked, 'myDivStackedChart');
 
     this.myStackedChart.remove();
 
     for (var i = 0; i < datas[0].length; i++) {
-      this.myStackedChart.addValue(datas[0][i], datas[1][i]);
+      this.myStackedChart.addValue(datas[0][i]);
+      tmpArray.push(datas[1][i]);
     }
 
-    this.myStackedChart.setLabel(label);
+    this.myStackedChart.addDatasetData(tmpArray);
+    this.myStackedChart.setDatasetLabel(label, 0);
     let barColors = this.getRandomColors(datas[0].length);
     this.myStackedChart.setChartColorBackground(barColors);
     this.myStackedChart.setChartColorBorder(barColors);
@@ -196,15 +201,18 @@ class ChartController{
   displayLineChart(datas, label) {
     let myDivLineChart = document.getElementById("myDivLineChart");
     let checkLine = document.getElementById("checkLine");
+    let tmpArray = [];
     this.showHideChart(checkLine, 'myDivLineChart');
 
     this.myLineChart.remove();
 
     for (var i = 0; i < datas[0].length; i++) {
-      this.myLineChart.addValue(datas[0][i], datas[1][i]);
+      this.myLineChart.addValue(datas[0][i]);
+      tmpArray.push(datas[1][i]);
     }
 
-    this.myLineChart.setLabel(label);
+    this.myLineChart.addDatasetData(tmpArray);
+    this.myLineChart.setDatasetLabel(label, 0);
     let pieColors = this.getRandomColors(datas[0].length);
     this.myLineChart.setChartColorBackground('rgba(255, 99, 132, 1)');
     this.myLineChart.setChartColorBorder('rgba(255, 99, 132, 1)');
@@ -216,15 +224,18 @@ class ChartController{
   displayPieChart(datas, label) {
     let myDivPieChart = document.getElementById("myDivPieChart");
     let checkPie = document.getElementById("checkPie");
+    let tmpArray = [];
     this.showHideChart(checkPie, 'myDivPieChart');
 
     this.myPieChart.remove();
 
     for (var i = 0; i < datas[0].length; i++) {
-      this.myPieChart.addValue(datas[0][i], datas[1][i]);
+      this.myPieChart.addValue(datas[0][i]);
+      tmpArray.push(datas[1][i]);
     }
 
-    this.myPieChart.setLabel(label);
+    this.myPieChart.addDatasetData(tmpArray);
+    this.myPieChart.setDatasetLabel(label, 0);
     let pieColors = this.getRandomColors(datas[0].length);
     this.myPieChart.setChartColorBackground(pieColors);
     this.myPieChart.setChartColorBorder(pieColors);

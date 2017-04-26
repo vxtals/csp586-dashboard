@@ -2,8 +2,7 @@
 class ConfiguredChart extends BaseChart {
   constructor() {
     super();
-    this.chartLabels = [];
-    this.chartDatas = [];
+    this.chartMainLabels = [];
     this.options = new Options({});
   }
 
@@ -24,7 +23,12 @@ class ConfiguredChart extends BaseChart {
   }
 
   remove() {
-    this.chartLabels = [];
-    this.chartDatas = [];
+    this.chartMainLabels = [];
+    // TODO: Empty all datasets
+    //this.chartDatas = [];
+  }
+
+  addValue(label) {
+    this.chartMainLabels.push(label);
   }
 }

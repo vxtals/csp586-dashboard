@@ -8,10 +8,16 @@ class ObjectChart {
     this.myChart = new Chart(this.ctx, {
         type: this.type,
         data: {
-            labels: this.chartLabels,
+            labels: this.chartMainLabels,
             datasets: [{
-                label: this.chartLabel,
-                data: this.chartDatas,
+                label: this.datasetsLabel[0],
+                data: this.datasetsData[0],
+                borderWidth: 1,
+                backgroundColor: this.chartColorBackground,
+                borderColor: this.chartColorBorder
+            },{
+                label: this.datasetsLabel[0],
+                data: this.datasetsData[0],
                 borderWidth: 1,
                 backgroundColor: this.chartColorBackground,
                 borderColor: this.chartColorBorder

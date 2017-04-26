@@ -5,9 +5,4 @@ class LineChart extends ConfiguredChart {
     this.ctx = ctx
     this.type = 'line';
   }
-
-  addValue(label, data) {
-    this.chartLabels.push(label);
-    this.chartDatas.push(data);
-  }
 }
