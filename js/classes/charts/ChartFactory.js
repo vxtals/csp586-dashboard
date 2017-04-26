@@ -6,9 +6,10 @@ class ChartFactory{
         return new PieChart(ctx);
       case 'bar':
         return new BarChart(ctx);
+      case 'stacked':
+        return new BarChart(ctx);
       case 'line':
         return new LineChart(ctx);
     }
   }
 }
-

@@ -69,6 +69,7 @@ class FilterController{
     this.setColumnSelectorDate(dataset)
     this.setColumnSelectorRange(dataset);
     this.chartController.setColumnSelectorBarChart(dataset);
+    this.chartController.setColumnSelectorStackedChart(dataset);
     this.chartController.setColumnSelectorLineChart(dataset);
     this.chartController.setColumnSelectorPieChart(dataset);
   }

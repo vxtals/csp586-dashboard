@@ -59,6 +59,7 @@ class DatasetController{
       document.getElementById('showChartBtn').hidden = false;
     }
     chartController.setColumnSelectorBarChart(dataset);
+    chartController.setColumnSelectorStackedChart(dataset);
     chartController.setColumnSelectorLineChart(dataset);
     chartController.setColumnSelectorPieChart(dataset);
   }

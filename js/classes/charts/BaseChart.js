@@ -8,4 +8,6 @@ class BaseChart extends ObjectChart {
   setLabel(label) {
     this.chartLabel = label;
   }
+
+  // TODO: Add datasets
 }

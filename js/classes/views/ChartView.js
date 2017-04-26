@@ -6,7 +6,7 @@ class ChartView{
     this.addControlListeners();
     this.addChartListeners();
   }
-  
+
   addControlListeners(){
     document.getElementById("showChartBtn").onclick = function(e) {
       e.preventDefault();
@@ -27,10 +27,15 @@ class ChartView{
 
   addChartListeners(){
     let view = this;
-    
+
     document.getElementById("applyColumnSelectorBar").onclick = function(e) {
       e.preventDefault();
       view.cc.applyColumnSelectorBar();
+    };
+
+    document.getElementById("applyColumnSelectorStacked").onclick = function(e) {
+      e.preventDefault();
+      view.cc.applyColumnSelectorStacked();
     };
 
     document.getElementById("applyColumnSelectorLine").onclick = function(e) {
@@ -54,6 +59,13 @@ class ChartView{
       e.preventDefault();
       if(!this.checked || view.cc.barChartRedraw){
         view.cc.showHideChart(this, 'myDivBarChart');
+      }
+    };
+
+    document.getElementById("checkStacked").onchange = function(e) {
+      e.preventDefault();
+      if(!this.checked || view.cc.stackedChartRedraw){
+        view.cc.showHideChart(this, 'myDivStackedChart');
       }
     };
 

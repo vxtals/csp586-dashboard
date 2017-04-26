@@ -1,4 +1,4 @@
-// Has Option and Configuration for the Chart
+// Has Option for the Chart
 class ConfiguredChart extends BaseChart {
   constructor() {
     super();

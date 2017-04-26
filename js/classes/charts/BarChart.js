@@ -6,15 +6,8 @@ class BarChart extends ConfiguredChart {
     this.type = 'bar';
   }
 
-  addBar(bar) {
-    this.chartLabels.push(bar.label);
-    this.chartDatas.push(bar.data);
-  }
-
-  addBars(bars) {
-    bars.map((bar) => {
-      this.chartLabels.push(bar.label);
-      this.chartDatas.push(bar.data);
-    });
+  addValue(label, data) {
+    this.chartLabels.push(label);
+    this.chartDatas.push(data);
   }
 }

@@ -12,6 +12,7 @@ class ChartController{
     this.view = new ChartView();
 
     this.initBarChart();
+    this.initStackedChart();
     this.initLineChart();
     this.initPieChart();
   }
@@ -21,8 +22,37 @@ class ChartController{
     // Creates BarChart instance.
     let ctxBar = document.getElementById("myBarChart").getContext("2d");
     this.myBarChart = chartFactory.createChart('bar',ctxBar);
+    this.myBarChart.setOptionsObject({
+      scales: {
+          yAxes: [{
+              ticks: {
+                  beginAtZero:true
+              }
+          }]
+      }
+    });
     this.myBarChart.displayChart(ctxBar);
     this.barChartRedraw = false;
+  }
+
+  initStackedChart(){
+    let chartFactory = new ChartFactory();
+    // Creates StackedChart instance.
+    let ctxStacked = document.getElementById("myStackedChart").getContext("2d");
+    this.myStackedChart = chartFactory.createChart('stacked',ctxStacked);
+    // TODO: Not Here
+    this.myStackedChart.setOptionsObject({
+      scales: {
+          yAxes: [{
+              stacked: true,
+              ticks: {
+                  beginAtZero:true
+              }
+          }]
+      }
+    });
+    this.myStackedChart.displayChart(ctxStacked);
+    this.stackedChartRedraw = false;
   }
 
   initLineChart(){
@@ -30,6 +60,15 @@ class ChartController{
     // Creates LineChart instance.
     let ctxLine = document.getElementById("myLineChart").getContext("2d");
     this.myLineChart = chartFactory.createChart('line',ctxLine);
+    this.myLineChart.setOptionsObject({
+      scales: {
+          yAxes: [{
+              ticks: {
+                  beginAtZero:true
+              }
+          }]
+      }
+    });
     this.myLineChart.displayChart(ctxLine);
     this.lineChartRedraw = false;
   }
@@ -39,6 +78,7 @@ class ChartController{
     // Creates PieChart instance.
     let ctxPie = document.getElementById("myPieChart").getContext("2d");
     this.myPieChart = chartFactory.createChart('pie',ctxPie);
+    this.myPieChart.setOptionsObject({});
     this.myPieChart.displayChart(ctxPie);
     this.pieChartRedraw = false;
   }
@@ -56,6 +96,23 @@ class ChartController{
       let axisValue = this.filter.getDataset().datasToChartValues(selector.value);
 
       this.displayBarChart(axisValue, selector.value);
+      selector.value = null;
+    }
+  }
+
+  applyColumnSelectorStacked(){
+    let selector = document.getElementById("columnSelectorStacked");
+    let errMsgStacked = document.getElementById("errMsgStacked");
+
+    errMsgStacked.innerHTML = "";
+    let selectedColumn = selector.options[selector.selectedIndex].value;
+
+    if(!selectedColumn || selectedColumn == "null"){
+      errMsgStacked.innerHTML = "You must select a column";
+    }else{
+      let axisValue = this.filter.getDataset().datasToChartValues(selector.value);
+
+      this.displayStackedChart(axisValue, selector.value);
       selector.value = null;
     }
   }
@@ -89,7 +146,8 @@ class ChartController{
     }else{
       let axisValue = this.filter.getDataset().datasToChartValues(selector.value);
       //Hide legend when there are too many values
-      this.myPieChart.getOptionsObject().setDisplayLegend(axisValue[0].length <= 35);
+      // TODO: This is not working
+      //this.myPieChart.getOptionsObject().setDisplayLegend(axisValue[0].length <= 35);
 
       this.displayPieChart(axisValue, selector.value);
       selector.value = null;
@@ -104,7 +162,7 @@ class ChartController{
     this.myBarChart.remove();
 
     for (var i = 0; i < datas[0].length; i++) {
-      this.myBarChart.addBar(new Bar(datas[0][i], datas[1][i]));
+      this.myBarChart.addValue(datas[0][i], datas[1][i]);
     }
 
     this.myBarChart.setLabel(label);
@@ -114,6 +172,26 @@ class ChartController{
 
     this.myBarChart.displayChart();
     this.barChartRedraw = true;
+  }
+
+  displayStackedChart(datas, label) {
+    let myDivStackedChart = document.getElementById("myDivStackedChart");
+    let checkStacked = document.getElementById("checkStacked");
+    this.showHideChart(checkStacked, 'myDivStackedChart');
+
+    this.myStackedChart.remove();
+
+    for (var i = 0; i < datas[0].length; i++) {
+      this.myStackedChart.addValue(datas[0][i], datas[1][i]);
+    }
+
+    this.myStackedChart.setLabel(label);
+    let barColors = this.getRandomColors(datas[0].length);
+    this.myStackedChart.setChartColorBackground(barColors);
+    this.myStackedChart.setChartColorBorder(barColors);
+
+    this.myStackedChart.displayChart();
+    this.stackedChartRedraw = true;
   }
 
   displayLineChart(datas, label) {
@@ -180,6 +258,32 @@ class ChartController{
     emptyselector.setAttribute("value", null)
 
     columnSelectorBar.insertBefore(emptyselector, columnSelectorBar.firstChild);
+  }
+
+  setColumnSelectorStackedChart(dataset){
+    let columnsCheckers = document.getElementById("columnsCheckers");
+    let columnSelectorStacked = document.getElementById("columnSelectorStacked");
+    let colCheckboxes = columnsCheckers.getElementsByTagName('input');
+
+    columnSelectorStacked.innerHTML = ""
+    let columnNames = dataset.dataframe.listColumns()
+    for(let index = columnNames.length - 1; index > -1; index--){
+      const selector = document.createElement("option")
+      selector.setAttribute("value", columnNames[index])
+      selector.innerHTML = columnNames[index]
+      if(!colCheckboxes[index].checked){
+        selector.disabled = true
+      }
+      columnSelectorStacked.insertBefore(selector, columnSelectorStacked.firstChild);
+    }
+
+    const emptyselector = document.createElement("option")
+    emptyselector.innerHTML = "Select column"
+    emptyselector.selected = true
+    emptyselector.disabled = true
+    emptyselector.setAttribute("value", null)
+
+    columnSelectorStacked.insertBefore(emptyselector, columnSelectorStacked.firstChild);
   }
 
   setColumnSelectorLineChart(dataset){

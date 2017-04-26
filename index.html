@@ -10,12 +10,12 @@
     <script src="js/classes/charts/ChartFactory.js"></script>
     <script src="js/classes/charts/ObjectChart.js"></script>
     <script src="js/classes/charts/BaseChart.js"></script>
-    <script src="js/classes/charts/Options.js"></script>
     <script src="js/classes/charts/ConfiguredChart.js"></script>
+    <script src="js/classes/charts/Options.js"></script>
     <script src="js/classes/charts/BarChart.js"></script>
-    <script src="js/classes/charts/Bar.js"></script>
     <script src="js/classes/charts/LineChart.js"></script>
     <script src="js/classes/charts/PieChart.js"></script>
+    <script src="js/classes/charts/StackedChart.js"></script>
 
     <script src="js/classes/views/FilterView.js"></script>
     <script src="js/classes/controllers/FilterController.js"></script>
@@ -173,6 +173,20 @@
             <button id="applyColumnSelectorPie" class="project-btn apply-filter-btn">Apply</button>
             <span id="errMsgPie" class="err-msg"></span>
           </div>
+          <div>
+            <input type="checkbox" id="checkStacked" onchange="showHideChart(this, 'myDivStackedChart');"></input>
+            <span class="chart-name">Stacked Chart</span>
+            <select id="columnSelectorStacked" class="input-field"></select>
+            <button id="applyColumnSelectorStacked" class="project-btn apply-filter-btn">Apply</button>
+            <span id="errMsgStacked" class="err-msg"></span>
+          </div>
+          <div>
+            <input type="checkbox" id="checkPivot" onchange="showHideChart(this, 'myDivPivotChart');"></input>
+            <span class="chart-name">Pivot Chart</span>
+            <select id="columnSelectorPivot" class="input-field"></select>
+            <button id="applyColumnSelectorPivot" class="project-btn apply-filter-btn">Apply</button>
+            <span id="errMsgPivot" class="err-msg"></span>
+          </div>
         </div>
         <div class="container">
           <div class="chart-container" id="myDivBarChart" style="display: none;">
@@ -183,6 +197,12 @@
           </div>
           <div class="chart-container" id="myDivPieChart" style="display: none;">
               <canvas id="myPieChart"></canvas>
+          </div>
+          <div class="chart-container" id="myDivStackedChart" style="display: none;">
+              <canvas id="myStackedChart"></canvas>
+          </div>
+          <div class="chart-container" id="myDivPivotChart" style="display: none;">
+              <canvas id="myPivotChart"></canvas>
           </div>
         </div>
     </div>
