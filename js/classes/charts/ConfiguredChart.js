@@ -24,8 +24,8 @@ class ConfiguredChart extends BaseChart {
 
   remove() {
     this.chartMainLabels = [];
-    // TODO: Empty all datasets
-    //this.chartDatas = [];
+    this.datasetsLabel = [];
+    this.datasetsData = [];
   }
 
   addMainLabel(label) {

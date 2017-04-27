@@ -163,7 +163,6 @@ class ChartController{
     this.showHideChart(checkBar, 'myDivBarChart');
 
     this.myBarChart.remove();
-    // TODO HERE
     for (var i = 0; i < datas[0].length; i++) {
       this.myBarChart.addMainLabel(datas[0][i]);
       tmpArray.push(datas[1][i]);
