@@ -1,5 +1,5 @@
-// Stacked Chart
-class StackedChart extends BarChart {
+// Pivot Chart
+class PivotChart extends StackedChart {
   constructor(ctx) {
     super();
     this.ctx = ctx

@@ -72,6 +72,9 @@ class FilterController{
     this.chartController.setColumnSelector(dataset, 'columnSelectorBar');
     this.chartController.setColumnSelector(dataset, 'columnSelectorStacked');
     this.chartController.setColumnSelector(dataset, 'columnSelectorStacked2');
+    this.chartController.setColumnSelector(dataset, 'columnSelectorPivot');
+    this.chartController.setColumnSelector(dataset, 'columnSelectorPivot2');
+    this.chartController.setColumnSelector(dataset, 'columnSelectorPivot3');
     this.chartController.setColumnSelector(dataset, 'columnSelectorLine');
     this.chartController.setColumnSelector(dataset, 'columnSelectorPie');
   }

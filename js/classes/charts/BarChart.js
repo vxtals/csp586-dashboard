@@ -1,4 +1,4 @@
-// Bar Chart with list of Bar
+// Bar Chart
 class BarChart extends ConfiguredChart {
   constructor(ctx) {
     super();

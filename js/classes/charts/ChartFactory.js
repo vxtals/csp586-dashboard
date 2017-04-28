@@ -8,6 +8,8 @@ class ChartFactory{
         return new BarChart(ctx);
       case 'stacked':
         return new BarChart(ctx);
+      case 'pivot':
+        return new PivotChart(ctx);
       case 'line':
         return new LineChart(ctx);
     }

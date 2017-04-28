@@ -61,6 +61,9 @@ class DatasetController{
     chartController.setColumnSelector(dataset, 'columnSelectorBar');
     chartController.setColumnSelector(dataset, 'columnSelectorStacked');
     chartController.setColumnSelector(dataset, 'columnSelectorStacked2');
+    chartController.setColumnSelector(dataset, 'columnSelectorPivot');
+    chartController.setColumnSelector(dataset, 'columnSelectorPivot2');
+    chartController.setColumnSelector(dataset, 'columnSelectorPivot3');
     chartController.setColumnSelector(dataset, 'columnSelectorLine');
     chartController.setColumnSelector(dataset, 'columnSelectorPie');
   }

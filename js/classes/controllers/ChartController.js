@@ -13,6 +13,7 @@ class ChartController{
 
     this.initBarChart();
     this.initStackedChart();
+    this.initPivotChart();
     this.initLineChart();
     this.initPieChart();
   }
@@ -52,6 +53,25 @@ class ChartController{
     });
     this.myStackedChart.displayChart(ctxStacked);
     this.stackedChartRedraw = false;
+  }
+
+  initPivotChart(){
+    let chartFactory = new ChartFactory();
+    // Creates PivotChart instance.
+    let ctxPivot = document.getElementById("myPivotChart").getContext("2d");
+    this.myPivotChart = chartFactory.createChart('stacked',ctxPivot);
+    this.myPivotChart.setOptionsObject({
+        scales: {
+            xAxes: [{
+                stacked: true,
+            }],
+            yAxes: [{
+                stacked: true
+            }]
+        }
+    });
+    this.myPivotChart.displayChart(ctxPivot);
+    this.pivotChartRedraw = false;
   }
 
   initLineChart(){
@@ -117,6 +137,32 @@ class ChartController{
       this.displayStackedChart(axisValue, selector.value, selector2.value);
       selector.value = null;
       selector2.value = null;
+    }
+  }
+
+  applyColumnSelectorPivot(){
+    let selector = document.getElementById("columnSelectorPivot");
+    let selector2 = document.getElementById("columnSelectorPivot2");
+    let selector3 = document.getElementById("columnSelectorPivot3");
+    let errMsgPivot = document.getElementById("errMsgPivot");
+
+    errMsgPivot.innerHTML = "";
+    let selectedColumn = selector.options[selector.selectedIndex].value;
+    let selectedColumn2 = selector2.options[selector2.selectedIndex].value;
+    let selectedColumn3 = selector3.options[selector3.selectedIndex].value;
+
+    if(!selectedColumn || selectedColumn == "null" ||
+        !selectedColumn2 || selectedColumn2 == "null"  ||
+            !selectedColumn3 || selectedColumn3 == "null"){
+      errMsgPivot.innerHTML = "You must select three columns";
+    }else{
+      let axisValue = this.filter.getDataset().threeDatasToChartValues(selector.value, selector2.value, selector3.value);
+      this.myPivotChart.getOptionsObject().setDisplayLegend(false);
+
+      this.displayPivotChart(axisValue, selector.value, selector2.value, selector3.value);
+      selector.value = null;
+      selector2.value = null;
+      selector3.value = null;
     }
   }
 
@@ -194,6 +240,31 @@ class ChartController{
     this.myStackedChart.setDatasetData(datasSelector[2]);
     this.myStackedChart.displayChart();
     this.stackedChartRedraw = true;
+  }
+
+  displayPivotChart(datasSelector, label1, label2, label3) {
+    let myDivPivotChart = document.getElementById("myDivPivotChart");
+    let checkPivot = document.getElementById("checkPivot");
+    let mainDatasetData = [];
+    let mainChartLabels = []
+    this.showHideChart(checkPivot, 'myDivPivotChart');
+
+    this.myPivotChart.remove();
+    // datasSelector[0] => c1 axis
+    // datasSelector[1] => c2 axis
+    // datasSelector[2] => c3 axis
+    // datasSelector[3] => 3d array of value values[c3][c2][c1]
+    this.myPivotChart.addMainLabels(datasSelector[0]);
+    this.myPivotChart.setDatasetLabelGroup(datasSelector[1]);
+    this.myPivotChart.setDatasetLabel(datasSelector[2]);
+    for (var i = 0; i < datasSelector[3].length; i++) {
+      for (var j = 0; j < datasSelector[1].length; j++) {
+        this.myPivotChart.addDatasetData(datasSelector[3][i][j]);
+      }
+    }
+
+    this.myPivotChart.displayChart();
+    this.pivotChartRedraw = true;
   }
 
   displayLineChart(datas, label) {

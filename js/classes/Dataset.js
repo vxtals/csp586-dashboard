@@ -136,4 +136,54 @@ class Dataset {
       return axisValues;
     }
 
+    threeDatasToChartValues(column1, column2, column3){
+      const position1 = this.getColumnPositionByName(column1);
+      const position2 = this.getColumnPositionByName(column2);
+      const position3 = this.getColumnPositionByName(column3);
+      let value1 = "";
+      let value2 = "";
+      let value3 = "";
+      let values = [];
+      let c1axis = [];
+      let c2axis = [];
+      let c3axis = [];
+      let rows = this.dataframe.toArray();
+
+      for (var i = 0; i < rows.length; i++) {
+        value1 = rows[i][position1];
+        value2 = rows[i][position2];
+        value3 = rows[i][position3];
+        if (!c1axis.includes(value1)) {
+          c1axis.push(value1);
+        }
+        if (!c2axis.includes(value2)) {
+          c2axis.push(value2);
+        }
+        if (!c3axis.includes(value3)) {
+          c3axis.push(value3);
+        }
+      }
+
+      for (var i = 0; i < c3axis.length; i++) {
+        values[i] = [];
+        for (var j = 0; j < c2axis.length; j++) {
+          values[i][j] = []
+          for (var k = 0; k < c1axis.length; k++) {
+            values[i][j][k] = 0
+          }
+        }
+      }
+
+      for (var j = 0; j < rows.length; j++) {
+        value1 = rows[j][position1];
+        value2 = rows[j][position2];
+        value3 = rows[j][position3];
+        values[c3axis.indexOf(value3)][c2axis.indexOf(value2)][c1axis.indexOf(value1)] += 1;
+      }
+
+      const axisValues = [c1axis, c2axis, c3axis, values];
+
+      return axisValues;
+    }
+
 }

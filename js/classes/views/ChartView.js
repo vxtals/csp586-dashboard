@@ -38,6 +38,11 @@ class ChartView{
       view.cc.applyColumnSelectorStacked();
     };
 
+    document.getElementById("applyColumnSelectorPivot").onclick = function(e) {
+      e.preventDefault();
+      view.cc.applyColumnSelectorPivot();
+    };
+
     document.getElementById("applyColumnSelectorLine").onclick = function(e) {
       e.preventDefault();
       view.cc.applyColumnSelectorLine();
@@ -66,6 +71,13 @@ class ChartView{
       e.preventDefault();
       if(!this.checked || view.cc.stackedChartRedraw){
         view.cc.showHideChart(this, 'myDivStackedChart');
+      }
+    };
+
+    document.getElementById("checkPivot").onchange = function(e) {
+      e.preventDefault();
+      if(!this.checked || view.cc.pivotChartRedraw){
+        view.cc.showHideChart(this, 'myDivPivotChart');
       }
     };
 
