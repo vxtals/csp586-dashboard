@@ -134,7 +134,7 @@ class ChartController{
     }else{
       let axisValue = this.filter.getDataset().twoDatasToChartValues(selector.value, selector2.value);
 
-      this.displayStackedChart(axisValue, selector.value, selector2.value);
+      this.displayStackedChart(axisValue);
       selector.value = null;
       selector2.value = null;
     }
@@ -157,9 +157,10 @@ class ChartController{
       errMsgPivot.innerHTML = "You must select three columns";
     }else{
       let axisValue = this.filter.getDataset().threeDatasToChartValues(selector.value, selector2.value, selector3.value);
-      this.myPivotChart.getOptionsObject().setDisplayLegend(false);
+      let totalComb = axisValue[1].length * axisValue[2].length;
+      this.myPivotChart.getOptionsObject().setDisplayLegend(totalComb <= 35);
 
-      this.displayPivotChart(axisValue, selector.value, selector2.value, selector3.value);
+      this.displayPivotChart(axisValue);
       selector.value = null;
       selector2.value = null;
       selector3.value = null;
@@ -224,7 +225,7 @@ class ChartController{
     this.barChartRedraw = true;
   }
 
-  displayStackedChart(datasSelector, label1, label2) {
+  displayStackedChart(datasSelector) {
     let myDivStackedChart = document.getElementById("myDivStackedChart");
     let checkStacked = document.getElementById("checkStacked");
     let mainDatasetData = [];
@@ -242,7 +243,7 @@ class ChartController{
     this.stackedChartRedraw = true;
   }
 
-  displayPivotChart(datasSelector, label1, label2, label3) {
+  displayPivotChart(datasSelector) {
     let myDivPivotChart = document.getElementById("myDivPivotChart");
     let checkPivot = document.getElementById("checkPivot");
     let mainDatasetData = [];
