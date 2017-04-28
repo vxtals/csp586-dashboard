@@ -107,14 +107,23 @@ class ChartController{
     let errMsgBar = document.getElementById("errMsgBar");
 
     errMsgBar.innerHTML = "";
-    let selectedColumn = selector.options[selector.selectedIndex].value;
+    var selectedColumn = selector.options[selector.selectedIndex].value;
+    var selectorValue = selector.value;
+
+    if(!selectedColumn || selectedColumn == "null"){
+      selectedColumn = this.selectedColumnBar;
+      selectorValue = this.selectorValueBar;
+    }
 
     if(!selectedColumn || selectedColumn == "null"){
       errMsgBar.innerHTML = "You must select a column";
     }else{
-      let axisValue = this.filter.getDataset().datasToChartValues(selector.value);
+      // Values stored to update automatically when dataset is updated
+      this.selectedColumnBar = selectedColumn;
+      this.selectorValueBar = selectorValue;
+      let axisValue = this.filter.getDataset().datasToChartValues(selectorValue);
 
-      this.displayBarChart(axisValue, selector.value);
+      this.displayBarChart(axisValue, selectorValue);
       selector.value = null;
     }
   }
@@ -125,14 +134,28 @@ class ChartController{
     let errMsgStacked = document.getElementById("errMsgStacked");
 
     errMsgStacked.innerHTML = "";
-    let selectedColumn = selector.options[selector.selectedIndex].value;
-    let selectedColumn2 = selector2.options[selector2.selectedIndex].value;
+    var selectedColumn = selector.options[selector.selectedIndex].value;
+    var selectedColumn2 = selector2.options[selector2.selectedIndex].value;
+    var selectorValue = selector.value;
+    var selectorValue2 = selector2.value;
+
+    if(!selectedColumn || selectedColumn == "null"){
+      selectedColumn = this.selectedColumnStacked;
+      selectedColumn2 = this.selectedColumnStacked2;
+      selectorValue = this.selectorValueStacked;
+      selectorValue2 = this.selectorValueStacked2;
+    }
 
     if(!selectedColumn || selectedColumn == "null" ||
         !selectedColumn2 || selectedColumn2 == "null"){
       errMsgStacked.innerHTML = "You must select two columns";
     }else{
-      let axisValue = this.filter.getDataset().twoDatasToChartValues(selector.value, selector2.value);
+      // Values stored to update automatically when dataset is updated
+      this.selectedColumnStacked = selectedColumn;
+      this.selectedColumnStacked2 = selectedColumn2;
+      this.selectorValueStacked = selectorValue;
+      this.selectorValueStacked2 = selectorValue2;
+      let axisValue = this.filter.getDataset().twoDatasToChartValues(selectorValue, selectorValue2);
 
       this.displayStackedChart(axisValue);
       selector.value = null;
@@ -147,16 +170,38 @@ class ChartController{
     let errMsgPivot = document.getElementById("errMsgPivot");
 
     errMsgPivot.innerHTML = "";
-    let selectedColumn = selector.options[selector.selectedIndex].value;
-    let selectedColumn2 = selector2.options[selector2.selectedIndex].value;
-    let selectedColumn3 = selector3.options[selector3.selectedIndex].value;
+    var selectedColumn = selector.options[selector.selectedIndex].value;
+    var selectedColumn2 = selector2.options[selector2.selectedIndex].value;
+    var selectedColumn3 = selector3.options[selector3.selectedIndex].value;
+    var selectorValue = selector.value;
+    var selectorValue2 = selector2.value;
+    var selectorValue3 = selector3.value;
+
+
+    if(!selectedColumn || selectedColumn == "null"){
+      // Restore values stored
+      selectedColumn = this.selectedColumnPivot;
+      selectedColumn2 = this.selectedColumnPivot2;
+      selectedColumn3 = this.selectedColumnPivot3;
+      selectorValue = this.selectorValuePivot;
+      selectorValue2 = this.selectorValuePivot2;
+      selectorValue3 = this.selectorValuePivot3;
+    }
 
     if(!selectedColumn || selectedColumn == "null" ||
         !selectedColumn2 || selectedColumn2 == "null"  ||
             !selectedColumn3 || selectedColumn3 == "null"){
       errMsgPivot.innerHTML = "You must select three columns";
     }else{
-      let axisValue = this.filter.getDataset().threeDatasToChartValues(selector.value, selector2.value, selector3.value);
+      // Values stored to update automatically when dataset is updated
+      this.selectedColumnPivot = selectedColumn;
+      this.selectedColumnPivot2 = selectedColumn2;
+      this.selectedColumnPivot3 = selectedColumn3;
+      this.selectorValuePivot = selectorValue;
+      this.selectorValuePivot2 = selectorValue2;
+      this.selectorValuePivot3 = selectorValue3;
+
+      let axisValue = this.filter.getDataset().threeDatasToChartValues(selectorValue, selectorValue2, selectorValue3);
       let totalComb = axisValue[1].length * axisValue[2].length;
       this.myPivotChart.getOptionsObject().setDisplayLegend(totalComb <= 35);
 
@@ -172,14 +217,25 @@ class ChartController{
     let errMsgLine = document.getElementById("errMsgLine");
 
     errMsgLine.innerHTML = "";
-    let selectedColumn = selector.options[selector.selectedIndex].value;
+    var selectedColumn = selector.options[selector.selectedIndex].value;
+    var selectorValue = selector.value;
+
+    if(!selectedColumn || selectedColumn == "null"){
+      // Restore values stored
+      selectedColumn = this.selectedColumnLine;
+      selectorValue = this.selectorValueLine;
+    }
 
     if(!selectedColumn || selectedColumn == "null"){
       errMsgLine.innerHTML = "You must select a column";
     }else{
-      let axisValue = this.filter.getDataset().datasToChartValues(selector.value);
+      // Values stored to update automatically when dataset is updated
+      this.selectedColumnLine = selectedColumn;
+      this.selectorValueLine = selectorValue;
 
-      this.displayLineChart(axisValue, selector.value);
+      let axisValue = this.filter.getDataset().datasToChartValues(selectorValue);
+
+      this.displayLineChart(axisValue, selectorValue);
       selector.value = null;
     }
   }
@@ -189,16 +245,25 @@ class ChartController{
     let errMsgPie = document.getElementById("errMsgPie");
 
     errMsgPie.innerHTML = "";
-    let selectedColumn = selector.options[selector.selectedIndex].value;
+    var selectedColumn = selector.options[selector.selectedIndex].value;
+    var selectorValue = selector.value;
+
+    if(!selectedColumn || selectedColumn == "null"){
+      selectedColumn = this.selectedColumnPie;
+      selectorValue = this.selectorValuePie;
+    }
 
     if(!selectedColumn || selectedColumn == "null"){
       errMsgPie.innerHTML = "You must select a column";
     }else{
-      let axisValue = this.filter.getDataset().datasToChartValues(selector.value);
+      // Values stored to update automatically when dataset is updated
+      this.selectedColumnPie = selectedColumn;
+      this.selectorValuePie = selectorValue;
+      let axisValue = this.filter.getDataset().datasToChartValues(selectorValue);
       //Hide legend when there are too many values
       this.myPieChart.getOptionsObject().setDisplayLegend(axisValue[0].length <= 35);
 
-      this.displayPieChart(axisValue, selector.value);
+      this.displayPieChart(axisValue, selectorValue);
       selector.value = null;
     }
   }
@@ -367,6 +432,25 @@ class ChartController{
         colorsList.push(color);
       }
       return colorsList;
+  }
+
+  notify(){
+    //Dataset is updated, repaint charts
+
+    if(this.selectedColumnBar)
+      this.applyColumnSelectorBar();
+
+    if(this.selectedColumnLine)
+      this.applyColumnSelectorLine();
+
+    if(this.selectedColumnPie)
+      this.applyColumnSelectorPie();
+
+    if(this.selectedColumnPivot)
+      this.applyColumnSelectorPivot();
+
+    if(this.selectedColumnStacked)
+      this.applyColumnSelectorStacked();
   }
 }
 

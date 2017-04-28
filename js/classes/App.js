@@ -4,5 +4,8 @@ class App{
     DatasetController.getInstance().init();
     FilterController.getInstance().init();
     ChartController.getInstance().init();
+
+    FilterController.getInstance()
+      .registerObserver(ChartController.getInstance());
   }
 }

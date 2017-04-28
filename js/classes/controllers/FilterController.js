@@ -13,6 +13,7 @@ class FilterController{
     this.chartController = ChartController.getInstance();
     this.tableRenderer = TableRenderer.getInstance();
     this.view = new FilterView();
+    this.observers = [];
   }
 
   applyRowByParameter(){
@@ -32,6 +33,7 @@ class FilterController{
       this.filter.filterByParameter(selectedColumn, parameterValue.value, exactMatch)
       parameterValue.value = null;
       this.applyColumnFilter();
+      this.notify();
     }
   }
 
@@ -53,6 +55,7 @@ class FilterController{
       }
       queryInput.value = null;
       this.applyColumnFilter();
+      this.notify();
     }else{
       errMsgQuery.innerHTML = "Query is empty.";
     }
@@ -96,6 +99,7 @@ class FilterController{
       startDate.value = null;
       endDate.value = null;
       this.applyColumnFilter();
+      this.notify();
     }
   }
 
@@ -116,6 +120,7 @@ class FilterController{
       minRange.value = null;
       maxRange.value = null;
       this.applyColumnFilter();
+      this.notify();
     }
   }
 
@@ -139,10 +144,11 @@ class FilterController{
       textareaFields[i].value = null
     }
     let dataset = this.datasetController.getDataset();
-    this.filter.setDataset(dataset)
-    this.tableRenderer.refreshTable(this.filter.getDataset())
+    this.filter.setDataset(dataset);
+    this.tableRenderer.refreshTable(this.filter.getDataset());
     this.datasetController.updateRowCounter(this.filter.getDataset());
-    this.updateDoButtons()
+    this.updateDoButtons();
+    this.notify();
   }
 
   getCheckedColumns(){
@@ -255,6 +261,21 @@ class FilterController{
   updateDoButtons(){
     document.getElementById('undoBtn').disabled = !this.filter.getUndoStatus();
     document.getElementById('redoBtn').disabled = !this.filter.getRedoStatus();
+  }
+
+  registerObserver(observer){
+    this.observers.push(observer);
+  }
+
+  unregisterObserver(observer){
+    let index = observers.indexOf(observer);
+    this.observers.splice(index, 1);
+  }
+
+  notify(){
+    this.observers.forEach(function myFunction(item, index) {
+      item.notify();
+    });
   }
 }
 FilterController.instance = null;
