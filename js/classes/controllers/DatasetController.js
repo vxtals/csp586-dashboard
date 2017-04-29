@@ -32,6 +32,7 @@ class DatasetController{
     }
     document.getElementById("startSteps").className = "hidden-steps";
     document.getElementById("newDatasetBtn").className = "";
+    document.getElementById("exportDatasetBtn").className = "";
     document.getElementById("loadingGlass").hidden = true;
     document.getElementById("loadingGlassMsg").innerHTML = "";
 
@@ -113,6 +114,10 @@ class DatasetController{
   updateRowCounter(dataset){
     let rowCounter = document.getElementById("rowCounter");
     rowCounter.innerHTML = dataset.dataframe.toArray().length + " rows."
+  }
+
+  exportDataset(){
+    this.dataset.exportDataset();
   }
 }
 

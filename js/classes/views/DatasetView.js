@@ -43,9 +43,14 @@ class DatasetView{
 
     document.getElementById("newDatasetBtn").onclick = function(e) {
       e.preventDefault();
-      document.getElementById("newDatasetBtn").className="hidden-button"
+      document.getElementById("newDatasetBtn").className="hidden-button";
+      document.getElementById("exportDatasetBtn").className="hidden-button";
       document.getElementById("startSteps").className = "";
     };
 
+    document.getElementById("exportDatasetBtn").onclick = function(e) {
+      e.preventDefault();
+      view.dc.exportDataset();
+    };
   }
 }

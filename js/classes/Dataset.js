@@ -186,4 +186,17 @@ class Dataset {
       return axisValues;
     }
 
+    exportDataset(){
+      let json = this.dataframe.toJSON();
+      let a = document.createElement("a");
+      document.body.appendChild(a);
+      a.style = "display: none";
+      let blob = new Blob([json], {type: "application/json;charset=utf-8"});
+      let url = window.URL.createObjectURL(blob);
+      a.href = url;
+      a.download = "filteredDataset.json";
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }
+
 }
