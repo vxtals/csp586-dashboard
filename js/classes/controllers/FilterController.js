@@ -72,14 +72,14 @@ class FilterController extends Observable {
     this.setColumnSelectorDate(dataset)
     this.setColumnSelectorRange(dataset);
 
-    this.setColumnSelector(dataset, 'columnSelectorBar', 'Select Axis');
-    this.setColumnSelector(dataset, 'columnSelectorStacked', 'Select Axis');
-    this.setColumnSelector(dataset, 'columnSelectorStacked2', 'Select Stacked Data');
-    this.setColumnSelector(dataset, 'columnSelectorPivot', 'Select Axis');
-    this.setColumnSelector(dataset, 'columnSelectorPivot2', 'Select Grouped Data');
-    this.setColumnSelector(dataset, 'columnSelectorPivot3', 'Select Stacked Data');
-    this.setColumnSelector(dataset, 'columnSelectorLine', 'Select Axis');
-    this.setColumnSelector(dataset, 'columnSelectorPie', 'Select Axis');
+    this.chartController.setColumnSelector(dataset, 'columnSelectorBar', 'Select Axis');
+    this.chartController.setColumnSelector(dataset, 'columnSelectorStacked', 'Select Axis');
+    this.chartController.setColumnSelector(dataset, 'columnSelectorStacked2', 'Select Stacked Data');
+    this.chartController.setColumnSelector(dataset, 'columnSelectorPivot', 'Select Axis');
+    this.chartController.setColumnSelector(dataset, 'columnSelectorPivot2', 'Select Grouped Data');
+    this.chartController.setColumnSelector(dataset, 'columnSelectorPivot3', 'Select Stacked Data');
+    this.chartController.setColumnSelector(dataset, 'columnSelectorLine', 'Select Axis');
+    this.chartController.setColumnSelector(dataset, 'columnSelectorPie', 'Select Axis');
   }
 
   applyDateFilter(){
