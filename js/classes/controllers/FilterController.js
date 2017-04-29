@@ -1,4 +1,4 @@
-class FilterController{
+class FilterController extends Observable {
 
   static getInstance(){
     if(!this.instance){

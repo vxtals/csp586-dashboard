@@ -1,4 +1,4 @@
-class ChartController{
+class ChartController extends Observer{
 
   static getInstance(){
     if(!this.instance){

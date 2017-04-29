@@ -1,0 +1,6 @@
+// Observer
+class Observer {
+
+  notify(){}
+
+}
