@@ -58,14 +58,14 @@ class DatasetController{
     if(!this.reload){
       document.getElementById('showChartBtn').hidden = false;
     }
-    chartController.setColumnSelector(dataset, 'columnSelectorBar');
-    chartController.setColumnSelector(dataset, 'columnSelectorStacked');
-    chartController.setColumnSelector(dataset, 'columnSelectorStacked2');
-    chartController.setColumnSelector(dataset, 'columnSelectorPivot');
-    chartController.setColumnSelector(dataset, 'columnSelectorPivot2');
-    chartController.setColumnSelector(dataset, 'columnSelectorPivot3');
-    chartController.setColumnSelector(dataset, 'columnSelectorLine');
-    chartController.setColumnSelector(dataset, 'columnSelectorPie');
+    chartController.setColumnSelector(dataset, 'columnSelectorBar', 'Select Axis');
+    chartController.setColumnSelector(dataset, 'columnSelectorStacked', 'Select Axis');
+    chartController.setColumnSelector(dataset, 'columnSelectorStacked2', 'Select Stacked Data');
+    chartController.setColumnSelector(dataset, 'columnSelectorPivot', 'Select Axis');
+    chartController.setColumnSelector(dataset, 'columnSelectorPivot2', 'Select Grouped Data');
+    chartController.setColumnSelector(dataset, 'columnSelectorPivot3', 'Select Stacked Data');
+    chartController.setColumnSelector(dataset, 'columnSelectorLine', 'Select Axis');
+    chartController.setColumnSelector(dataset, 'columnSelectorPie', 'Select Axis');
   }
 
   addRemoteDataset(url, estimatedSize)

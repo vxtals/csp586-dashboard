@@ -72,14 +72,14 @@ class FilterController{
     this.setColumnSelectorDate(dataset)
     this.setColumnSelectorRange(dataset);
 
-    this.chartController.setColumnSelector(dataset, 'columnSelectorBar');
-    this.chartController.setColumnSelector(dataset, 'columnSelectorStacked');
-    this.chartController.setColumnSelector(dataset, 'columnSelectorStacked2');
-    this.chartController.setColumnSelector(dataset, 'columnSelectorPivot');
-    this.chartController.setColumnSelector(dataset, 'columnSelectorPivot2');
-    this.chartController.setColumnSelector(dataset, 'columnSelectorPivot3');
-    this.chartController.setColumnSelector(dataset, 'columnSelectorLine');
-    this.chartController.setColumnSelector(dataset, 'columnSelectorPie');
+    this.setColumnSelector(dataset, 'columnSelectorBar', 'Select Axis');
+    this.setColumnSelector(dataset, 'columnSelectorStacked', 'Select Axis');
+    this.setColumnSelector(dataset, 'columnSelectorStacked2', 'Select Stacked Data');
+    this.setColumnSelector(dataset, 'columnSelectorPivot', 'Select Axis');
+    this.setColumnSelector(dataset, 'columnSelectorPivot2', 'Select Grouped Data');
+    this.setColumnSelector(dataset, 'columnSelectorPivot3', 'Select Stacked Data');
+    this.setColumnSelector(dataset, 'columnSelectorLine', 'Select Axis');
+    this.setColumnSelector(dataset, 'columnSelectorPie', 'Select Axis');
   }
 
   applyDateFilter(){

@@ -379,7 +379,7 @@ class ChartController{
     this.pieChartRedraw = true;
   }
 
-  setColumnSelector(dataset, idSelector){
+  setColumnSelector(dataset, idSelector, nameCol){
     let columnsCheckers = document.getElementById("columnsCheckers");
     let columnSelector = document.getElementById(idSelector);
     let colCheckboxes = columnsCheckers.getElementsByTagName('input');
@@ -397,7 +397,7 @@ class ChartController{
     }
 
     const emptyselector = document.createElement("option")
-    emptyselector.innerHTML = "Select column"
+    emptyselector.innerHTML = nameCol
     emptyselector.selected = true
     emptyselector.disabled = true
     emptyselector.setAttribute("value", null)
