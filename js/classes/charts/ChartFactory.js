@@ -7,7 +7,7 @@ class ChartFactory{
       case 'bar':
         return new BarChart(ctx);
       case 'stacked':
-        return new BarChart(ctx);
+        return new StackedChart(ctx);
       case 'pivot':
         return new PivotChart(ctx);
       case 'line':
