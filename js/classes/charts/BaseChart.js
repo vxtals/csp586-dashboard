@@ -63,7 +63,7 @@ class BaseChart extends ObjectChart {
           k = i % datasetsLabelGroupLength;
           this.datasets.push(
             {
-                label: this.datasetsLabel[j]+' - '+this.datasetsLabelGroup[k],
+                label: '['+this.datasetsLabel[j]+' | '+this.datasetsLabelGroup[k]+']',
                 data: this.datasetsData[i],
                 stack: this.datasetsLabelGroup[k],
                 borderWidth: 1,
