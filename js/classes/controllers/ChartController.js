@@ -23,15 +23,6 @@ class ChartController extends Observer{
     // Creates BarChart instance.
     let ctxBar = document.getElementById("myBarChart").getContext("2d");
     this.myBarChart = chartFactory.createChart('bar',ctxBar);
-    this.myBarChart.setOptionsObject({
-      scales: {
-          yAxes: [{
-              ticks: {
-                  beginAtZero:true
-              }
-          }]
-      }
-    });
     this.myBarChart.displayChart(ctxBar);
     this.barChartRedraw = false;
   }
@@ -41,16 +32,6 @@ class ChartController extends Observer{
     // Creates StackedChart instance.
     let ctxStacked = document.getElementById("myStackedChart").getContext("2d");
     this.myStackedChart = chartFactory.createChart('stacked',ctxStacked);
-    this.myStackedChart.setOptionsObject({
-      scales: {
-          yAxes: [{
-              stacked: true,
-              ticks: {
-                  beginAtZero:true
-              }
-          }]
-      }
-    });
     this.myStackedChart.displayChart(ctxStacked);
     this.stackedChartRedraw = false;
   }
@@ -60,16 +41,6 @@ class ChartController extends Observer{
     // Creates PivotChart instance.
     let ctxPivot = document.getElementById("myPivotChart").getContext("2d");
     this.myPivotChart = chartFactory.createChart('stacked',ctxPivot);
-    this.myPivotChart.setOptionsObject({
-        scales: {
-            xAxes: [{
-                stacked: true,
-            }],
-            yAxes: [{
-                stacked: true
-            }]
-        }
-    });
     this.myPivotChart.displayChart(ctxPivot);
     this.pivotChartRedraw = false;
   }
@@ -79,15 +50,6 @@ class ChartController extends Observer{
     // Creates LineChart instance.
     let ctxLine = document.getElementById("myLineChart").getContext("2d");
     this.myLineChart = chartFactory.createChart('line',ctxLine);
-    this.myLineChart.setOptionsObject({
-      scales: {
-          yAxes: [{
-              ticks: {
-                  beginAtZero:true
-              }
-          }]
-      }
-    });
     this.myLineChart.displayChart(ctxLine);
     this.lineChartRedraw = false;
   }
@@ -97,7 +59,6 @@ class ChartController extends Observer{
     // Creates PieChart instance.
     let ctxPie = document.getElementById("myPieChart").getContext("2d");
     this.myPieChart = chartFactory.createChart('pie',ctxPie);
-    this.myPieChart.setOptionsObject({});
     this.myPieChart.displayChart(ctxPie);
     this.pieChartRedraw = false;
   }

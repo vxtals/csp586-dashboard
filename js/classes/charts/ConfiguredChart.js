@@ -3,7 +3,7 @@ class ConfiguredChart extends BaseChart {
   constructor() {
     super();
     this.chartMainLabels = [];
-    this.options = new Options({});
+    this.options = new Options();
   }
 
   setOptionsObject(options){

@@ -4,5 +4,9 @@ class LineChart extends ConfiguredChart {
     super();
     this.ctx = ctx
     this.type = 'line';
+    this.options.addScales();
+    this.options.addYAxes();
+    this.options.addTicks('yAxes');
+    this.options.setBeginAtZero('yAxes', true);
   }
 }
